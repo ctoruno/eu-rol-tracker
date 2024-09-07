@@ -1,0 +1,131 @@
+---
+title: Introducing the EU Rule of Law Tracker
+author:
+  - name: Carlos A. Toruño Paniagua
+    corresponding: true
+    email: ctoruno@worldjusticeproject.org
+    roles:
+      - Senior Data Analyst
+      - Research
+    affiliations:
+      - The World Justice Project
+keywords:
+  - Rule of Law
+  - Large Language Model
+  - News tracker
+abstract: |
+  This paper introduces the EU Rule of Law Tracker, a project aimed at systematically tracking, classifying, and analyzing social and political events related to the rule of law across the 27 member states of the European Union. While existing indices, such as the World Justice Project's Rule of Law Index, rely on expert assessments and public perceptions to evaluate key dimensions of the rule of law, they may not fully capture the connection between perceptions and tangible events. Leveraging news archives and advances in machine learning and artificial intelligence, particularly Large Language Models (LLMs), this initiative seeks to complement perception-based metrics by building a comprehensive event database. This document details the data extraction process, classification methods, use of LLMs for analysis, and future directions for the project ...
+plain-language-summary: |
+  The EU Rule of Law Tracker uses AI to track and analyze rule of law events across the EU. ...
+date: last-modified
+bibliography: references.bib
+citation:
+  container-title: EU Rule of Law Tracker
+number-sections: true
+cap-location: top
+reference-location: margin
+---
+
+## Introduction
+
+Tracking the conditions surrounding the rule of law is essential for understanding the medium- and long-term evolution of social and political institutions within a country or region. Currently, there are several measures and indices aimed at assessing the rule of law globally, one of the most prominent being the Rule of Law Index (ROLI) produced by the World Justice Project (WJP). Like most similar measurements, the ROLI relies heavily on expert assessments and public perceptions, evaluating eight key dimensions of the rule of law: constraints on government powers, absence of corruption, open government, fundamental rights, order and security, regulatory enforcement, civil justice, and criminal justice [@botero2011measuring]. These perception-based metrics provide valuable insights into how various aspects of the rule of law are viewed. However, they may not always link changes in perceptions to specific, tangible events. Given the complexity of the rule of law and the limited pool of experts qualified to assess it, having a compendium of concrete events—such as judicial rulings, electoral processes, protests, and government actions—becomes increasingly valuable. Such a database, when properly compiled and organized, can help to assess, contextualize, and validate perception-based findings, providing a more comprehensive and reliable understanding of the state of the rule of law.
+
+There have been various initiatives aimed at developing tools to track rule of law events in the past [@hertogh2024empirical; @barendrecht2011rule]. However, the complexity of the concepts involved, overlapping definitions, data limitations, time constraints, among other challenges, have made this a difficult endeavor. Despite these obstacles, recent advancements in fields such as machine learning and artificial intelligence, combined with greater accessibility to large data pools, open new possibilities to produce more accurate and efficient results at lower costs.
+
+In this document, we are introducing the *EU Rule of Law Tracker*, an initiative that is focused on tracking, classifying, analyzing, and producing insights on social and political events related to the Rule of Law in the 27 members of the European Union. This initiative makes use of news articles archives and Large Language Models (LLM) in order to produce a systematized database for researchers to assess and validate perceptions on the rule of Law in the targeted countries.
+
+The document is structured in six sections. After this brief introduction, we introduced some guidelines on how the extraction and translation of the input data was performed. The third section is focused on the use of LLMs to help us classify the extracted data. The fourth section covers the use of LLMs to help us summarize the information into brief media reports that can complement and facilitate the work of researchers when having to assess changes in people's perceptions. The fifth section explain the use of some Natural Language Processing (NLP) techniques to get further insights from the final database. Finally, the last section provides some brief overview on the next steps and potential extensions.
+
+![Figure 1: Overview of the Process](images/Massive-News-Country-Reports.png){#general-flow}
+
+## Extraction and translation
+
+The first step is designing the *EU Rule of Law Tracker* was to identify, gather, and compile the information that was going to be used as the primary input for the tracker. Several inputs such as official records, social media, academic research, and think tanks publications were considered. After a careful review of the options, it was decided to rely on news articles for the pilot version of the tracker. This decision was based on the several advantages of using this type of data.
+
+First, there are multiple data archives that provide harmonized databases for a variety of newspapers around the world. Access to these massive databases is usually provided through Application Programming Interfaces or APIs. Additionally, these databases are usually updated in short intervals providing access to almost real-time reporting to the latest events around the world. Due to higher research, editorial, and publishing times, alternatives data inputs offer least updated information in comparison to most newspapers.
+
+Second, news articles come from a wide variety of media outlets. Each with its own editorial line and cultural context. Given the political nature of the events that are usually associated to the Rule of Law, it is of highly importance to ensure the diversity of viewpoints so our final outcome have a more nuanced understanding of how the events are shaping the political and social environment in every country.
+
+Third, newspapers create a historical record of events that can be tracked over time and, at the same time, is a resource that can be easily scrutinized by the general public. Moreover, the competition to capture readers among newspapers promotes extra research from journalists that allows readers to have easy access to background information and context.
+
+On the other hand, relying in news articles as our primary data input for tracking democracy and rule of law events has some drawbacks as well. The most important ones being the risks of media bias, subjectivity, and sensationalism. Additionally, data quality and consistency can vary significantly between sources, posing risks related to misinformation, lack of depth, and regional disparities in coverage.
+
+To mitigate these potential risks, we limited our selection to 211 newspapers. The list was curated based on five key criteria to ensure balanced and reliable coverage:(i) editorial influence, (ii) historical significance, (iii) audience reach, (iv) diversity of editorial perspectives, and (v) regional representation. Additionally, the newspapers were categorized to identify *priority* and *high-priority* sources within each of the 27 member states of the European Union. Of the 211 sources, 153 were designated as priority, while 84 were labeled as high-priority. The full list of data sources can be found in @sec-sources. Due to limited resources during the news extraction phase, only high-priority sources were used in the first version of the tracker.
+
+Having identified and delimited the pool of data sources for the study, we needed a way to access and download the news articles for the tracker. For this purpose, we made use of a news API service called [Newscatcher](https://www.newscatcherapi.com/). A news API is a programming interface that allows users to access and retrieve news articles from a wide variety of sources. By making use of [HTTP calls](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods), we are able to access the data archive compiled by the company and retrieve news articles based on some query parameters. The Newscatcher API allows to search news based on dates, languages, sources, URL, among other optional parameters. Additionally, their data archive tracks all of our 84 high-priority newspapers. However, it is not possible to define queries that will target only those news articles that are related to our definition of the rule of law. Because of this, we had to rely on queries that will make use of specific keywords that are associated to our definition of the rule of law and all of its dimensions, as well as to other related macro-concepts such as justice and governance. At the same time, our keywords were defined with the goal of performing a *wide-search* rather than a *narrow-search*. In other words, we defined them from very general perspective so our search results leave plenty of margin to also capture unrelated news articles. This approach is preferred to a search were we might be leaving related articles outside of our database. In @sec-class, we cover the process of refining the search through a text classification process through Large Language Models.
+
+For the extraction, we defined a total of 137 keywords. These keywords are divided into 123 language-based keywords and 14 country-based institutional keywords. The language-based keywords encompass common nouns that are shared across countries that shared the same official language. For example "*Kongress*" is the German word for Congress and it can be equally used in news articles from newspapers in Germany as well by newspapers in Austria. However, even when these two countries share the same language, they might refer to some institutions in different ways. For example, "*Verfassungsgerichtshof*" is how Austrian newspapers might refer to the Constitutional Court, while German newspapers might refer to it as "*Bundesverfassungsgericht*".
+
+Depending on the language of publication of each targeted newspaper, we will use a combination of language- and country-based keywords. For example, the newspaper "*De Standaard*" in Belgium publishes news in Dutch. Therefore, we will use the 123 language-based keywords in Dutch (also used in some newspapers from the Netherlands), as well as the 14 Belgium institutions names in Dutch (unique for Belgium). On the other hand, the Belgium newspaper "*Le Soir*" publishes their news in French. As a result, we use the 123 french keywords (also used for Newspapers in France), as well as the 14 Belgium institution names in French (unique for Belgium newspapers). The definition of keywords was made in English and then manually translated to the other 22 languages used by the rest of the targeted newspapers.^[The translation of these keywords involved a combination of desk research, translation engines, and native speaker consultations when possible.] The full list of keywords can be consulted in @sec-keys.
+
+Due to quota limitations at the time of the extraction,^[At the time of the extraction, Newscatcher was transitioning from version 2 to version 3 of their API. While the v2 version of their API was able to go further back to even 2 years in the past, the v3 version was only able to capture news articles from the past 3 months. Due to technology transitions, we had a limit of 20,000 calls for their version 2, which is equivalent to a total of 800,000 news articles] a time range of eight months was targeted for most countries with a few exceptions (see @tbl-extraction). A total of 904,944 news articles were gathered from the Newscatcher data archive. The data consisted of tabular data in JSON format. The response object returned by the API contained some information from the news articles such as the published date, title, content, language, URL, and if the article was coming from an opinion column.
+
+| **Country** | **Total News Extracted** | **Date Range**                |
+|:------------|--------------------------|-------------------------------|
+| Austria     | 46,145               | Mar 06, 2023 - Mar 07, 2024    |
+| Belgium     | 21,287               | Jun 07, 2023 - Mar 07, 2024    |
+| Bulgaria    | 38,118               | Jul 07, 2023 - Mar 07, 2024    |
+| Croatia     | 37,068               | Jul 07, 2023 - Mar 07, 2024    |
+| Cyprus      | 34,955               | Jul 07, 2023 - Mar 08, 2024    |
+| Czechia     | 41,415               | Jul 07, 2023 - Mar 08, 2024    |
+| Denmark     | 11,312               | Aug 07, 2023 - Mar 07, 2024    |
+| Estonia     | 12,370               | Aug 08, 2023 - Mar 07, 2024    |
+| Finland     | 6,647                | Aug 08, 2023 - Mar 07, 2024    |
+| France      | 64,527               | Aug 07, 2023 - Mar 07, 2024    |
+| Germany     | 45,321               | Jan 08, 2024 - Mar 07, 2024    |
+| Greece      | 49,504               | Aug 08, 2023 - Mar 07, 2024    |
+| Hungary     | 18,111               | Aug 08, 2023 - Mar 07, 2024    |
+| Ireland     | 48,409               | Aug 08, 2023 - Mar 07, 2024    |
+| Italy       | 93,858               | Aug 08, 2023 - Mar 07, 2024    |
+| Latvia      | 5,487                | Aug 09, 2023 - Mar 07, 2024    |
+| Lithuania   | 14,396               | Aug 08, 2023 - Mar 07, 2024    |
+| Luxembourg  | 7,894                | Aug 08, 2023 - Mar 07, 2024    |
+| Malta       | 10,842               | Aug 08, 2023 - Mar 07, 2024    |
+| Netherlands | 23,935               | Aug 08, 2023 - Mar 07, 2024    |
+| Poland      | 21,434               | Aug 08, 2023 - Mar 07, 2024    |
+| Portugal    | 29,624               | Aug 08, 2023 - Mar 07, 2024    |
+| Romania     | 33,264               | Aug 08, 2023 - Mar 07, 2024    |
+| Slovakia    | 34,874               | Aug 08, 2023 - Mar 07, 2024    |
+| Slovenia    | 10,211               | Aug 08, 2023 - Mar 07, 2024    |
+| Spain       | 112,820              | Aug 08, 2023 - Mar 07, 2024    |
+| Sweden      | 6,417                | Jan 08, 2024 - Mar 07, 2024    |
+| **Total**   | **904,944**          |                                |
+
+: Total news extracted per country {#tbl-extraction}
+
+The title and content of the news articles was returned in the original language of the publication. As a result, our pool of news articles contained information in 23 languages: Bulgarian, Croatian, Czech, Danish, Dutch, English, Estonian, Finnish, French, German, Greek, Hungarian, Italian, Latvian, Lithuanian, Maltese, Polish, Portuguese, Romanian, Slovak, Slovene, Spanish, and Swedish. While it is true that this demonstrates the cultural richness of the region, the linguistic diversity of the texts also poses some challenges for proper classification and text analysis.
+
+First, the LLMs that are being used in this project are multilingual models. However, their accuracy in text classification might be lower in some languages. In order to keep consistency during the classification stage as well as facilitating the use of NLP techniques during the data analysis phase, it was decided to translate all the data into a single language. Given that most LLMs are primarily trained using English data, we used this language as the target of the translations. To ensure the highest quality during the process, we used the Google Translation API service to translate the entirety of our text data.
+
+## Classification {#sec-class}
+
+Hello
+
+## Appendix {.appendix}
+
+### List of data sources {.appendix #sec-sources}
+::: {.callout-note collapse="true"}
+#### Data sources
+```{r}
+newspapers <- readxl::read_xlsx("notebooks/EU_sources_1.xlsx")
+knitr::kable(newspapers)
+```
+:::
+
+### List of keywords used for extraction {.appendix #sec-keys}
+
+::: {.callout-note collapse="true"}
+#### Language-based keywords {.appendix .unnumbered}
+```{r}
+langkeys <- readxl::read_xlsx("notebooks/keywords_1.xlsx")
+knitr::kable(langkeys)
+```
+:::
+
+::: {.callout-note collapse="true"}
+#### Country-based keywords {.appendix .unnumbered}
+```{r}
+countrykeys <- readxl::read_xlsx("notebooks/country_institutions_1.xlsx")
+knitr::kable(countrykeys)
+```
+:::
