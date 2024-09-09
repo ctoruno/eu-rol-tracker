@@ -19600,214 +19600,12 @@ knitr::kable(countrykeys)</code>
 <sub-article article-type="notebook" id="nb-3-nb-1">
 <front-stub>
 <title-group>
-<article-title>Prompts Templates: Text Classification</article-title>
-</title-group>
-</front-stub>
-
-<body>
-<sec id="cell-2-nb-1" specific-use="notebook-content">
-<sec id="stage-1-system-context-and-instructions-nb-1">
-  <title>Stage 1 (System Context and Instructions)</title>
-  </sec>
-  <sec id="cell-3-nb-1" specific-use="notebook-content">
-  <code language="python">context_stage_1 = &quot;&quot;&quot;
-You are an assistant with knowledge and subject-matter expertise on Rule of Law, justice, governance, global politics, social sciences, and related fields in the European Union. Your task is to carefully read a news article and determine whether it is related to the definitions of Rule of Law, Justice, and Governance that I will give you. To successfully perform this task, you should carefully read the definitions that I will provide, and use the knowledge of global politics, law, and social sciences that you have.
-&quot;&quot;&quot;
-
-instructions_stage_1 = &quot;&quot;&quot;
-# Key macro concepts
-Here are the definitions of Rule of Law, Justice, and Governance:
-
-## What is the Rule of Law?
-The term Rule of Law refers to a system in which law is able to impose meaningful restraints on the state and individual members of the ruling elite. It refers to a governance principle in which all persons, institutions, and entities, public and private, including the State itself, are accountable to laws that are publicly promulgated, equally enforced, and independently adjudicated, and which are consistent with international human rights norms and standards.
-
-We extend this concept further by defining the Rule of Law as a rules-based system in which the following four universal principles are upheld. First, the government and its officials and agents are accountable under the law. Second, the laws are clear, publicized, stable, and fair, and protect fundamental rights, including the security of persons and property. Third, the process by which the laws are enacted, administered, and enforced is accessible, fair, and efficient. Lastly, access to justice is provided by competent, independent, and ethical adjudicators, attorneys or representatives, and judicial officers who are of sufficient number, have adequate resources, and reflect the makeup of the communities they serve.
-
-Given the previous definitions, we can infer that the Rule of Law is a multidimensional concept that extends over eight basic pillars: limited government powers; absence of corruption; order and security; fundamental rights; open government; effective regulatory enforcement; access to civil justice; and an effective criminal justice.
-
-From a political science perspective, these factors draw on four basic ideas related to the relationship between the state and the civil society: the checks and balances on the government's power, the effectiveness of the state in performing its basic functions, participation and collaboration between the state and its citizens, and absence of arbitrary abuse by the authority.
-
-## What is Justice? 
-We define Justice as the ethical, philosophical idea that people are to be treated impartially, fairly, properly, and reasonably by the law and by arbiters of the law, that laws are to ensure that no harm befalls another, and that, where harm is alleged, a remedial action is taken - both the accuser and the accused receive a morally right consequence merited by their actions.
-
-Justice also refers more specifically to the set of institutions and services that allow for the impartial mediation and adjudication of disputes arising from the violation or conflicting interpretations of laws, including the enforcement of decisions or agreements reached through their operation.
-
-## What is Governance? 
-Finally, we define Governance as the mechanisms, processes, and structures through which public institutions operate and make decisions for the welfare and benefit of their respective communities. This encompasses the way governments and local authorities are organized, how policies are formulated and implemented, how resources are allocated and managed, and how public services are delivered to citizens.
-
-# News article and instructions
-Now, given the following news article:
-News title: {headline}
-News summary: {summary}
-News body: {body}
-
-Please analyze the news article and its context, and answer the following question:
-1. Based on the definitions that I just provided above, is this news article narrating events related to the Rule of Law, Justice, or Governance?
-2. In which country do the events described in the article take place?
-
-Use the following JSON format to answer:
-{{
-    rol_related: answer to question number 1. If the news article IS NOT related to the Rule of Law, Justice, or Governance answer with &quot;Unrelated&quot;, otherwise answer with &quot;Related&quot;.
-    country: answer to question number 2.
-}}
-
-When answering, strictly attach to the definitions of the Rule of Law, Justice, and Governance and keep in mind the following points:
-1. We do not include the right to access to healthcare in the conceptual framework of the Rule of Law because we are not contacting public health experts in this project, so news articles which main topic is the right to healthcare should not be related to the Rule of Law.
-2. It is very important to distinguish between different types of news: description of events, interviews, op-eds, public statements, to clarify whether the news article has any actual impact on the Rule of Law, Justice, or Governance.
-3. Opinion columns and opinion articles in general should not be related to the Rule of Law, Justice, and Governance.
-4. Any news article referring to foreign policy or international diplomacy should be rated as unrelated to all the pillars of the Rule of Law.
-5. We are only interested in current or recent events related to the Rule of Law. Therefore, please label articles referring to historical events in the far past as UNRELATED to the Rule of Law.
-
-There is a very important key point to keep in mind: Our conceptual framework does NOT include war, armed conflict, or peace agreements. Therefore, news articles narrating events that derive from war, armed conflict, or peace agreements, or events that are a direct consequence from the previous situations should be labelled as UNRELATED to the Rule of Law.
-
-Remember to ONLY answer following the JSON format explained above.
-
-Begin!
-&quot;&quot;&quot;</code>
-  </sec>
-  <sec id="cell-4-nb-1" specific-use="notebook-content">
-</sec>
-<sec id="stage-2-system-context-and-instructions-nb-1">
-  <title>Stage 2 (System Context and Instructions)</title>
-  </sec>
-  <sec id="cell-5-nb-1" specific-use="notebook-content">
-  <code language="python">context_stage_2 = &quot;&quot;&quot;
-You are an assistant with knowledge and expertise in global politics, social sciences, rule of law, and related fields. Your task is to assist me in classifying news articles according to which pillar of the Rule of Law do they belong to. To successfully accomplish this task, you will have to carefully read the definitions of each pillar that I will give you and the text of the article itself, as well as use the knowledge of global politics, social sciences, and law that you have. Once you have read the news article, you will proceed to determine the extent to which the events described in the news article are related to each pillar.
-&quot;&quot;&quot;
-
-instructions_stage_2 = &quot;&quot;&quot;
-To help you contextualize, this is the definition of the Rule of Law that we are using for the task at hand:
-
-# Definition of the Rule of Law
-The term Rule of Law refers to a system in which law is able to impose meaningful restraints on the state and individual members of the ruling elite. It refers to a governance principle in which all persons, institutions, and entities, public and private, including the State itself, are accountable to laws that are publicly promulgated, equally enforced, and independently adjudicated, and which are consistent with international human rights norms and standards.
-
-We extend this concept further by defining the Rule of Law as a rules-based system in which the following four universal principles are upheld. First, the government and its officials and agents are accountable under the law. Second, the laws are clear, publicized, stable, and fair, and protect fundamental rights, including the security of persons and property. Third, the process by which the laws are enacted, administered, and enforced is accessible, fair, and efficient. Lastly, access to justice is provided by competent, independent, and ethical adjudicators, attorneys or representatives, and judicial officers who are of sufficient number, have adequate resources, and reflect the makeup of the communities they serve.
-
-From a political science perspective, these factors draw on four basic ideas related to the relationship between the state and the civil society: the checks and balances on the government's power, the effectiveness of the state in performing its basic functions, participation and collaboration between the state and its citizens, and absence of arbitrary abuse by the authority.
-
-Given the previous definitions, we can infer that the Rule of Law is a multidimensional concept that extends over eight basic pillars: limited government powers; absence of corruption; order and security; fundamental rights; open government; effective regulatory enforcement; access to civil justice; and an effective criminal justice.
-
-Next, I will provide you with detailed definitions for each pillar.
-
-# Pillars of the Rule of Law
-1. Constraints on Government Powers: 
-Measures the extent to which those who govern are bound by law. It comprises the means, both constitutional and institutional, by which the powers of the government and its officials and agents are limited and held accountable under the law. It also includes non-governmental checks on the government’s power, such as a free and independent press. Additionally, it measures the absence of authoritarianism, which includes the accountability of the Chief Executive, and its respect for checks and balances. In more detail, this pillar is related to the following topics:
-    -   The active and reactive transparency of legislative bodies (senate, parliament, assemblies), its ability to impose disciplinary measures to government officials, and if there is representation of disadvantaged groups, as well as citizen participation. It also measures if the opposition can express its opinions and if it exercises its functions of overseeing and investigating the government.
-    -   The independence of the judiciary, by means of having sufficient resources and professional judges, with adequate rights and competencies, as well as its ability to impose disciplinary measures on government officials.
-    -   The independence and effectiveness of oversight institutions, such as the Supreme Audit Institution or comptroller, anticorruption authority, human rights institution, the office of the ombudsman, and prosecution services, as well as if civil servants are free from political pressure, and are effective in implementing public policies.
-    -   Whether elections are free of barriers of entry, intimidation, corruption, and criminality, in accordance with the law, with equitable access to resources, free from misinformation, secure from cyberattacks and with protection of personal. It also measures the effectiveness and independence of the electoral authority.
-    -   The effectiveness of non-governmental checks on the government’s power, such as the media, CSOs, political parties, activists, and citizens. It includes their effective exercise of the freedoms of assembly, association, opinion, and expression, and the rights to petition and civic engagement.
-    -   The accountability of the Chief Executive or the Head of Government, and its respect for the constitutional order, the law-making process, the outcome and quality of elections, civil liberties, political opponents, as well as the independence of the judiciary and oversight institutions. It also measures the likelihood of sanctions to officials for misconduct.
-    -   Whether members of the legislature, judiciary, elected leaders or high-ranking government officials, public sector employees, and police officers, who abuse their power are sanctioned for misconduct.
-
-2. Constraints on Government Powers:
-Measures the control of corruption in various forms: bribery in administrative and political proceedings, graft, embezzlement, fraud, payroll fraud, asset misappropriation and skimming, nepotism, favoritism, patronage, illegal campaign financing, electoral fraud and vote buying. In more detail, this pillar is related to the following topics:
-    -   The prevalence of bribery in the delivery of public services and regulations, as well as in the political process. 
-    -   The prevalence of graft by elected officials, public sector employees, by awarding contracts without competitive bidding processes, exerting influence for their private benefit, and using insider knowledge to profit.
-    -   The prevalence of embezzlement or misappropriation of public funds, payroll fraud, asset misappropriation and skimming, as well as of nepotism, favoritism, and patronage.
-    -   The prevalence of nepotism and favoritism by elected officials, public sector employees, judges, and prosecutors. It also measures the prevalence of patronage by elected officials.
-    -   The prevalence of corruption in elections, including illegal campaign financing, manipulation of elections, and vote buying.
-
-3. Open Government
-Measures the openness of government defined by the extent to which a government shares information, empowers people with tools to hold the government accountable, and fosters citizen participation in public policy deliberations while maintaining an open civic space. This factor measures whether basic laws and information on legal rights are publicized and evaluates the quality of information published by the government. In more detail, this pillar is related to the following topics:
-    -   Whether requests for information from the public to government agencies and institutions are granted, and if these requests are granted within a reasonable time period, with complete and pertinent answers, at a reasonable cost and without having to pay a bribe for the information.
-    -   Whether people are aware of their right to information, and whether relevant records are accessible to the public upon request.
-    -   The effectiveness of non-governmental checks on the government’s power, as well as the openness of the civic space and the extent of citizen participation. It includes the effective exercise of the freedoms of assembly, association, opinion, and expression, and the rights to petition and civic engagement.
-
-4. Fundamental Rights
-This pillar recognizes that a system of positive law that fails to respect core human rights established under international law is at best “rule by law,” and does not 
-deserve to be called a rule of law system. This aspect focuses on rights that are firmly established under the Charter of Fundamental Rights of the European Union, but 
-only includes a relatively small number of rights which are most closely related to rule of law concerns. In more detail, this pillar is related to the following topics:
-    -   The protection of rights related to dignity, including the prohibition of torture, slavery and forced labor.  
-    -   The protection of rights related to freedom, including freedom of thought, conscience, religion, peaceful assembly, association, opinion, and expression, as well as the right to property and to asylum.
-    -   Whether civil society organizations are free to comment on government policies, without fear of retaliation. In addition, it also measures if quarantines and lockdowns are applied proportionately, not discriminatory, with limited duration and in accordance with the law.
-    -   Whether independent media, civil society organizations, members of the opposition, opposing factions of the governing party, activists, whistleblowers, and individuals are free to report and comment on government policies, without fear of retaliation.
-    -   The extent to which the media publish credible fact-checked information, and if its editorial content is independent from political influences, as well as if it can conduct investigations and expose cases of corruption without facing surveillance, harassment, threats, legal actions, or administrative sanctions.
-    -   The extent to which the government allows the formation or operation of CSOs, and the formation or operation of opposition parties.
-    -   Whether the government respects the property rights of people and corporations, refrains from the illegal seizure of private property, and provides adequate reasons and compensation when property is legally expropriated. It also measures if the process for transferring a property is simple and quick. In addition, it measures if foreign investors receive fair and equitable treatment from the government, and the effective enforcement of anti-squatting laws and intellectual property rights.
-    -   Whether the government respects the right to asylum and refugees can move freely within the host country, have access to legal work and state services such as education, accommodation, meals, healthcare, and cash benefits, as well as legal documentation and economic opportunities.
-    -   The protection of rights related to equality, including equality before the law, and absence of discrimination based on socio-economic status, gender, ethnicity, religion, national origin, sexual orientation, or gender identity.
-    -   The protection of rights related to solidarity, including labor rights such as workers’ right to information, consultation, collective bargaining, access to placement services, and protection in the event of unjustified dismissal, as well as the prohibition of child labor.
-    -   The protection of rights related to citizens´ rights, including political rights such as the right to vote and to stand as a candidate at European Parliament and municipal elections, to information, petition, movement, and of residence.
-    -   The protection of rights related to justice, including the right to effective remedy and to a fair trial, presumption of innocence, and to defense, as well as rights of the accused including principles of legality and proportionality of criminal offenses and penalties, and the right not to be tried or punished twice.
-
-5. Security
-Measures the assurance of the security of persons and property. Security is one of the defining aspects of any rule of law society and is a fundamental function of the state. It is also a precondition for the realization of the rights and freedoms that the rule of law seeks to advance. We are excluding armed conflict from this pillar. In more detail, this pillar is related to the following topics:
-    -   The extent to which people feel safe and secure in their city, town, or village, and in their neighborhood.
-    -   The extent to which the State is able to keep crime and violence to minimum levels.
-
-6. Regulatory Enforcement and Enabling Business Environment
-Measures the extent to which regulations are fairly and effectively implemented and enforced. Regulations, both legal and administrative, structure behaviors within and outside of the government. This factor does not assess which activities a government chooses to regulate, nor does it consider how much regulation of a particular activity is appropriate. Rather, it examines how regulations are implemented and enforced. In more detail, this pillar is related to the following topics:
-    -   The extent to which the legal framework for businesses is clear, accessible, and predictable, as well as the respect for property rights.
-    -   Whether the government respects the property rights of people and corporations, refrains from the illegal seizure of private property, and provides adequate reasons and compensation when property is legally expropriated. In addition, it measures if foreign investors receive fair and equitable treatment from the government, and the effective enforcement of anti-squatting laws and intellectual property rights. 
-    -   Whether the process for transferring a property is simple and quick. 
-    -   The extent to which the government audits and inspections are conducted in accordance with the law and are free of corruption; if complaint mechanisms are simple, accessible, and cost-effective, and if regulation authorities are impartial, and if they sanction violations.
-    -   Whether environmental and labor regulation authorities sanction violations, such as occupational safety and business license or zoning violations.
-
-7. Civil Justice
-Measures whether ordinary people can resolve their grievances through formal institutions of justice in a peaceful and effective manner, as well as in accordance with generally accepted social norms rather than resorting to violence or self-help. Access to civil justice requires that the system be accessible, affordable, effective, impartial, and culturally competent. In more detail, this pillar is related to the following topics:
-    -   Whether justice institutions help prevent legal and justice needs. It also measures whether authorities tolerate illegal activities such as squatting, street vending or informal labor arrangements.
-    -   Whether people are aware of their rights, formal justice, and alternative justice mechanisms, and know where to get information and advice when facing a legal problem.
-    -   Whether can access and afford legal advice and representation; and can access the court system without incurring unreasonable fees.
-    -   Whether the civil justice system is impartial and free of discrimination, corruption and undue influence from the government and private interests.
-    -   The effectiveness and timeliness of the enforcement of civil justice decisions and judgments in practice.
-    -   Whether alternative dispute resolution mechanisms (ADRs) are available, accessible, affordable, impartial, timely, effective, enforceable, and free of corruption and undue influence from the government and private interests.
-
-8. Criminal Justice
-Evaluates a country’s criminal justice system. An effective criminal justice system is a key aspect of the rule of law, as it constitutes the conventional mechanism to redress grievances and bring action against individuals for offenses against society. An assessment of the delivery of criminal justice should take into consideration the entire system, including the police, lawyers, prosecutors, judges, and prison officers. In more detail, this pillar is related to the following topics:
-    -   Whether criminal investigations are effective, timely, impartial, and free of corruption and undue influence from criminal organizations and political and private interests.
-    -   The effectiveness of prosecutors in investigating crimes, and if pre-trial proceedings are timely, outcome-oriented, impartial, and free of corruption and undue influence from political and private interests.
-    -   Whether trials are timely, outcome-oriented, impartial, and free of corruption and undue influence from political and private interests.
-    -   Whether alternative dispute resolution mechanisms (ADRs) are available, accessible, affordable, impartial, timely, effective, enforceable, and free of corruption and undue influence from the government and private interests.
-    -   Whether victim’s rights are effectively guaranteed, including treatment with respect, absence of discrimination, timely and sufficient information, and protection.
-    -   Whether the basic rights of criminal suspects are respected, including the presumption of innocence and the freedom from arbitrary arrest and unreasonable pre-trial detention. It also measures whether criminal suspects are able to access and challenge evidence used against them, whether they are subject to abusive treatment, and whether they are provided with adequate legal assistance. In addition, it measures whether the basic rights of prisoners are respected once they have been convicted of a crime.
-    -   Whether the prison system guarantees conditions of safety and order and respects the rights of people deprived of their liberty. It also measures the absence of corruption and the effectiveness of the prison system in reducing recidivism.
-
-# News article and instructions
-Now, given the following news article:
-News title: {headline}
-News summary: {summary}
-News body: {body}
-
-Analyze the news article and its context, and answer the following question:
-1.  How related is this news article to each one of the pillars of the Rule of Law? Produce a score for each pillar ranging from 1 to 10, where 10 reflects that the news article is HIGHLY related to a specific pillar, and 0 meaning that the news article is TOTALLY UNRELATED to a given pillar.
-
-Use the following JSON format to structure your answer:
-    {{
-        &quot;pillars_relation&quot;: answer to the question number 1. Answer using a list where each element of the list is a dictionary like this: 
-        {{'[number of pillar]. name of pillar': relevance score as an integer number}}
-    }}
-
-IMPORTANT: As you saw, each pillar measures a wide range of elements, and they tend to overlap in various aspects. On the other hand, the news articles describe events that take place in a specific country, territory, or region. Therefore, a pillar being related to a news article means that the events narrated by the article can be measured by that pillar, or that the events happening in the news article would have an impact on that pillar, either positive, negative, or neutral. Remember to ONLY answer following the JSON format explained above.
-
-When answering, strictly attach to the definitions of the Rule of Law, Justice, and Governance that I provided above and keep in mind the following points:
-1. We do not include the right to access to healthcare in the conceptual framework of the Rule of Law because we are not contacting public health experts in this project, so news articles which main topic is the right to healthcare should be rated as unrelated to all the pillars of the Rule of Law.
-2. We are only interested in current or recent events related to the Rule of Law. Therefore, please rate articles referring to historical events in the far past asunrelated to all the pillars of the Rule of Law.
-3. Any news article referring to foreign policy or international diplomacy should be rated as unrelated to all the pillars of the Rule of Law.
-4. VERY IMPROTANT: Our conceptual framework DOES NOT include war, armed conflict, or peace agreements. Therefore, news articles narrating events that derive from war, armed conflict, or peace agreements, or events that are a direct consequence from the previous situations should be rated as unrelated to all the pillars of the Rule of Law. Remember to ONLY answer following the JSON format explained above.
-
-Begin!
-&quot;&quot;&quot;</code>
-  </sec>
-</sec>
-</body>
-
-
-
-<back>
-</back>
-
-
-</sub-article>
-<sub-article article-type="notebook" id="nb-6-nb-2">
-<front-stub>
-<title-group>
 <article-title>1. Extraction code</article-title>
 </title-group>
 </front-stub>
 
 <body>
-<sec id="cell-2-nb-2" specific-use="notebook-content">
+<sec id="cell-2-nb-1" specific-use="notebook-content">
 <code language="python">import pandas as pd
 import os
 import requests
@@ -19815,22 +19613,22 @@ import json
 import time
 from dotenv import load_dotenv</code>
 </sec>
-<sec id="cell-3-nb-2" specific-use="notebook-content">
-<sec id="loading-api-key-nb-2">
+<sec id="cell-3-nb-1" specific-use="notebook-content">
+<sec id="loading-api-key-nb-1">
   <title>Loading API Key</title>
   </sec>
-  <sec id="cell-4-nb-2" specific-use="notebook-content">
+  <sec id="cell-4-nb-1" specific-use="notebook-content">
   <code language="python"># Loading API KEY from environment
 load_dotenv()
 newscatcher_key_v2 = os.getenv(&quot;newscatcher_key_v2&quot;)
 newscatcher_key_v3 = os.getenv(&quot;newscatcher_key_v3&quot;)</code>
   </sec>
-  <sec id="cell-5-nb-2" specific-use="notebook-content">
+  <sec id="cell-5-nb-1" specific-use="notebook-content">
 </sec>
-<sec id="checking-subscription-plan-only-for-v3-nb-2">
+<sec id="checking-subscription-plan-only-for-v3-nb-1">
   <title>Checking Subscription Plan (only for V3)</title>
   </sec>
-  <sec id="cell-6-nb-2" specific-use="notebook-content">
+  <sec id="cell-6-nb-1" specific-use="notebook-content">
   <code language="python"># Defining URL, header, and parameters
 url      = &quot;https://v3-api.newscatcherapi.com/api/subscription&quot;
 headers  = {&quot;x-api-token&quot; : newscatcher_key_v3}
@@ -19845,16 +19643,16 @@ print(json_format)</code>
     <preformat>{'active': True, 'concurrent_calls': 1, 'plan': 'v3_nlp', 'plan_calls': 10000, 'remaining_calls': 7557, 'historical_days': 60}</preformat>
   </boxed-text>
   </sec>
-  <sec id="cell-7-nb-2" specific-use="notebook-content">
+  <sec id="cell-7-nb-1" specific-use="notebook-content">
 </sec>
-<sec id="loading-keywords-and-sources-nb-2">
+<sec id="loading-keywords-and-sources-nb-1">
   <title>Loading Keywords and Sources</title>
   </sec>
-  <sec id="cell-8-nb-2" specific-use="notebook-content">
+  <sec id="cell-8-nb-1" specific-use="notebook-content">
   <code language="python">sources = pd.read_excel(&quot;../inputs/EU_sources_1.xlsx&quot;)
 sources[&quot;shortURL&quot;] = sources[&quot;URL&quot;].replace(r&quot;^https?://|www\.|/&quot;, &quot;&quot;, regex=True)</code>
   </sec>
-  <sec id="cell-9-nb-2" specific-use="notebook-content">
+  <sec id="cell-9-nb-1" specific-use="notebook-content">
   <code language="python">keywords      = pd.read_excel(&quot;../inputs/keywords_1.xlsx&quot;)
 keywords_long = pd.melt(
     keywords, 
@@ -19863,15 +19661,15 @@ keywords_long = pd.melt(
     value_name = &quot;keyword&quot;
 )</code>
   </sec>
-  <sec id="cell-10-nb-2" specific-use="notebook-content">
+  <sec id="cell-10-nb-1" specific-use="notebook-content">
   <code language="python">institutions = pd.read_excel(&quot;../inputs/country_institutions_1.xlsx&quot;).dropna(subset=[&quot;translation&quot;])</code>
   </sec>
-  <sec id="cell-11-nb-2" specific-use="notebook-content">
+  <sec id="cell-11-nb-1" specific-use="notebook-content">
 </sec>
-<sec id="gathering-news-articles-nb-2">
+<sec id="gathering-news-articles-nb-1">
   <title>Gathering News Articles</title>
   </sec>
-  <sec id="cell-12-nb-2" specific-use="notebook-content">
+  <sec id="cell-12-nb-1" specific-use="notebook-content">
   <code language="python">def gatherKeywords(language, country):
     &quot;&quot;&quot;
     This function takes a language and a country as arguments and retrieve a set of query-styled strings
@@ -20020,11 +19818,11 @@ def mergeData(dta, version):
                 master_data  = pd.concat(data_list)
                 master_data.to_parquet(f&quot;../data/data-extraction-1/{version}/{source}.parquet.gzip&quot;, compression = &quot;gzip&quot;)    </code>
   </sec>
-  <sec id="cell-13-nb-2" specific-use="notebook-content">
-  <sec id="using-api-v2-to-gather-news-nb-2">
+  <sec id="cell-13-nb-1" specific-use="notebook-content">
+  <sec id="using-api-v2-to-gather-news-nb-1">
     <title>Using API V2 to gather news</title>
     </sec>
-    <sec id="cell-14-nb-2" specific-use="notebook-content">
+    <sec id="cell-14-nb-1" specific-use="notebook-content">
     <code language="python">results_list_v2 = (
     sources
     # .loc[64:64]
@@ -20032,15 +19830,15 @@ def mergeData(dta, version):
     .tolist()
 )</code>
     </sec>
-    <sec id="cell-15-nb-2" specific-use="notebook-content">
+    <sec id="cell-15-nb-1" specific-use="notebook-content">
     <code language="python">mergeData(results_list_v2, version = &quot;v2&quot;)</code>
     </sec>
-    <sec id="cell-16-nb-2" specific-use="notebook-content">
+    <sec id="cell-16-nb-1" specific-use="notebook-content">
   </sec>
-  <sec id="using-api-v3-to-gather-news-nb-2">
+  <sec id="using-api-v3-to-gather-news-nb-1">
     <title>Using API V3 to gather news</title>
     </sec>
-    <sec id="cell-17-nb-2" specific-use="notebook-content">
+    <sec id="cell-17-nb-1" specific-use="notebook-content">
     <code language="python">results_list_v3 = (
     sources
     # .loc[(sources[&quot;Priority&quot;] == &quot;Yes&quot;) &amp; (sources[&quot;HP&quot;] == &quot;No&quot;)]
@@ -20052,16 +19850,16 @@ def mergeData(dta, version):
     .tolist()
 )</code>
     </sec>
-    <sec id="cell-18-nb-2" specific-use="notebook-content">
+    <sec id="cell-18-nb-1" specific-use="notebook-content">
     <code language="python">mergeData(results_list_v3, version = &quot;v3&quot;)</code>
     </sec>
-    <sec id="cell-19-nb-2" specific-use="notebook-content">
+    <sec id="cell-19-nb-1" specific-use="notebook-content">
   </sec>
 </sec>
-<sec id="compiling-and-saving-data-nb-2">
+<sec id="compiling-and-saving-data-nb-1">
   <title>Compiling and saving data</title>
   </sec>
-  <sec id="cell-20-nb-2" specific-use="notebook-content">
+  <sec id="cell-20-nb-1" specific-use="notebook-content">
   <code language="python">files_v2 = os.listdir(&quot;../data/data-extraction-1/v2&quot;)
 data_sources_v2 = [
     pd.read_parquet(f&quot;../data/data-extraction-1/v2/{x}&quot;)
@@ -20070,7 +19868,7 @@ data_sources_v2 = [
 master_v2 = pd.concat(data_sources_v2).drop_duplicates(subset = &quot;_id&quot;)
 master_v2.to_parquet(&quot;../data/data-extraction-1/master_1v2.parquet.gzip&quot;, compression = &quot;gzip&quot;)</code>
   </sec>
-  <sec id="cell-21-nb-2" specific-use="notebook-content">
+  <sec id="cell-21-nb-1" specific-use="notebook-content">
   <code language="python">files_v3 = os.listdir(&quot;../data/data-extraction-1/v3&quot;)
 data_sources_v3 = [
     pd.read_parquet(f&quot;../data/data-extraction-1/v3/{x}&quot;)
@@ -20079,16 +19877,16 @@ data_sources_v3 = [
 master_v3 = pd.concat(data_sources_v3).drop_duplicates(subset = &quot;id&quot;)
 master_v3.to_parquet(&quot;../data/data-extraction-1/master_1v3.parquet.gzip&quot;, compression = &quot;gzip&quot;)</code>
   </sec>
-  <sec id="cell-22-nb-2" specific-use="notebook-content">
+  <sec id="cell-22-nb-1" specific-use="notebook-content">
 </sec>
-<sec id="harmonizing-v2-and-v3-data-nb-2">
+<sec id="harmonizing-v2-and-v3-data-nb-1">
   <title>Harmonizing V2 and V3 data</title>
   </sec>
-  <sec id="cell-23-nb-2" specific-use="notebook-content">
+  <sec id="cell-23-nb-1" specific-use="notebook-content">
   <code language="python">master_v2 = pd.read_parquet(&quot;../data/data-extraction-1/master_1v2.parquet.gzip&quot;)
 master_v3 = pd.read_parquet(&quot;../data/data-extraction-1/master_1v3.parquet.gzip&quot;)</code>
   </sec>
-  <sec id="cell-24-nb-2" specific-use="notebook-content">
+  <sec id="cell-24-nb-1" specific-use="notebook-content">
   <code language="python">target_columns = [&quot;id&quot;, &quot;link&quot;, &quot;domain_url&quot;, &quot;published_date&quot;, &quot;title&quot;, &quot;description&quot;, &quot;content&quot;, &quot;language&quot;, &quot;is_opinion&quot;]
 master_v2_harm = (
     master_v2
@@ -20109,23 +19907,23 @@ master_data    = (
 )
 master_data = master_data.loc[master_data[[&quot;title&quot;, &quot;content&quot;]].notna().all(axis=1)]</code>
   </sec>
-  <sec id="cell-25-nb-2" specific-use="notebook-content">
+  <sec id="cell-25-nb-1" specific-use="notebook-content">
 </sec>
-<sec id="saving-data-nb-2">
+<sec id="saving-data-nb-1">
   <title>Saving data</title>
   </sec>
-  <sec id="cell-26-nb-2" specific-use="notebook-content">
+  <sec id="cell-26-nb-1" specific-use="notebook-content">
   <code language="python">master_data.to_parquet(&quot;../data/data-extraction-1/master_extraction_1.parquet.gzip&quot;, compression = &quot;gzip&quot;)</code>
   </sec>
-  <sec id="cell-27-nb-2" specific-use="notebook-content">
+  <sec id="cell-27-nb-1" specific-use="notebook-content">
 </sec>
-<sec id="subsetting-data-for-translation-nb-2">
+<sec id="subsetting-data-for-translation-nb-1">
   <title>Subsetting data for translation</title>
   </sec>
-  <sec id="cell-28-nb-2" specific-use="notebook-content">
+  <sec id="cell-28-nb-1" specific-use="notebook-content">
   <code language="python">master_data = pd.read_parquet(&quot;../data/data-extraction-1/master_extraction_1.parquet.gzip&quot;)</code>
   </sec>
-  <sec id="cell-29-nb-2" specific-use="notebook-content">
+  <sec id="cell-29-nb-1" specific-use="notebook-content">
   <code language="python">top_journals = {
       &quot;Luxembourg&quot;  : ['lequotidien.lu','tageblatt.lu','wort.lu'],
       &quot;Slovakia&quot;    : ['dennikn.sk','sme.sk', 'pravda.sk'],
@@ -20164,7 +19962,7 @@ def assign_country(domain_url):
 
 master_data[&quot;country&quot;] = master_data[&quot;domain_url&quot;].apply(assign_country)</code>
   </sec>
-  <sec id="cell-30-nb-2" specific-use="notebook-content">
+  <sec id="cell-30-nb-1" specific-use="notebook-content">
   <code language="python">for country in sources[&quot;Country&quot;].drop_duplicates().to_list():
     subset4translation = (
         master_data.copy()
@@ -20213,10 +20011,108 @@ Sweden: 6417</preformat>
 
 
 </sub-article>
+<sub-article article-type="notebook" id="nb-6-nb-2">
+<front-stub>
+<title-group>
+<article-title>2. Translation code</article-title>
+</title-group>
+</front-stub>
+
+<body>
+<sec id="cell-2-nb-2" specific-use="notebook-content">
+<code language="python">import os
+import time
+import pandas as pd
+import math
+import nltk
+from nltk.tokenize import sent_tokenize
+from deep_translator import GoogleTranslator
+nltk.download(&quot;punkt&quot;)</code>
+<boxed-text>
+  <preformat>[nltk_data] Downloading package punkt to
+[nltk_data]     C:\Users\ctoruno\AppData\Roaming\nltk_data...
+[nltk_data]   Package punkt is already up-to-date!</preformat>
+</boxed-text>
+<boxed-text>
+  <preformat>True</preformat>
+</boxed-text>
+</sec>
+<sec id="cell-3-nb-2" specific-use="notebook-content">
+<code language="python">country = &quot;Romania&quot;
+path2SP = &quot;.../Data/data-extraction-1&quot;</code>
+</sec>
+<sec id="cell-4-nb-2" specific-use="notebook-content">
+<code language="python">master_data = pd.read_parquet(f&quot;{path2SP}/data4translation/{country}_tp.parquet.gzip&quot;)</code>
+</sec>
+<sec id="cell-5-nb-2" specific-use="notebook-content">
+<code language="python">def trans2english(text, sourcelang):
+    &quot;&quot;&quot;
+    This functions gathers a text in a specific language and it returns its equivalent
+    in English using the Google translation engine.
+
+    Parameters:
+        text:       String. Text to translate.
+        sourcelang: String. Code of the source language you want to translate the text from.
+    &quot;&quot;&quot;
+    if text:
+      try:
+          sentences = sent_tokenize(text)
+          batch  = GoogleTranslator(source = sourcelang, target = &quot;en&quot;).translate_batch(sentences)
+          result = &quot; &quot;.join(batch)
+          return result
+      except Exception as e:
+          out = f&quot;Translation through API failed. Reason: {e}&quot;
+          return out
+    else:
+      return &quot;No information available. No translation performed&quot;</code>
+</sec>
+<sec id="cell-6-nb-2" specific-use="notebook-content">
+<code language="python">total_batches = math.ceil(len(master_data)/2000)
+for batch_number in range(0, total_batches):
+    print(&quot;======================================================================&quot;)
+    print(f&quot;Currently running batch number: {batch_number} out of {total_batches}&quot;)
+    
+    mode          = &quot;overnight&quot; # One of two values: &quot;9to5&quot; OR &quot;overnight&quot;
+    counter_day   = 0
+    counter_night = batch_number
+
+    batch = counter_day + counter_night + 1
+    if mode == &quot;9to5&quot;:
+        batch_size   = 500
+        mode_counter = counter_day
+    if mode == &quot;overnight&quot;:
+        batch_size   = 2000
+        mode_counter = counter_night
+
+    starting_row = (counter_day*500)+(counter_night*2000)
+    final_row    = starting_row+batch_size
+    batch_subset = master_data.copy().iloc[starting_row:final_row]
+
+    print(f&quot;Starting row: {starting_row}&quot;)
+
+    batch_subset[[&quot;title_trans&quot;, &quot;description_trans&quot;, &quot;content_trans&quot;]] = batch_subset.apply(
+        lambda row: row[[&quot;title&quot;, &quot;description&quot;, &quot;content&quot;]].apply(lambda x: trans2english(text = x, sourcelang = row[&quot;language&quot;])),
+        axis = 1
+    )
+
+    print(&quot;Translation completed&quot;)
+    batch_subset.to_parquet(f&quot;{path2SP}/translation-batches/{country}/{country}_batch_{batch}_{mode}_{mode_counter}.parquet.gzip&quot;, compression = &quot;gzip&quot;)
+
+    time.sleep(25)</code>
+</sec>
+</body>
+
+
+
+<back>
+</back>
+
+
+</sub-article>
 <sub-article article-type="notebook" id="nb-9-nb-3">
 <front-stub>
 <title-group>
-<article-title>4. Article summarization code</article-title>
+<article-title>3. Classification code</article-title>
 </title-group>
 </front-stub>
 
@@ -20229,7 +20125,7 @@ import json
 import time
 import pandas as pd
 from dotenv import load_dotenv
-import prompt_templates_summarization as pts
+import prompt_templates_classification as ptc
 from langchain.schema import BaseOutputParser
 from langchain.prompts.chat import ChatPromptTemplate
 from langchain_google_genai import (
@@ -20260,244 +20156,15 @@ os.environ['GOOGLE_API_KEY'] = GoogleAI_key</code>
   <title>Loading data</title>
   </sec>
   <sec id="cell-7-nb-3" specific-use="notebook-content">
-  <code language="python">def showEverything(df):
-    with pd.option_context('display.max_rows', None,
-                        'display.max_columns', None,
-                        'display.width', 1000,
-                        'display.precision', 3,
-                        'display.colheader_justify', 'left'):
-        display(df)</code>
-  </sec>
-  <sec id="cell-8-nb-3" specific-use="notebook-content">
-  <code language="python">country_data      = pd.read_parquet(f&quot;{path2SP}/EU-S Data/Automated Qualitative Checks/Data/data-classification-1/0_compiled/{country}_classified.parquet.gzip&quot;)
-location_variable = f&quot;location_{country}&quot;
-if country == &quot;Czechia&quot;:
-    location_variable = f&quot;location_Czech&quot;
-subset_data       = (
-    country_data.copy()
-    .loc[(country_data[location_variable] == True) &amp; (country_data[&quot;topic_related&quot;].str.contains(&quot;Related|Justice|Governance&quot;))]
-)
-subset_data.shape</code>
-  </sec>
-  <sec id="cell-9-nb-3" specific-use="notebook-content">
-  <code language="python">pillar_columns = subset_data.filter(like='pillar_')
-pillar_sum = pillar_columns.sum(axis=0)
-pillar_sum</code>
-  </sec>
-  <sec id="cell-10-nb-3" specific-use="notebook-content">
-</sec>
-<sec id="defining-chain-nb-3">
-  <title>Defining chain</title>
-  </sec>
-  <sec id="cell-11-nb-3" specific-use="notebook-content">
-  <code language="python">safety_settings = {
-    HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_NONE,
-    HarmCategory.HARM_CATEGORY_HATE_SPEECH: HarmBlockThreshold.BLOCK_NONE,
-    HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT: HarmBlockThreshold.BLOCK_NONE,
-    HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_NONE
-}</code>
-  </sec>
-  <sec id="cell-12-nb-3" specific-use="notebook-content">
-  <code language="python">class JSONOutputParser(BaseOutputParser):
-    def parse(self, text: str):
-        &quot;&quot;&quot;
-        Parse the output of an LLM call to a valid JSON format.
-        &quot;&quot;&quot;
-        return json.loads(text.replace('```json', '').replace('```', ''), strict=False)</code>
-  </sec>
-  <sec id="cell-13-nb-3" specific-use="notebook-content">
-  <code language="python">def summarize_article(headline, summary, body, pillar):
-    &quot;&quot;&quot;
-    This function takes a headline, a summary, and the content of a news article and it sends a call to Google's Gemini
-    to summarize a article and provide an impact score focusing on a specific pillar of the Rule of Law.
-    &quot;&quot;&quot;
-    
-    idx = str(pillar)
-
-    # Setting up the Prompt Template
-    chat_prompt = ChatPromptTemplate.from_messages([
-                    (&quot;system&quot;, pts.context),
-                    (&quot;human&quot;, pts.instructions)
-                ])
-
-    # Defining our chain
-    chain_gemini = chat_prompt | ChatGoogleGenerativeAI(model = &quot;gemini-pro&quot;,
-                                                        temperature = 0.1, 
-                                                        safety_settings = safety_settings,
-                                                        convert_system_message_to_human = True) | JSONOutputParser()
-    
-    try: 
-        llm_response = chain_gemini.invoke({
-            &quot;headline&quot;       : headline,
-            &quot;summary&quot;        : summary,
-            &quot;body&quot;           : body,
-            &quot;pillar_name&quot;    : pts.pillar_names[idx],
-            &quot;pillar_bullets&quot; : pts.pillar_bullets[idx]
-        })
-        status = True
-        time.sleep(3)   # We need to slow down the calls. given that the Gemini API has a limit of 60 calls per second
-
-    # The API can still block some of our prompts due to undefined reasons. Sadly, we can't do anything about it, so we
-    # predefine the outcome    
-    except (BlockedPromptException, StopCandidateException):
-        print(&quot;Prompt BLOCKED&quot;)
-        status = False
-    
-    except JSONDecodeError:
-        print(&quot;Decode error... trying again...&quot;)
-        try: 
-            llm_response = chain_gemini.invoke({
-                &quot;headline&quot;       : headline,
-                &quot;summary&quot;        : summary,
-                &quot;body&quot;           : body,
-                &quot;pillar_name&quot;    : pts.pillar_names[idx],
-                &quot;pillar_bullets&quot; : pts.pillar_bullets[idx]
-            })
-            status = True
-            time.sleep(3)
-
-        except JSONDecodeError:
-            print(&quot;Failed. Skipping article.&quot;)
-            status = False
-
-    # We use the STATUS variable to throw an outcome to our call depending if our prompt was blocked or not
-    if status == True:
-        outcome = [llm_response[&quot;summary&quot;], llm_response[&quot;impact_score&quot;]]
-
-    else:
-        outcome = &quot;Skipped article&quot;
-
-    return outcome</code>
-  </sec>
-  <sec id="cell-14-nb-3" specific-use="notebook-content">
-</sec>
-<sec id="sending-calls-in-sets-and-batches-nb-3">
-  <title>Sending calls in sets and batches</title>
-  </sec>
-  <sec id="cell-15-nb-3" specific-use="notebook-content">
-  <code language="python">try:
-    os.mkdir(f&quot;{path2SP}/EU-S Data/Automated Qualitative Checks/Data/data-summarization/{country}&quot;)
-    print(&quot;Directory created&quot;)
-except FileExistsError:
-    print(&quot;Directory already exists&quot;)
-try:
-    for p in range(1,9):
-        os.mkdir(f&quot;{path2SP}/EU-S Data/Automated Qualitative Checks/Data/data-summarization/{country}/pillar_{p}&quot;)
-    print(&quot;Sub-directories created&quot;)
-except FileExistsError:
-    print(&quot;Sub-directories already exists&quot;)</code>
-  </sec>
-  <sec id="cell-16-nb-3" specific-use="notebook-content">
-  <code language="python">for p in range(1,9):
-
-    print(&quot;=========================&quot;)
-    print(f&quot;Starting with PILLAR {p}&quot;)
-    print(&quot;=========================&quot;)
-
-    pillar_subset = (
-        subset_data.copy()
-        .loc[subset_data[f&quot;pillar_{p}&quot;] == True]
-    )
-    nsets = math.ceil(len(pillar_subset)/1000)
-
-    for set in range(1, nsets+!):
-        print(&quot;==============================================&quot;)
-        print(f&quot;Starting with SET {set} out of {nsets} set(s)&quot;)
-        print(&quot;==============================================&quot;)
-
-        results = []
-
-        for batch_number in range(1,11):
-            starting_row = ((set-1)*1000)+((batch_number-1)*100)
-            end_row      = starting_row+100
-            batch_subset = pillar_subset.copy().iloc[starting_row:end_row]
-
-            if len(batch_subset) &gt; 0 :
-                print(&quot;============================================================================&quot;)
-                print(f&quot;Sending batch number: {batch_number}, start: {starting_row}, end: {end_row}&quot;)
-                print(&quot;============================================================================&quot;)
-
-                batch_subset[[&quot;summary&quot;, &quot;impact_score&quot;]] = batch_subset.apply(lambda row: pd.Series(summarize_article(
-                    row[&quot;title_trans&quot;], 
-                    row[&quot;description_trans&quot;], 
-                    row[&quot;content_trans&quot;], 
-                    p
-                )), axis = 1)
-                results.append(batch_subset)
-
-        # Collapsing and saving data
-        collapsed_data = pd.concat(results).drop_duplicates(subset=&quot;id&quot;)
-        collapsed_data.loc[collapsed_data[&quot;impact_score&quot;] == &quot;N/A&quot;, &quot;impact_score&quot;] = 0
-        collapsed_data[&quot;impact_score&quot;] = collapsed_data[&quot;impact_score&quot;].fillna(0).astype(int)
-        collapsed_data.to_parquet(f&quot;{path2SP}/EU-S Data/Automated Qualitative Checks/Data/data-summarization/{country}/pillar_{p}/{country}_pillar_{p}_set_{set}.parquet.gzip&quot;, compression=&quot;gzip&quot;)
-        time.sleep(5)</code>
-  </sec>
-</sec>
-</body>
-
-
-
-<back>
-</back>
-
-
-</sub-article>
-<sub-article article-type="notebook" id="nb-12-nb-4">
-<front-stub>
-<title-group>
-<article-title>3. Classification code</article-title>
-</title-group>
-</front-stub>
-
-<body>
-<sec id="cell-2-nb-4" specific-use="notebook-content">
-<code language="python">import os
-import ast
-import math
-import json
-import time
-import pandas as pd
-from dotenv import load_dotenv
-import prompt_templates_classification as ptc
-from langchain.schema import BaseOutputParser
-from langchain.prompts.chat import ChatPromptTemplate
-from langchain_google_genai import (
-    ChatGoogleGenerativeAI,
-    HarmBlockThreshold,
-    HarmCategory
-)
-from json.decoder import JSONDecodeError
-from google.generativeai.types import BlockedPromptException
-from google.generativeai.types.generation_types import StopCandidateException</code>
-</sec>
-<sec id="cell-3-nb-4" specific-use="notebook-content">
-<code language="python">country = &quot;Italy&quot;
-path2SP = &quot;.../EU-S Data/&quot;</code>
-</sec>
-<sec id="cell-4-nb-4" specific-use="notebook-content">
-<sec id="loading-api-key-nb-4">
-  <title>Loading API key</title>
-  </sec>
-  <sec id="cell-5-nb-4" specific-use="notebook-content">
-  <code language="python">load_dotenv()
-GoogleAI_key = os.getenv(&quot;googleAI_API_key&quot;)
-os.environ['GOOGLE_API_KEY'] = GoogleAI_key</code>
-  </sec>
-  <sec id="cell-6-nb-4" specific-use="notebook-content">
-</sec>
-<sec id="loading-data-nb-4">
-  <title>Loading data</title>
-  </sec>
-  <sec id="cell-7-nb-4" specific-use="notebook-content">
   <code language="python">country_data = pd.read_parquet(f&quot;{path2SP}/EU-S Data/Automated Qualitative Checks/Data/data-extraction-1/ready4class/{country}_translated.parquet.gzip&quot;)
 country_data.head(5)</code>
   </sec>
-  <sec id="cell-8-nb-4" specific-use="notebook-content">
+  <sec id="cell-8-nb-3" specific-use="notebook-content">
 </sec>
-<sec id="defining-chain-nb-4">
+<sec id="defining-chain-nb-3">
   <title>Defining Chain</title>
   </sec>
-  <sec id="cell-9-nb-4" specific-use="notebook-content">
+  <sec id="cell-9-nb-3" specific-use="notebook-content">
   <code language="python">safety_settings = {
     HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_NONE,
     HarmCategory.HARM_CATEGORY_HATE_SPEECH: HarmBlockThreshold.BLOCK_NONE,
@@ -20505,7 +20172,7 @@ country_data.head(5)</code>
     HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_NONE
 }</code>
   </sec>
-  <sec id="cell-10-nb-4" specific-use="notebook-content">
+  <sec id="cell-10-nb-3" specific-use="notebook-content">
   <code language="python">class JSONOutputParser(BaseOutputParser):
     def parse(self, text: str):
         &quot;&quot;&quot;
@@ -20513,7 +20180,7 @@ country_data.head(5)</code>
         &quot;&quot;&quot;
         return json.loads(text.replace('```json', '').replace('```', ''), strict=False)</code>
   </sec>
-  <sec id="cell-11-nb-4" specific-use="notebook-content">
+  <sec id="cell-11-nb-3" specific-use="notebook-content">
   <code language="python">def classify_article(headline, summary, body, id = None, stage_1 = True, relation = None):
     &quot;&quot;&quot;
     This function takes a headline, a summary, and the content of a news article and it sends a call to Google's Gemini
@@ -20595,22 +20262,22 @@ country_data.head(5)</code>
 
     return outcome</code>
   </sec>
-  <sec id="cell-12-nb-4" specific-use="notebook-content">
+  <sec id="cell-12-nb-3" specific-use="notebook-content">
   <code language="python">country_data.shape</code>
   </sec>
-  <sec id="cell-13-nb-4" specific-use="notebook-content">
+  <sec id="cell-13-nb-3" specific-use="notebook-content">
 </sec>
-<sec id="sending-calls-in-sets-and-batches-nb-4">
+<sec id="sending-calls-in-sets-and-batches-nb-3">
   <title>Sending calls in sets and batches</title>
   </sec>
-  <sec id="cell-14-nb-4" specific-use="notebook-content">
+  <sec id="cell-14-nb-3" specific-use="notebook-content">
   <code language="python">try:
     os.mkdir(f&quot;{path2SP}/EU-S Data/Automated Qualitative Checks/Data/data-classification-1/{country}&quot;)
     print(&quot;Directory created&quot;)
 except FileExistsError:
     print(&quot;Directory already exists&quot;)</code>
   </sec>
-  <sec id="cell-15-nb-4" specific-use="notebook-content">
+  <sec id="cell-15-nb-3" specific-use="notebook-content">
   <code language="python">nsets = math.ceil(len(country_data)/1000)
 for set in range(1, nsets+1):
     
@@ -20659,24 +20326,24 @@ for set in range(1, nsets+1):
     collapsed_data.to_parquet(f&quot;{path2SP}/EU-S Data/Automated Qualitative Checks/Data/data-classification-1/{country}/{country}_set_{set}.parquet.gzip&quot;, compression=&quot;gzip&quot;)
     time.sleep(5)</code>
   </sec>
-  <sec id="cell-16-nb-4" specific-use="notebook-content">
+  <sec id="cell-16-nb-3" specific-use="notebook-content">
 </sec>
-<sec id="compiling-sets-nb-4">
+<sec id="compiling-sets-nb-3">
   <title>Compiling sets</title>
   </sec>
-  <sec id="cell-17-nb-4" specific-use="notebook-content">
+  <sec id="cell-17-nb-3" specific-use="notebook-content">
   <code language="python">classified_data_list = [
     pd.read_parquet(f&quot;{path2SP}/EU-S Data/Automated Qualitative Checks/Data/data-classification-1/{country}/{file}&quot;) 
     for file in os.listdir(f&quot;{path2SP}/EU-S Data/Automated Qualitative Checks/Data/data-classification-1/{country}&quot;)
 ]
 classified_data = pd.concat(classified_data_list)</code>
   </sec>
-  <sec id="cell-18-nb-4" specific-use="notebook-content">
+  <sec id="cell-18-nb-3" specific-use="notebook-content">
 </sec>
-<sec id="converting-pillar-scores-to-binary-nb-4">
+<sec id="converting-pillar-scores-to-binary-nb-3">
   <title>Converting pillar scores to binary</title>
   </sec>
-  <sec id="cell-19-nb-4" specific-use="notebook-content">
+  <sec id="cell-19-nb-3" specific-use="notebook-content">
   <code language="python">def extract_score(string, pillar, t = 7):
     &quot;&quot;&quot;
     This function extracts scores from a string and returns a binary value that is equal to 1 if the score is higher/equal
@@ -20707,17 +20374,17 @@ classified_data = pd.concat(classified_data_list)</code>
         if string == &quot;Skipped article&quot;:
             return 0</code>
   </sec>
-  <sec id="cell-20-nb-4" specific-use="notebook-content">
+  <sec id="cell-20-nb-3" specific-use="notebook-content">
   <code language="python">for i in range(1, 9):
     var_name     = &quot;pillar_&quot; + str(i)
     classified_data[var_name] = classified_data[&quot;pillars_score&quot;].apply(lambda x: extract_score(x, i))</code>
   </sec>
-  <sec id="cell-21-nb-4" specific-use="notebook-content">
+  <sec id="cell-21-nb-3" specific-use="notebook-content">
 </sec>
-<sec id="cleaning-location-of-events-and-topic-relation-nb-4">
+<sec id="cleaning-location-of-events-and-topic-relation-nb-3">
   <title>Cleaning location of events and topic relation</title>
   </sec>
-  <sec id="cell-22-nb-4" specific-use="notebook-content">
+  <sec id="cell-22-nb-3" specific-use="notebook-content">
   <code language="python">def loc2bin(location, country):
     if pd.isna(location):
         return False
@@ -20726,7 +20393,7 @@ classified_data = pd.concat(classified_data_list)</code>
     else:
         return False</code>
   </sec>
-  <sec id="cell-23-nb-4" specific-use="notebook-content">
+  <sec id="cell-23-nb-3" specific-use="notebook-content">
   <code language="python">eu_member_states = [
     &quot;Austria&quot;, &quot;Belgium&quot;, &quot;Bulgaria&quot;, &quot;Croatia&quot;, &quot;Cyprus&quot;, &quot;Czech&quot;, &quot;Denmark&quot;, &quot;Estonia&quot;, &quot;Finland&quot;, &quot;France&quot;,
     &quot;Germany&quot;, &quot;Greece&quot;, &quot;Hungary&quot;, &quot;Ireland&quot;, &quot;Italy&quot;, &quot;Latvia&quot;, &quot;Lithuania&quot;, &quot;Luxembourg&quot;, &quot;Malta&quot;, &quot;Netherlands&quot;,
@@ -20736,13 +20403,242 @@ for member in eu_member_states:
     var_name = f&quot;location_{member}&quot;
     classified_data[var_name] = classified_data[&quot;location_events&quot;].apply(lambda x: loc2bin(x, member))</code>
   </sec>
-  <sec id="cell-24-nb-4" specific-use="notebook-content">
+  <sec id="cell-24-nb-3" specific-use="notebook-content">
 </sec>
-<sec id="saving-data-nb-4">
+<sec id="saving-data-nb-3">
   <title>Saving data</title>
   </sec>
-  <sec id="cell-25-nb-4" specific-use="notebook-content">
+  <sec id="cell-25-nb-3" specific-use="notebook-content">
   <code language="python">classified_data.to_parquet(f&quot;{path2SP}/EU-S Data/Automated Qualitative Checks/Data/data-classification-1/0_compiled/{country}_classified.parquet.gzip&quot;, compression=&quot;gzip&quot;)</code>
+  </sec>
+</sec>
+</body>
+
+
+
+<back>
+</back>
+
+
+</sub-article>
+<sub-article article-type="notebook" id="nb-12-nb-4">
+<front-stub>
+<title-group>
+<article-title>4. Article summarization code</article-title>
+</title-group>
+</front-stub>
+
+<body>
+<sec id="cell-2-nb-4" specific-use="notebook-content">
+<code language="python">import os
+import ast
+import math
+import json
+import time
+import pandas as pd
+from dotenv import load_dotenv
+import prompt_templates_summarization as pts
+from langchain.schema import BaseOutputParser
+from langchain.prompts.chat import ChatPromptTemplate
+from langchain_google_genai import (
+    ChatGoogleGenerativeAI,
+    HarmBlockThreshold,
+    HarmCategory
+)
+from json.decoder import JSONDecodeError
+from google.generativeai.types import BlockedPromptException
+from google.generativeai.types.generation_types import StopCandidateException</code>
+</sec>
+<sec id="cell-3-nb-4" specific-use="notebook-content">
+<code language="python">country = &quot;Italy&quot;
+path2SP = &quot;.../EU-S Data/&quot;</code>
+</sec>
+<sec id="cell-4-nb-4" specific-use="notebook-content">
+<sec id="loading-api-key-nb-4">
+  <title>Loading API key</title>
+  </sec>
+  <sec id="cell-5-nb-4" specific-use="notebook-content">
+  <code language="python">load_dotenv()
+GoogleAI_key = os.getenv(&quot;googleAI_API_key&quot;)
+os.environ['GOOGLE_API_KEY'] = GoogleAI_key</code>
+  </sec>
+  <sec id="cell-6-nb-4" specific-use="notebook-content">
+</sec>
+<sec id="loading-data-nb-4">
+  <title>Loading data</title>
+  </sec>
+  <sec id="cell-7-nb-4" specific-use="notebook-content">
+  <code language="python">def showEverything(df):
+    with pd.option_context('display.max_rows', None,
+                        'display.max_columns', None,
+                        'display.width', 1000,
+                        'display.precision', 3,
+                        'display.colheader_justify', 'left'):
+        display(df)</code>
+  </sec>
+  <sec id="cell-8-nb-4" specific-use="notebook-content">
+  <code language="python">country_data      = pd.read_parquet(f&quot;{path2SP}/EU-S Data/Automated Qualitative Checks/Data/data-classification-1/0_compiled/{country}_classified.parquet.gzip&quot;)
+location_variable = f&quot;location_{country}&quot;
+if country == &quot;Czechia&quot;:
+    location_variable = f&quot;location_Czech&quot;
+subset_data       = (
+    country_data.copy()
+    .loc[(country_data[location_variable] == True) &amp; (country_data[&quot;topic_related&quot;].str.contains(&quot;Related|Justice|Governance&quot;))]
+)
+subset_data.shape</code>
+  </sec>
+  <sec id="cell-9-nb-4" specific-use="notebook-content">
+  <code language="python">pillar_columns = subset_data.filter(like='pillar_')
+pillar_sum = pillar_columns.sum(axis=0)
+pillar_sum</code>
+  </sec>
+  <sec id="cell-10-nb-4" specific-use="notebook-content">
+</sec>
+<sec id="defining-chain-nb-4">
+  <title>Defining chain</title>
+  </sec>
+  <sec id="cell-11-nb-4" specific-use="notebook-content">
+  <code language="python">safety_settings = {
+    HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_NONE,
+    HarmCategory.HARM_CATEGORY_HATE_SPEECH: HarmBlockThreshold.BLOCK_NONE,
+    HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT: HarmBlockThreshold.BLOCK_NONE,
+    HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_NONE
+}</code>
+  </sec>
+  <sec id="cell-12-nb-4" specific-use="notebook-content">
+  <code language="python">class JSONOutputParser(BaseOutputParser):
+    def parse(self, text: str):
+        &quot;&quot;&quot;
+        Parse the output of an LLM call to a valid JSON format.
+        &quot;&quot;&quot;
+        return json.loads(text.replace('```json', '').replace('```', ''), strict=False)</code>
+  </sec>
+  <sec id="cell-13-nb-4" specific-use="notebook-content">
+  <code language="python">def summarize_article(headline, summary, body, pillar):
+    &quot;&quot;&quot;
+    This function takes a headline, a summary, and the content of a news article and it sends a call to Google's Gemini
+    to summarize a article and provide an impact score focusing on a specific pillar of the Rule of Law.
+    &quot;&quot;&quot;
+    
+    idx = str(pillar)
+
+    # Setting up the Prompt Template
+    chat_prompt = ChatPromptTemplate.from_messages([
+                    (&quot;system&quot;, pts.context),
+                    (&quot;human&quot;, pts.instructions)
+                ])
+
+    # Defining our chain
+    chain_gemini = chat_prompt | ChatGoogleGenerativeAI(model = &quot;gemini-pro&quot;,
+                                                        temperature = 0.1, 
+                                                        safety_settings = safety_settings,
+                                                        convert_system_message_to_human = True) | JSONOutputParser()
+    
+    try: 
+        llm_response = chain_gemini.invoke({
+            &quot;headline&quot;       : headline,
+            &quot;summary&quot;        : summary,
+            &quot;body&quot;           : body,
+            &quot;pillar_name&quot;    : pts.pillar_names[idx],
+            &quot;pillar_bullets&quot; : pts.pillar_bullets[idx]
+        })
+        status = True
+        time.sleep(3)   # We need to slow down the calls. given that the Gemini API has a limit of 60 calls per second
+
+    # The API can still block some of our prompts due to undefined reasons. Sadly, we can't do anything about it, so we
+    # predefine the outcome    
+    except (BlockedPromptException, StopCandidateException):
+        print(&quot;Prompt BLOCKED&quot;)
+        status = False
+    
+    except JSONDecodeError:
+        print(&quot;Decode error... trying again...&quot;)
+        try: 
+            llm_response = chain_gemini.invoke({
+                &quot;headline&quot;       : headline,
+                &quot;summary&quot;        : summary,
+                &quot;body&quot;           : body,
+                &quot;pillar_name&quot;    : pts.pillar_names[idx],
+                &quot;pillar_bullets&quot; : pts.pillar_bullets[idx]
+            })
+            status = True
+            time.sleep(3)
+
+        except JSONDecodeError:
+            print(&quot;Failed. Skipping article.&quot;)
+            status = False
+
+    # We use the STATUS variable to throw an outcome to our call depending if our prompt was blocked or not
+    if status == True:
+        outcome = [llm_response[&quot;summary&quot;], llm_response[&quot;impact_score&quot;]]
+
+    else:
+        outcome = &quot;Skipped article&quot;
+
+    return outcome</code>
+  </sec>
+  <sec id="cell-14-nb-4" specific-use="notebook-content">
+</sec>
+<sec id="sending-calls-in-sets-and-batches-nb-4">
+  <title>Sending calls in sets and batches</title>
+  </sec>
+  <sec id="cell-15-nb-4" specific-use="notebook-content">
+  <code language="python">try:
+    os.mkdir(f&quot;{path2SP}/EU-S Data/Automated Qualitative Checks/Data/data-summarization/{country}&quot;)
+    print(&quot;Directory created&quot;)
+except FileExistsError:
+    print(&quot;Directory already exists&quot;)
+try:
+    for p in range(1,9):
+        os.mkdir(f&quot;{path2SP}/EU-S Data/Automated Qualitative Checks/Data/data-summarization/{country}/pillar_{p}&quot;)
+    print(&quot;Sub-directories created&quot;)
+except FileExistsError:
+    print(&quot;Sub-directories already exists&quot;)</code>
+  </sec>
+  <sec id="cell-16-nb-4" specific-use="notebook-content">
+  <code language="python">for p in range(1,9):
+
+    print(&quot;=========================&quot;)
+    print(f&quot;Starting with PILLAR {p}&quot;)
+    print(&quot;=========================&quot;)
+
+    pillar_subset = (
+        subset_data.copy()
+        .loc[subset_data[f&quot;pillar_{p}&quot;] == True]
+    )
+    nsets = math.ceil(len(pillar_subset)/1000)
+
+    for set in range(1, nsets+!):
+        print(&quot;==============================================&quot;)
+        print(f&quot;Starting with SET {set} out of {nsets} set(s)&quot;)
+        print(&quot;==============================================&quot;)
+
+        results = []
+
+        for batch_number in range(1,11):
+            starting_row = ((set-1)*1000)+((batch_number-1)*100)
+            end_row      = starting_row+100
+            batch_subset = pillar_subset.copy().iloc[starting_row:end_row]
+
+            if len(batch_subset) &gt; 0 :
+                print(&quot;============================================================================&quot;)
+                print(f&quot;Sending batch number: {batch_number}, start: {starting_row}, end: {end_row}&quot;)
+                print(&quot;============================================================================&quot;)
+
+                batch_subset[[&quot;summary&quot;, &quot;impact_score&quot;]] = batch_subset.apply(lambda row: pd.Series(summarize_article(
+                    row[&quot;title_trans&quot;], 
+                    row[&quot;description_trans&quot;], 
+                    row[&quot;content_trans&quot;], 
+                    p
+                )), axis = 1)
+                results.append(batch_subset)
+
+        # Collapsing and saving data
+        collapsed_data = pd.concat(results).drop_duplicates(subset=&quot;id&quot;)
+        collapsed_data.loc[collapsed_data[&quot;impact_score&quot;] == &quot;N/A&quot;, &quot;impact_score&quot;] = 0
+        collapsed_data[&quot;impact_score&quot;] = collapsed_data[&quot;impact_score&quot;].fillna(0).astype(int)
+        collapsed_data.to_parquet(f&quot;{path2SP}/EU-S Data/Automated Qualitative Checks/Data/data-summarization/{country}/pillar_{p}/{country}_pillar_{p}_set_{set}.parquet.gzip&quot;, compression=&quot;gzip&quot;)
+        time.sleep(5)</code>
   </sec>
 </sec>
 </body>
@@ -20757,16 +20653,218 @@ for member in eu_member_states:
 <sub-article article-type="notebook" id="nb-15-nb-5">
 <front-stub>
 <title-group>
-<article-title>Promp Templates: Summarization</article-title>
+<article-title>Prompts Templates: Text Classification</article-title>
 </title-group>
 </front-stub>
 
 <body>
 <sec id="cell-2-nb-5" specific-use="notebook-content">
-<sec id="pillar-insights-and-context-nb-5">
-  <title>Pillar insights and context</title>
+<sec id="stage-1-system-context-and-instructions-nb-5">
+  <title>Stage 1 (System Context and Instructions)</title>
   </sec>
   <sec id="cell-3-nb-5" specific-use="notebook-content">
+  <code language="python">context_stage_1 = &quot;&quot;&quot;
+You are an assistant with knowledge and subject-matter expertise on Rule of Law, justice, governance, global politics, social sciences, and related fields in the European Union. Your task is to carefully read a news article and determine whether it is related to the definitions of Rule of Law, Justice, and Governance that I will give you. To successfully perform this task, you should carefully read the definitions that I will provide, and use the knowledge of global politics, law, and social sciences that you have.
+&quot;&quot;&quot;
+
+instructions_stage_1 = &quot;&quot;&quot;
+# Key macro concepts
+Here are the definitions of Rule of Law, Justice, and Governance:
+
+## What is the Rule of Law?
+The term Rule of Law refers to a system in which law is able to impose meaningful restraints on the state and individual members of the ruling elite. It refers to a governance principle in which all persons, institutions, and entities, public and private, including the State itself, are accountable to laws that are publicly promulgated, equally enforced, and independently adjudicated, and which are consistent with international human rights norms and standards.
+
+We extend this concept further by defining the Rule of Law as a rules-based system in which the following four universal principles are upheld. First, the government and its officials and agents are accountable under the law. Second, the laws are clear, publicized, stable, and fair, and protect fundamental rights, including the security of persons and property. Third, the process by which the laws are enacted, administered, and enforced is accessible, fair, and efficient. Lastly, access to justice is provided by competent, independent, and ethical adjudicators, attorneys or representatives, and judicial officers who are of sufficient number, have adequate resources, and reflect the makeup of the communities they serve.
+
+Given the previous definitions, we can infer that the Rule of Law is a multidimensional concept that extends over eight basic pillars: limited government powers; absence of corruption; order and security; fundamental rights; open government; effective regulatory enforcement; access to civil justice; and an effective criminal justice.
+
+From a political science perspective, these factors draw on four basic ideas related to the relationship between the state and the civil society: the checks and balances on the government's power, the effectiveness of the state in performing its basic functions, participation and collaboration between the state and its citizens, and absence of arbitrary abuse by the authority.
+
+## What is Justice? 
+We define Justice as the ethical, philosophical idea that people are to be treated impartially, fairly, properly, and reasonably by the law and by arbiters of the law, that laws are to ensure that no harm befalls another, and that, where harm is alleged, a remedial action is taken - both the accuser and the accused receive a morally right consequence merited by their actions.
+
+Justice also refers more specifically to the set of institutions and services that allow for the impartial mediation and adjudication of disputes arising from the violation or conflicting interpretations of laws, including the enforcement of decisions or agreements reached through their operation.
+
+## What is Governance? 
+Finally, we define Governance as the mechanisms, processes, and structures through which public institutions operate and make decisions for the welfare and benefit of their respective communities. This encompasses the way governments and local authorities are organized, how policies are formulated and implemented, how resources are allocated and managed, and how public services are delivered to citizens.
+
+# News article and instructions
+Now, given the following news article:
+News title: {headline}
+News summary: {summary}
+News body: {body}
+
+Please analyze the news article and its context, and answer the following question:
+1. Based on the definitions that I just provided above, is this news article narrating events related to the Rule of Law, Justice, or Governance?
+2. In which country do the events described in the article take place?
+
+Use the following JSON format to answer:
+{{
+    rol_related: answer to question number 1. If the news article IS NOT related to the Rule of Law, Justice, or Governance answer with &quot;Unrelated&quot;, otherwise answer with &quot;Related&quot;.
+    country: answer to question number 2.
+}}
+
+When answering, strictly attach to the definitions of the Rule of Law, Justice, and Governance and keep in mind the following points:
+1. We do not include the right to access to healthcare in the conceptual framework of the Rule of Law because we are not contacting public health experts in this project, so news articles which main topic is the right to healthcare should not be related to the Rule of Law.
+2. It is very important to distinguish between different types of news: description of events, interviews, op-eds, public statements, to clarify whether the news article has any actual impact on the Rule of Law, Justice, or Governance.
+3. Opinion columns and opinion articles in general should not be related to the Rule of Law, Justice, and Governance.
+4. Any news article referring to foreign policy or international diplomacy should be rated as unrelated to all the pillars of the Rule of Law.
+5. We are only interested in current or recent events related to the Rule of Law. Therefore, please label articles referring to historical events in the far past as UNRELATED to the Rule of Law.
+
+There is a very important key point to keep in mind: Our conceptual framework does NOT include war, armed conflict, or peace agreements. Therefore, news articles narrating events that derive from war, armed conflict, or peace agreements, or events that are a direct consequence from the previous situations should be labelled as UNRELATED to the Rule of Law.
+
+Remember to ONLY answer following the JSON format explained above.
+
+Begin!
+&quot;&quot;&quot;</code>
+  </sec>
+  <sec id="cell-4-nb-5" specific-use="notebook-content">
+</sec>
+<sec id="stage-2-system-context-and-instructions-nb-5">
+  <title>Stage 2 (System Context and Instructions)</title>
+  </sec>
+  <sec id="cell-5-nb-5" specific-use="notebook-content">
+  <code language="python">context_stage_2 = &quot;&quot;&quot;
+You are an assistant with knowledge and expertise in global politics, social sciences, rule of law, and related fields. Your task is to assist me in classifying news articles according to which pillar of the Rule of Law do they belong to. To successfully accomplish this task, you will have to carefully read the definitions of each pillar that I will give you and the text of the article itself, as well as use the knowledge of global politics, social sciences, and law that you have. Once you have read the news article, you will proceed to determine the extent to which the events described in the news article are related to each pillar.
+&quot;&quot;&quot;
+
+instructions_stage_2 = &quot;&quot;&quot;
+To help you contextualize, this is the definition of the Rule of Law that we are using for the task at hand:
+
+# Definition of the Rule of Law
+The term Rule of Law refers to a system in which law is able to impose meaningful restraints on the state and individual members of the ruling elite. It refers to a governance principle in which all persons, institutions, and entities, public and private, including the State itself, are accountable to laws that are publicly promulgated, equally enforced, and independently adjudicated, and which are consistent with international human rights norms and standards.
+
+We extend this concept further by defining the Rule of Law as a rules-based system in which the following four universal principles are upheld. First, the government and its officials and agents are accountable under the law. Second, the laws are clear, publicized, stable, and fair, and protect fundamental rights, including the security of persons and property. Third, the process by which the laws are enacted, administered, and enforced is accessible, fair, and efficient. Lastly, access to justice is provided by competent, independent, and ethical adjudicators, attorneys or representatives, and judicial officers who are of sufficient number, have adequate resources, and reflect the makeup of the communities they serve.
+
+From a political science perspective, these factors draw on four basic ideas related to the relationship between the state and the civil society: the checks and balances on the government's power, the effectiveness of the state in performing its basic functions, participation and collaboration between the state and its citizens, and absence of arbitrary abuse by the authority.
+
+Given the previous definitions, we can infer that the Rule of Law is a multidimensional concept that extends over eight basic pillars: limited government powers; absence of corruption; order and security; fundamental rights; open government; effective regulatory enforcement; access to civil justice; and an effective criminal justice.
+
+Next, I will provide you with detailed definitions for each pillar.
+
+# Pillars of the Rule of Law
+1. Constraints on Government Powers: 
+Measures the extent to which those who govern are bound by law. It comprises the means, both constitutional and institutional, by which the powers of the government and its officials and agents are limited and held accountable under the law. It also includes non-governmental checks on the government’s power, such as a free and independent press. Additionally, it measures the absence of authoritarianism, which includes the accountability of the Chief Executive, and its respect for checks and balances. In more detail, this pillar is related to the following topics:
+    -   The active and reactive transparency of legislative bodies (senate, parliament, assemblies), its ability to impose disciplinary measures to government officials, and if there is representation of disadvantaged groups, as well as citizen participation. It also measures if the opposition can express its opinions and if it exercises its functions of overseeing and investigating the government.
+    -   The independence of the judiciary, by means of having sufficient resources and professional judges, with adequate rights and competencies, as well as its ability to impose disciplinary measures on government officials.
+    -   The independence and effectiveness of oversight institutions, such as the Supreme Audit Institution or comptroller, anticorruption authority, human rights institution, the office of the ombudsman, and prosecution services, as well as if civil servants are free from political pressure, and are effective in implementing public policies.
+    -   Whether elections are free of barriers of entry, intimidation, corruption, and criminality, in accordance with the law, with equitable access to resources, free from misinformation, secure from cyberattacks and with protection of personal. It also measures the effectiveness and independence of the electoral authority.
+    -   The effectiveness of non-governmental checks on the government’s power, such as the media, CSOs, political parties, activists, and citizens. It includes their effective exercise of the freedoms of assembly, association, opinion, and expression, and the rights to petition and civic engagement.
+    -   The accountability of the Chief Executive or the Head of Government, and its respect for the constitutional order, the law-making process, the outcome and quality of elections, civil liberties, political opponents, as well as the independence of the judiciary and oversight institutions. It also measures the likelihood of sanctions to officials for misconduct.
+    -   Whether members of the legislature, judiciary, elected leaders or high-ranking government officials, public sector employees, and police officers, who abuse their power are sanctioned for misconduct.
+
+2. Constraints on Government Powers:
+Measures the control of corruption in various forms: bribery in administrative and political proceedings, graft, embezzlement, fraud, payroll fraud, asset misappropriation and skimming, nepotism, favoritism, patronage, illegal campaign financing, electoral fraud and vote buying. In more detail, this pillar is related to the following topics:
+    -   The prevalence of bribery in the delivery of public services and regulations, as well as in the political process. 
+    -   The prevalence of graft by elected officials, public sector employees, by awarding contracts without competitive bidding processes, exerting influence for their private benefit, and using insider knowledge to profit.
+    -   The prevalence of embezzlement or misappropriation of public funds, payroll fraud, asset misappropriation and skimming, as well as of nepotism, favoritism, and patronage.
+    -   The prevalence of nepotism and favoritism by elected officials, public sector employees, judges, and prosecutors. It also measures the prevalence of patronage by elected officials.
+    -   The prevalence of corruption in elections, including illegal campaign financing, manipulation of elections, and vote buying.
+
+3. Open Government
+Measures the openness of government defined by the extent to which a government shares information, empowers people with tools to hold the government accountable, and fosters citizen participation in public policy deliberations while maintaining an open civic space. This factor measures whether basic laws and information on legal rights are publicized and evaluates the quality of information published by the government. In more detail, this pillar is related to the following topics:
+    -   Whether requests for information from the public to government agencies and institutions are granted, and if these requests are granted within a reasonable time period, with complete and pertinent answers, at a reasonable cost and without having to pay a bribe for the information.
+    -   Whether people are aware of their right to information, and whether relevant records are accessible to the public upon request.
+    -   The effectiveness of non-governmental checks on the government’s power, as well as the openness of the civic space and the extent of citizen participation. It includes the effective exercise of the freedoms of assembly, association, opinion, and expression, and the rights to petition and civic engagement.
+
+4. Fundamental Rights
+This pillar recognizes that a system of positive law that fails to respect core human rights established under international law is at best “rule by law,” and does not 
+deserve to be called a rule of law system. This aspect focuses on rights that are firmly established under the Charter of Fundamental Rights of the European Union, but 
+only includes a relatively small number of rights which are most closely related to rule of law concerns. In more detail, this pillar is related to the following topics:
+    -   The protection of rights related to dignity, including the prohibition of torture, slavery and forced labor.  
+    -   The protection of rights related to freedom, including freedom of thought, conscience, religion, peaceful assembly, association, opinion, and expression, as well as the right to property and to asylum.
+    -   Whether civil society organizations are free to comment on government policies, without fear of retaliation. In addition, it also measures if quarantines and lockdowns are applied proportionately, not discriminatory, with limited duration and in accordance with the law.
+    -   Whether independent media, civil society organizations, members of the opposition, opposing factions of the governing party, activists, whistleblowers, and individuals are free to report and comment on government policies, without fear of retaliation.
+    -   The extent to which the media publish credible fact-checked information, and if its editorial content is independent from political influences, as well as if it can conduct investigations and expose cases of corruption without facing surveillance, harassment, threats, legal actions, or administrative sanctions.
+    -   The extent to which the government allows the formation or operation of CSOs, and the formation or operation of opposition parties.
+    -   Whether the government respects the property rights of people and corporations, refrains from the illegal seizure of private property, and provides adequate reasons and compensation when property is legally expropriated. It also measures if the process for transferring a property is simple and quick. In addition, it measures if foreign investors receive fair and equitable treatment from the government, and the effective enforcement of anti-squatting laws and intellectual property rights.
+    -   Whether the government respects the right to asylum and refugees can move freely within the host country, have access to legal work and state services such as education, accommodation, meals, healthcare, and cash benefits, as well as legal documentation and economic opportunities.
+    -   The protection of rights related to equality, including equality before the law, and absence of discrimination based on socio-economic status, gender, ethnicity, religion, national origin, sexual orientation, or gender identity.
+    -   The protection of rights related to solidarity, including labor rights such as workers’ right to information, consultation, collective bargaining, access to placement services, and protection in the event of unjustified dismissal, as well as the prohibition of child labor.
+    -   The protection of rights related to citizens´ rights, including political rights such as the right to vote and to stand as a candidate at European Parliament and municipal elections, to information, petition, movement, and of residence.
+    -   The protection of rights related to justice, including the right to effective remedy and to a fair trial, presumption of innocence, and to defense, as well as rights of the accused including principles of legality and proportionality of criminal offenses and penalties, and the right not to be tried or punished twice.
+
+5. Security
+Measures the assurance of the security of persons and property. Security is one of the defining aspects of any rule of law society and is a fundamental function of the state. It is also a precondition for the realization of the rights and freedoms that the rule of law seeks to advance. We are excluding armed conflict from this pillar. In more detail, this pillar is related to the following topics:
+    -   The extent to which people feel safe and secure in their city, town, or village, and in their neighborhood.
+    -   The extent to which the State is able to keep crime and violence to minimum levels.
+
+6. Regulatory Enforcement and Enabling Business Environment
+Measures the extent to which regulations are fairly and effectively implemented and enforced. Regulations, both legal and administrative, structure behaviors within and outside of the government. This factor does not assess which activities a government chooses to regulate, nor does it consider how much regulation of a particular activity is appropriate. Rather, it examines how regulations are implemented and enforced. In more detail, this pillar is related to the following topics:
+    -   The extent to which the legal framework for businesses is clear, accessible, and predictable, as well as the respect for property rights.
+    -   Whether the government respects the property rights of people and corporations, refrains from the illegal seizure of private property, and provides adequate reasons and compensation when property is legally expropriated. In addition, it measures if foreign investors receive fair and equitable treatment from the government, and the effective enforcement of anti-squatting laws and intellectual property rights. 
+    -   Whether the process for transferring a property is simple and quick. 
+    -   The extent to which the government audits and inspections are conducted in accordance with the law and are free of corruption; if complaint mechanisms are simple, accessible, and cost-effective, and if regulation authorities are impartial, and if they sanction violations.
+    -   Whether environmental and labor regulation authorities sanction violations, such as occupational safety and business license or zoning violations.
+
+7. Civil Justice
+Measures whether ordinary people can resolve their grievances through formal institutions of justice in a peaceful and effective manner, as well as in accordance with generally accepted social norms rather than resorting to violence or self-help. Access to civil justice requires that the system be accessible, affordable, effective, impartial, and culturally competent. In more detail, this pillar is related to the following topics:
+    -   Whether justice institutions help prevent legal and justice needs. It also measures whether authorities tolerate illegal activities such as squatting, street vending or informal labor arrangements.
+    -   Whether people are aware of their rights, formal justice, and alternative justice mechanisms, and know where to get information and advice when facing a legal problem.
+    -   Whether can access and afford legal advice and representation; and can access the court system without incurring unreasonable fees.
+    -   Whether the civil justice system is impartial and free of discrimination, corruption and undue influence from the government and private interests.
+    -   The effectiveness and timeliness of the enforcement of civil justice decisions and judgments in practice.
+    -   Whether alternative dispute resolution mechanisms (ADRs) are available, accessible, affordable, impartial, timely, effective, enforceable, and free of corruption and undue influence from the government and private interests.
+
+8. Criminal Justice
+Evaluates a country’s criminal justice system. An effective criminal justice system is a key aspect of the rule of law, as it constitutes the conventional mechanism to redress grievances and bring action against individuals for offenses against society. An assessment of the delivery of criminal justice should take into consideration the entire system, including the police, lawyers, prosecutors, judges, and prison officers. In more detail, this pillar is related to the following topics:
+    -   Whether criminal investigations are effective, timely, impartial, and free of corruption and undue influence from criminal organizations and political and private interests.
+    -   The effectiveness of prosecutors in investigating crimes, and if pre-trial proceedings are timely, outcome-oriented, impartial, and free of corruption and undue influence from political and private interests.
+    -   Whether trials are timely, outcome-oriented, impartial, and free of corruption and undue influence from political and private interests.
+    -   Whether alternative dispute resolution mechanisms (ADRs) are available, accessible, affordable, impartial, timely, effective, enforceable, and free of corruption and undue influence from the government and private interests.
+    -   Whether victim’s rights are effectively guaranteed, including treatment with respect, absence of discrimination, timely and sufficient information, and protection.
+    -   Whether the basic rights of criminal suspects are respected, including the presumption of innocence and the freedom from arbitrary arrest and unreasonable pre-trial detention. It also measures whether criminal suspects are able to access and challenge evidence used against them, whether they are subject to abusive treatment, and whether they are provided with adequate legal assistance. In addition, it measures whether the basic rights of prisoners are respected once they have been convicted of a crime.
+    -   Whether the prison system guarantees conditions of safety and order and respects the rights of people deprived of their liberty. It also measures the absence of corruption and the effectiveness of the prison system in reducing recidivism.
+
+# News article and instructions
+Now, given the following news article:
+News title: {headline}
+News summary: {summary}
+News body: {body}
+
+Analyze the news article and its context, and answer the following question:
+1.  How related is this news article to each one of the pillars of the Rule of Law? Produce a score for each pillar ranging from 1 to 10, where 10 reflects that the news article is HIGHLY related to a specific pillar, and 0 meaning that the news article is TOTALLY UNRELATED to a given pillar.
+
+Use the following JSON format to structure your answer:
+    {{
+        &quot;pillars_relation&quot;: answer to the question number 1. Answer using a list where each element of the list is a dictionary like this: 
+        {{'[number of pillar]. name of pillar': relevance score as an integer number}}
+    }}
+
+IMPORTANT: As you saw, each pillar measures a wide range of elements, and they tend to overlap in various aspects. On the other hand, the news articles describe events that take place in a specific country, territory, or region. Therefore, a pillar being related to a news article means that the events narrated by the article can be measured by that pillar, or that the events happening in the news article would have an impact on that pillar, either positive, negative, or neutral. Remember to ONLY answer following the JSON format explained above.
+
+When answering, strictly attach to the definitions of the Rule of Law, Justice, and Governance that I provided above and keep in mind the following points:
+1. We do not include the right to access to healthcare in the conceptual framework of the Rule of Law because we are not contacting public health experts in this project, so news articles which main topic is the right to healthcare should be rated as unrelated to all the pillars of the Rule of Law.
+2. We are only interested in current or recent events related to the Rule of Law. Therefore, please rate articles referring to historical events in the far past asunrelated to all the pillars of the Rule of Law.
+3. Any news article referring to foreign policy or international diplomacy should be rated as unrelated to all the pillars of the Rule of Law.
+4. VERY IMPROTANT: Our conceptual framework DOES NOT include war, armed conflict, or peace agreements. Therefore, news articles narrating events that derive from war, armed conflict, or peace agreements, or events that are a direct consequence from the previous situations should be rated as unrelated to all the pillars of the Rule of Law. Remember to ONLY answer following the JSON format explained above.
+
+Begin!
+&quot;&quot;&quot;</code>
+  </sec>
+</sec>
+</body>
+
+
+
+<back>
+</back>
+
+
+</sub-article>
+<sub-article article-type="notebook" id="nb-18-nb-6">
+<front-stub>
+<title-group>
+<article-title>Promp Templates: Summarization</article-title>
+</title-group>
+</front-stub>
+
+<body>
+<sec id="cell-2-nb-6" specific-use="notebook-content">
+<sec id="pillar-insights-and-context-nb-6">
+  <title>Pillar insights and context</title>
+  </sec>
+  <sec id="cell-3-nb-6" specific-use="notebook-content">
   <code language="python">pillar_bullets = {
     &quot;1&quot;: &quot;&quot;&quot;
     - The active and reactive transparency of legislative bodies (senate, parliament, assemblies), its ability to impose disciplinary measures to government officials, and if there is representation of disadvantaged groups, as well as citizen participation. It also measures if the opposition can express its opinions and if it exercises its functions of overseeing and investigating the government.
@@ -20841,13 +20939,13 @@ for member in eu_member_states:
 }
   </code>
   </sec>
-  <sec id="cell-4-nb-5" specific-use="notebook-content">
+  <sec id="cell-4-nb-6" specific-use="notebook-content">
 </sec>
-<sec id="article-summarization-system-context-and-summarization-nb-5">
+<sec id="article-summarization-system-context-and-summarization-nb-6">
   <title>Article Summarization (System Context and
   Summarization)</title>
   </sec>
-  <sec id="cell-5-nb-5" specific-use="notebook-content">
+  <sec id="cell-5-nb-6" specific-use="notebook-content">
   <code language="python">context = &quot;&quot;&quot;
 You are a specialized assistant whose role is to meticulously analyze news articles, with a keen focus on thematic pillars that encompass constraints on government powers, governance, transparency, corruption, freedom, human rights, equality, justice, and civic participation. Your task consists in, first, reading a news article and preparing a concise summary that underscores its relevance to a specific thematic pillar and, second, provide an evaluation on how the events narrated by the article impact the thematic pillar specified. I will provide you with further details about the news articles and the chosen pillar.
 &quot;&quot;&quot;
@@ -20872,104 +20970,6 @@ Remember to ONLY answer following the JSON format provided and using double quot
 &quot;&quot;&quot;
   </code>
   </sec>
-</sec>
-</body>
-
-
-
-<back>
-</back>
-
-
-</sub-article>
-<sub-article article-type="notebook" id="nb-18-nb-6">
-<front-stub>
-<title-group>
-<article-title>2. Translation code</article-title>
-</title-group>
-</front-stub>
-
-<body>
-<sec id="cell-2-nb-6" specific-use="notebook-content">
-<code language="python">import os
-import time
-import pandas as pd
-import math
-import nltk
-from nltk.tokenize import sent_tokenize
-from deep_translator import GoogleTranslator
-nltk.download(&quot;punkt&quot;)</code>
-<boxed-text>
-  <preformat>[nltk_data] Downloading package punkt to
-[nltk_data]     C:\Users\ctoruno\AppData\Roaming\nltk_data...
-[nltk_data]   Package punkt is already up-to-date!</preformat>
-</boxed-text>
-<boxed-text>
-  <preformat>True</preformat>
-</boxed-text>
-</sec>
-<sec id="cell-3-nb-6" specific-use="notebook-content">
-<code language="python">country = &quot;Romania&quot;
-path2SP = &quot;.../Data/data-extraction-1&quot;</code>
-</sec>
-<sec id="cell-4-nb-6" specific-use="notebook-content">
-<code language="python">master_data = pd.read_parquet(f&quot;{path2SP}/data4translation/{country}_tp.parquet.gzip&quot;)</code>
-</sec>
-<sec id="cell-5-nb-6" specific-use="notebook-content">
-<code language="python">def trans2english(text, sourcelang):
-    &quot;&quot;&quot;
-    This functions gathers a text in a specific language and it returns its equivalent
-    in English using the Google translation engine.
-
-    Parameters:
-        text:       String. Text to translate.
-        sourcelang: String. Code of the source language you want to translate the text from.
-    &quot;&quot;&quot;
-    if text:
-      try:
-          sentences = sent_tokenize(text)
-          batch  = GoogleTranslator(source = sourcelang, target = &quot;en&quot;).translate_batch(sentences)
-          result = &quot; &quot;.join(batch)
-          return result
-      except Exception as e:
-          out = f&quot;Translation through API failed. Reason: {e}&quot;
-          return out
-    else:
-      return &quot;No information available. No translation performed&quot;</code>
-</sec>
-<sec id="cell-6-nb-6" specific-use="notebook-content">
-<code language="python">total_batches = math.ceil(len(master_data)/2000)
-for batch_number in range(0, total_batches):
-    print(&quot;======================================================================&quot;)
-    print(f&quot;Currently running batch number: {batch_number} out of {total_batches}&quot;)
-    
-    mode          = &quot;overnight&quot; # One of two values: &quot;9to5&quot; OR &quot;overnight&quot;
-    counter_day   = 0
-    counter_night = batch_number
-
-    batch = counter_day + counter_night + 1
-    if mode == &quot;9to5&quot;:
-        batch_size   = 500
-        mode_counter = counter_day
-    if mode == &quot;overnight&quot;:
-        batch_size   = 2000
-        mode_counter = counter_night
-
-    starting_row = (counter_day*500)+(counter_night*2000)
-    final_row    = starting_row+batch_size
-    batch_subset = master_data.copy().iloc[starting_row:final_row]
-
-    print(f&quot;Starting row: {starting_row}&quot;)
-
-    batch_subset[[&quot;title_trans&quot;, &quot;description_trans&quot;, &quot;content_trans&quot;]] = batch_subset.apply(
-        lambda row: row[[&quot;title&quot;, &quot;description&quot;, &quot;content&quot;]].apply(lambda x: trans2english(text = x, sourcelang = row[&quot;language&quot;])),
-        axis = 1
-    )
-
-    print(&quot;Translation completed&quot;)
-    batch_subset.to_parquet(f&quot;{path2SP}/translation-batches/{country}/{country}_batch_{batch}_{mode}_{mode_counter}.parquet.gzip&quot;, compression = &quot;gzip&quot;)
-
-    time.sleep(25)</code>
 </sec>
 </body>
 
