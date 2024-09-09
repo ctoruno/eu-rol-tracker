@@ -1,4 +1,11 @@
-## A Quarto Manuscript Template
+## How to update
 
-This is a template repo for generating a manuscript from Quarto that accompanies the tutorial at: [Quarto Manuscripts: RStudio](https://quarto.org/docs/manuscripts/authoring/rstudio.html)
+1. Render `index.qmd`:
+```
+$ quarto render
+```
 
+2. Publish document
+```
+$ quarto publish gh-pages
+```
