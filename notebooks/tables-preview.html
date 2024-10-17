@@ -1,0 +1,1779 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="generator" content="quarto-1.5.57">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+    <title>Tables</title>
+    <style>
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      div.columns{display: flex; gap: min(4vw, 1.5em);}
+      div.column{flex: auto; overflow-x: auto;}
+      div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+      ul.task-list{list-style: none;}
+      ul.task-list li input[type="checkbox"] {
+        width: 0.8em;
+        margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+        vertical-align: middle;
+      }
+      /* CSS for syntax highlighting */
+      pre > code.sourceCode { white-space: pre; position: relative; }
+      pre > code.sourceCode > span { line-height: 1.25; }
+      pre > code.sourceCode > span:empty { height: 1.2em; }
+      .sourceCode { overflow: visible; }
+      code.sourceCode > span { color: inherit; text-decoration: inherit; }
+      div.sourceCode { margin: 1em 0; }
+      pre.sourceCode { margin: 0; }
+      @media screen {
+      div.sourceCode { overflow: auto; }
+      }
+      @media print {
+      pre > code.sourceCode { white-space: pre-wrap; }
+      pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+      }
+      pre.numberSource code
+        { counter-reset: source-line 0; }
+      pre.numberSource code > span
+        { position: relative; left: -4em; counter-increment: source-line; }
+      pre.numberSource code > span > a:first-child::before
+        { content: counter(source-line);
+          position: relative; left: -1em; text-align: right; vertical-align: baseline;
+          border: none; display: inline-block;
+          -webkit-touch-callout: none; -webkit-user-select: none;
+          -khtml-user-select: none; -moz-user-select: none;
+          -ms-user-select: none; user-select: none;
+          padding: 0 4px; width: 4em;
+        }
+      pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+      div.sourceCode
+        {   }
+      @media screen {
+      pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+      }
+    </style>
+
+    <style>
+      body.hypothesis-enabled #quarto-embed-header {
+        padding-right: 36px;
+      }
+
+      #quarto-embed-header {
+        height: 3em;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: solid 1px;
+      }
+
+      #quarto-embed-header h6 {
+        font-size: 1.1em;
+        padding-top: 0.6em;
+        margin-left: 1em;
+        margin-right: 1em;
+        font-weight: 400;
+      }
+
+      #quarto-embed-header a.quarto-back-link,
+      #quarto-embed-header a.quarto-download-embed {
+        font-size: 0.8em;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        margin-left: 1em;
+        margin-right: 1em;
+      }
+
+      .quarto-back-container {
+        padding-left: 0.5em;
+        display: flex;
+      }
+
+      .headroom {
+          will-change: transform;
+          transition: transform 200ms linear;
+      }
+
+      .headroom--pinned {
+          transform: translateY(0%);
+      }
+
+      .headroom--unpinned {
+          transform: translateY(-100%);
+      }      
+    </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script>
+    window.document.addEventListener("DOMContentLoaded", function () {
+
+      var header = window.document.querySelector("#quarto-embed-header");
+      const titleBannerEl = window.document.querySelector("body > #title-block-header");
+      if (titleBannerEl) {
+        titleBannerEl.style.paddingTop = header.clientHeight + "px";
+      }
+      const contentEl = window.document.getElementById('quarto-content');
+      for (const child of contentEl.children) {
+        child.style.paddingTop = header.clientHeight + "px";
+        child.style.marginTop = "1em";
+      }
+
+      // Use the article root if the `back` call doesn't work. This isn't perfect
+      // but should typically work
+      window.quartoBackToArticle = () => {
+        var currentUrl = window.location.href;
+        window.history.back();
+        setTimeout(() => {
+            // if location was not changed in 100 ms, then there is no history back
+            if(currentUrl === window.location.href){              
+                // redirect to site root
+                window.location.href = "...html";
+            }
+        }, 100);
+      }
+
+      const headroom = new window.Headroom(header, {
+        tolerance: 5,
+        onPin: function () {
+        },
+        onUnpin: function () {
+        },
+      });
+      headroom.init();
+    });
+    </script>
+
+    
+<script src="../site_libs/manuscript-notebook/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+     <script async="" src="https://hypothes.is/embed.js"></script>
+<script>
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    document.body.classList.add('hypothesis-enabled');
+  });
+</script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>  
+      </head>
+
+  <body class="quarto-notebook">
+    <div id="quarto-embed-header" class="headroom fixed-top bg-primary">
+      
+      <a onclick="window.quartoBackToArticle(); return false;" class="btn btn-primary quarto-back-link" href=""><i class="bi bi-caret-left"></i> Back to Article</a>
+      <h6><i class="bi bi-journal-code"></i> Tables</h6>
+
+            <a href="../notebooks/tables.ipynb" class="btn btn-primary quarto-download-embed" download="tables.ipynb">Download Notebook</a>
+          </div>
+
+     <header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Tables</h1>
+          </div>
+
+    
+    <div class="quarto-title-meta-container">
+      <div class="quarto-title-meta-column-start">
+        
+        <div class="quarto-title-meta">
+
+                
+          
+                
+              </div>
+      </div>
+      <div class="quarto-title-meta-column-end quarto-other-formats-target">
+      </div>
+    </div>
+
+
+
+    <div class="quarto-other-links-text-target">
+    </div>  </div>
+</header><div id="quarto-content" class="page-columns page-rows-contents page-layout-article toc-left">
+<div id="quarto-sidebar-toc-left" class="sidebar toc-left">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#table-1-extracted-data" id="toc-table-1-extracted-data" class="nav-link active" data-scroll-target="#table-1-extracted-data">Table 1: Extracted Data</a></li>
+  <li><a href="#table-2-failed-translation" id="toc-table-2-failed-translation" class="nav-link" data-scroll-target="#table-2-failed-translation">Table 2: Failed Translation</a></li>
+  <li><a href="#table-3-first-stage-classification" id="toc-table-3-first-stage-classification" class="nav-link" data-scroll-target="#table-3-first-stage-classification">Table 3: First Stage Classification</a></li>
+  <li><a href="#table-4-second-stage-classification" id="toc-table-4-second-stage-classification" class="nav-link" data-scroll-target="#table-4-second-stage-classification">Table 4: Second Stage Classification</a></li>
+  </ul>
+</nav>
+</div>
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+</div>
+<main class="content quarto-banner-title-block" id="quarto-document-content">      
+
+       <div id="cell-1" class="cell markdown">
+
+</div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [1]:</pre></div><div id="cell-2" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [4]:</pre></div><div id="cell-3" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>path2SP <span class="op">=</span> <span class="st">"/Users/ctoruno/OneDrive - World Justice Project/EU Subnational/EU-S Data/Automated Qualitative Checks/Data"</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>eu_member_states <span class="op">=</span> [</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Austria"</span>,<span class="st">"Belgium"</span>,<span class="st">"Bulgaria"</span>,<span class="st">"Croatia"</span>,<span class="st">"Cyprus"</span>,<span class="st">"Czechia"</span>,<span class="st">"Denmark"</span>,<span class="st">"Estonia"</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Finland"</span>,<span class="st">"France"</span>,<span class="st">"Germany"</span>,<span class="st">"Greece"</span>,<span class="st">"Hungary"</span>,<span class="st">"Ireland"</span>,<span class="st">"Italy"</span>,<span class="st">"Latvia"</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Lithuania"</span>,<span class="st">"Luxembourg"</span>,<span class="st">"Malta"</span>,<span class="st">"Netherlands"</span>,<span class="st">"Poland"</span>,<span class="st">"Portugal"</span>,<span class="st">"Romania"</span>,<span class="st">"Slovakia"</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Slovenia"</span>,<span class="st">"Spain"</span>,<span class="st">"Sweden"</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div>
+<div id="cell-4" class="cell markdown">
+<section id="table-1-extracted-data" class="level3">
+<h3 class="anchored" data-anchor-id="table-1-extracted-data">Table 1: Extracted Data</h3>
+</section>
+</div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [3]:</pre></div><div id="cell-5" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>data_tbl01 <span class="op">=</span> {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Country"</span>: [<span class="st">"Austria"</span>, <span class="st">"Belgium"</span>, <span class="st">"Bulgaria"</span>, <span class="st">"Croatia"</span>, <span class="st">"Cyprus"</span>, <span class="st">"Czechia"</span>, <span class="st">"Denmark"</span>, <span class="st">"Estonia"</span>, <span class="st">"Finland"</span>, <span class="st">"France"</span>, </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Germany"</span>, <span class="st">"Greece"</span>, <span class="st">"Hungary"</span>, <span class="st">"Ireland"</span>, <span class="st">"Italy"</span>, <span class="st">"Latvia"</span>, <span class="st">"Lithuania"</span>, <span class="st">"Luxembourg"</span>, <span class="st">"Malta"</span>, </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Netherlands"</span>, <span class="st">"Poland"</span>, <span class="st">"Portugal"</span>, <span class="st">"Romania"</span>, <span class="st">"Slovakia"</span>, <span class="st">"Slovenia"</span>, <span class="st">"Spain"</span>, <span class="st">"Sweden"</span>],</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Total News Extracted"</span>: [<span class="dv">46145</span>, <span class="dv">21287</span>, <span class="dv">38118</span>, <span class="dv">37068</span>, <span class="dv">34955</span>, <span class="dv">41415</span>, <span class="dv">11312</span>, <span class="dv">12370</span>, <span class="dv">6647</span>, <span class="dv">64527</span>, </span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>                             <span class="dv">45321</span>, <span class="dv">49504</span>, <span class="dv">18111</span>, <span class="dv">48409</span>, <span class="dv">93858</span>, <span class="dv">5487</span>, <span class="dv">14396</span>, <span class="dv">7894</span>, <span class="dv">10842</span>, </span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>                             <span class="dv">23935</span>, <span class="dv">21434</span>, <span class="dv">29624</span>, <span class="dv">33264</span>, <span class="dv">34874</span>, <span class="dv">10211</span>, <span class="dv">112820</span>, <span class="dv">6417</span>],</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Date Range"</span>: [<span class="st">"Mar 06, 2023 - Mar 07, 2024"</span>, <span class="st">"Jun 07, 2023 - Mar 07, 2024"</span>, <span class="st">"Jul 07, 2023 - Mar 07, 2024"</span>,</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>                   <span class="st">"Jul 07, 2023 - Mar 07, 2024"</span>, <span class="st">"Jul 07, 2023 - Mar 08, 2024"</span>, <span class="st">"Jul 07, 2023 - Mar 08, 2024"</span>,</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>                   <span class="st">"Aug 07, 2023 - Mar 07, 2024"</span>, <span class="st">"Aug 08, 2023 - Mar 07, 2024"</span>, <span class="st">"Aug 08, 2023 - Mar 07, 2024"</span>,</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>                   <span class="st">"Aug 07, 2023 - Mar 07, 2024"</span>, <span class="st">"Jan 08, 2024 - Mar 07, 2024"</span>, <span class="st">"Aug 08, 2023 - Mar 07, 2024"</span>,</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>                   <span class="st">"Aug 08, 2023 - Mar 07, 2024"</span>, <span class="st">"Aug 08, 2023 - Mar 07, 2024"</span>, <span class="st">"Aug 08, 2023 - Mar 07, 2024"</span>,</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>                   <span class="st">"Aug 09, 2023 - Mar 07, 2024"</span>, <span class="st">"Aug 08, 2023 - Mar 07, 2024"</span>, <span class="st">"Aug 08, 2023 - Mar 07, 2024"</span>,</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>                   <span class="st">"Aug 08, 2023 - Mar 07, 2024"</span>, <span class="st">"Aug 08, 2023 - Mar 07, 2024"</span>, <span class="st">"Aug 08, 2023 - Mar 07, 2024"</span>,</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>                   <span class="st">"Aug 08, 2023 - Mar 07, 2024"</span>, <span class="st">"Aug 08, 2023 - Mar 07, 2024"</span>, <span class="st">"Aug 08, 2023 - Mar 07, 2024"</span>,</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>                   <span class="st">"Aug 08, 2023 - Mar 07, 2024"</span>, <span class="st">"Aug 08, 2023 - Mar 07, 2024"</span>, <span class="st">"Jan 08, 2024 - Mar 07, 2024"</span>]</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>tbl01 <span class="op">=</span> pd.DataFrame(data_tbl01)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>total_row <span class="op">=</span> pd.DataFrame([[<span class="st">"Total"</span>, <span class="bu">sum</span>(data_tbl01[<span class="st">"Total News Extracted"</span>]), <span class="st">""</span>]], columns<span class="op">=</span>tbl01.columns)</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>tbl01_total <span class="op">=</span> pd.concat([tbl01, total_row], ignore_index<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [4]:</pre></div><div class="cell" data-execution_count="4">
+
+<div class="cell-container"><div class="cell-decorator"><pre>In [4]:</pre></div><div><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>tbl01_total.style.hide(axis<span class="op">=</span><span class="st">"index"</span>).<span class="bu">format</span>({</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Total News Extracted'</span>: <span class="st">'</span><span class="sc">{:,.0f}</span><span class="st">'</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div><div id="tbl-extraction" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="4">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-extraction-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Total news extracted per country
+</figcaption>
+<div aria-describedby="tbl-extraction-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output cell-output-display" data-execution_count="4">
+<style type="text/css">
+</style>
+
+<table id="T_1f17c" class="do-not-create-environment cell caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th id="T_1f17c_level0_col0" class="col_heading level0 col0" data-quarto-table-cell-role="th">Country</th>
+<th id="T_1f17c_level0_col1" class="col_heading level0 col1" data-quarto-table-cell-role="th">Total News Extracted</th>
+<th id="T_1f17c_level0_col2" class="col_heading level0 col2" data-quarto-table-cell-role="th">Date Range</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td id="T_1f17c_row0_col0" class="data row0 col0">Austria</td>
+<td id="T_1f17c_row0_col1" class="data row0 col1">46,145</td>
+<td id="T_1f17c_row0_col2" class="data row0 col2">Mar 06, 2023 - Mar 07, 2024</td>
+</tr>
+<tr class="even">
+<td id="T_1f17c_row1_col0" class="data row1 col0">Belgium</td>
+<td id="T_1f17c_row1_col1" class="data row1 col1">21,287</td>
+<td id="T_1f17c_row1_col2" class="data row1 col2">Jun 07, 2023 - Mar 07, 2024</td>
+</tr>
+<tr class="odd">
+<td id="T_1f17c_row2_col0" class="data row2 col0">Bulgaria</td>
+<td id="T_1f17c_row2_col1" class="data row2 col1">38,118</td>
+<td id="T_1f17c_row2_col2" class="data row2 col2">Jul 07, 2023 - Mar 07, 2024</td>
+</tr>
+<tr class="even">
+<td id="T_1f17c_row3_col0" class="data row3 col0">Croatia</td>
+<td id="T_1f17c_row3_col1" class="data row3 col1">37,068</td>
+<td id="T_1f17c_row3_col2" class="data row3 col2">Jul 07, 2023 - Mar 07, 2024</td>
+</tr>
+<tr class="odd">
+<td id="T_1f17c_row4_col0" class="data row4 col0">Cyprus</td>
+<td id="T_1f17c_row4_col1" class="data row4 col1">34,955</td>
+<td id="T_1f17c_row4_col2" class="data row4 col2">Jul 07, 2023 - Mar 08, 2024</td>
+</tr>
+<tr class="even">
+<td id="T_1f17c_row5_col0" class="data row5 col0">Czechia</td>
+<td id="T_1f17c_row5_col1" class="data row5 col1">41,415</td>
+<td id="T_1f17c_row5_col2" class="data row5 col2">Jul 07, 2023 - Mar 08, 2024</td>
+</tr>
+<tr class="odd">
+<td id="T_1f17c_row6_col0" class="data row6 col0">Denmark</td>
+<td id="T_1f17c_row6_col1" class="data row6 col1">11,312</td>
+<td id="T_1f17c_row6_col2" class="data row6 col2">Aug 07, 2023 - Mar 07, 2024</td>
+</tr>
+<tr class="even">
+<td id="T_1f17c_row7_col0" class="data row7 col0">Estonia</td>
+<td id="T_1f17c_row7_col1" class="data row7 col1">12,370</td>
+<td id="T_1f17c_row7_col2" class="data row7 col2">Aug 08, 2023 - Mar 07, 2024</td>
+</tr>
+<tr class="odd">
+<td id="T_1f17c_row8_col0" class="data row8 col0">Finland</td>
+<td id="T_1f17c_row8_col1" class="data row8 col1">6,647</td>
+<td id="T_1f17c_row8_col2" class="data row8 col2">Aug 08, 2023 - Mar 07, 2024</td>
+</tr>
+<tr class="even">
+<td id="T_1f17c_row9_col0" class="data row9 col0">France</td>
+<td id="T_1f17c_row9_col1" class="data row9 col1">64,527</td>
+<td id="T_1f17c_row9_col2" class="data row9 col2">Aug 07, 2023 - Mar 07, 2024</td>
+</tr>
+<tr class="odd">
+<td id="T_1f17c_row10_col0" class="data row10 col0">Germany</td>
+<td id="T_1f17c_row10_col1" class="data row10 col1">45,321</td>
+<td id="T_1f17c_row10_col2" class="data row10 col2">Jan 08, 2024 - Mar 07, 2024</td>
+</tr>
+<tr class="even">
+<td id="T_1f17c_row11_col0" class="data row11 col0">Greece</td>
+<td id="T_1f17c_row11_col1" class="data row11 col1">49,504</td>
+<td id="T_1f17c_row11_col2" class="data row11 col2">Aug 08, 2023 - Mar 07, 2024</td>
+</tr>
+<tr class="odd">
+<td id="T_1f17c_row12_col0" class="data row12 col0">Hungary</td>
+<td id="T_1f17c_row12_col1" class="data row12 col1">18,111</td>
+<td id="T_1f17c_row12_col2" class="data row12 col2">Aug 08, 2023 - Mar 07, 2024</td>
+</tr>
+<tr class="even">
+<td id="T_1f17c_row13_col0" class="data row13 col0">Ireland</td>
+<td id="T_1f17c_row13_col1" class="data row13 col1">48,409</td>
+<td id="T_1f17c_row13_col2" class="data row13 col2">Aug 08, 2023 - Mar 07, 2024</td>
+</tr>
+<tr class="odd">
+<td id="T_1f17c_row14_col0" class="data row14 col0">Italy</td>
+<td id="T_1f17c_row14_col1" class="data row14 col1">93,858</td>
+<td id="T_1f17c_row14_col2" class="data row14 col2">Aug 08, 2023 - Mar 07, 2024</td>
+</tr>
+<tr class="even">
+<td id="T_1f17c_row15_col0" class="data row15 col0">Latvia</td>
+<td id="T_1f17c_row15_col1" class="data row15 col1">5,487</td>
+<td id="T_1f17c_row15_col2" class="data row15 col2">Aug 09, 2023 - Mar 07, 2024</td>
+</tr>
+<tr class="odd">
+<td id="T_1f17c_row16_col0" class="data row16 col0">Lithuania</td>
+<td id="T_1f17c_row16_col1" class="data row16 col1">14,396</td>
+<td id="T_1f17c_row16_col2" class="data row16 col2">Aug 08, 2023 - Mar 07, 2024</td>
+</tr>
+<tr class="even">
+<td id="T_1f17c_row17_col0" class="data row17 col0">Luxembourg</td>
+<td id="T_1f17c_row17_col1" class="data row17 col1">7,894</td>
+<td id="T_1f17c_row17_col2" class="data row17 col2">Aug 08, 2023 - Mar 07, 2024</td>
+</tr>
+<tr class="odd">
+<td id="T_1f17c_row18_col0" class="data row18 col0">Malta</td>
+<td id="T_1f17c_row18_col1" class="data row18 col1">10,842</td>
+<td id="T_1f17c_row18_col2" class="data row18 col2">Aug 08, 2023 - Mar 07, 2024</td>
+</tr>
+<tr class="even">
+<td id="T_1f17c_row19_col0" class="data row19 col0">Netherlands</td>
+<td id="T_1f17c_row19_col1" class="data row19 col1">23,935</td>
+<td id="T_1f17c_row19_col2" class="data row19 col2">Aug 08, 2023 - Mar 07, 2024</td>
+</tr>
+<tr class="odd">
+<td id="T_1f17c_row20_col0" class="data row20 col0">Poland</td>
+<td id="T_1f17c_row20_col1" class="data row20 col1">21,434</td>
+<td id="T_1f17c_row20_col2" class="data row20 col2">Aug 08, 2023 - Mar 07, 2024</td>
+</tr>
+<tr class="even">
+<td id="T_1f17c_row21_col0" class="data row21 col0">Portugal</td>
+<td id="T_1f17c_row21_col1" class="data row21 col1">29,624</td>
+<td id="T_1f17c_row21_col2" class="data row21 col2">Aug 08, 2023 - Mar 07, 2024</td>
+</tr>
+<tr class="odd">
+<td id="T_1f17c_row22_col0" class="data row22 col0">Romania</td>
+<td id="T_1f17c_row22_col1" class="data row22 col1">33,264</td>
+<td id="T_1f17c_row22_col2" class="data row22 col2">Aug 08, 2023 - Mar 07, 2024</td>
+</tr>
+<tr class="even">
+<td id="T_1f17c_row23_col0" class="data row23 col0">Slovakia</td>
+<td id="T_1f17c_row23_col1" class="data row23 col1">34,874</td>
+<td id="T_1f17c_row23_col2" class="data row23 col2">Aug 08, 2023 - Mar 07, 2024</td>
+</tr>
+<tr class="odd">
+<td id="T_1f17c_row24_col0" class="data row24 col0">Slovenia</td>
+<td id="T_1f17c_row24_col1" class="data row24 col1">10,211</td>
+<td id="T_1f17c_row24_col2" class="data row24 col2">Aug 08, 2023 - Mar 07, 2024</td>
+</tr>
+<tr class="even">
+<td id="T_1f17c_row25_col0" class="data row25 col0">Spain</td>
+<td id="T_1f17c_row25_col1" class="data row25 col1">112,820</td>
+<td id="T_1f17c_row25_col2" class="data row25 col2">Aug 08, 2023 - Mar 07, 2024</td>
+</tr>
+<tr class="odd">
+<td id="T_1f17c_row26_col0" class="data row26 col0">Sweden</td>
+<td id="T_1f17c_row26_col1" class="data row26 col1">6,417</td>
+<td id="T_1f17c_row26_col2" class="data row26 col2">Jan 08, 2024 - Mar 07, 2024</td>
+</tr>
+<tr class="even">
+<td id="T_1f17c_row27_col0" class="data row27 col0">Total</td>
+<td id="T_1f17c_row27_col1" class="data row27 col1">880,245</td>
+<td id="T_1f17c_row27_col2" class="data row27 col2"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div></div></div>
+</div></div>
+<div id="cell-7" class="cell markdown">
+<section id="table-2-failed-translation" class="level3">
+<h3 class="anchored" data-anchor-id="table-2-failed-translation">Table 2: Failed Translation</h3>
+</section>
+</div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [5]:</pre></div><div id="cell-8" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>path2exdata <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>path2SP<span class="sc">}</span><span class="ss">/data-extraction-1/data4translation"</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>extracted_data <span class="op">=</span> [pd.read_parquet(<span class="ss">f"</span><span class="sc">{</span>path2exdata<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>country<span class="sc">}</span><span class="ss">_tp.parquet.gzip"</span>) <span class="cf">for</span> country <span class="kw">in</span> eu_member_states]</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>exdata <span class="op">=</span> pd.concat(extracted_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [24]:</pre></div><div id="cell-9" class="cell" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>path2trdata <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>path2SP<span class="sc">}</span><span class="ss">/data-extraction-1/ready4class"</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>files <span class="op">=</span> os.listdir(path2trdata)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>translated_data <span class="op">=</span> [pd.read_parquet(<span class="ss">f"</span><span class="sc">{</span>path2trdata<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>x<span class="sc">}</span><span class="ss">"</span>) <span class="cf">for</span> x <span class="kw">in</span> files]</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>trdata <span class="op">=</span> pd.concat(translated_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [45]:</pre></div><div class="cell" data-execution_count="45">
+
+<div class="cell-container"><div class="cell-decorator"><pre>In [45]:</pre></div><div><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>tbl02 <span class="op">=</span> (</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    exdata.country.value_counts().reset_index().sort_values(<span class="st">"country"</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    .merge(</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>        trdata.country.value_counts().reset_index(), </span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>        how <span class="op">=</span> <span class="st">"left"</span>, </span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>        on  <span class="op">=</span> <span class="st">"country"</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    .assign(</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>        success <span class="op">=</span> <span class="kw">lambda</span> df: (<span class="dv">1</span><span class="op">-</span>((df[<span class="st">'count_x'</span>] <span class="op">-</span> df[<span class="st">'count_y'</span>]) <span class="op">/</span> df[<span class="st">'count_x'</span>]))<span class="op">*</span><span class="dv">100</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    .rename(</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>        columns <span class="op">=</span> {</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>            <span class="st">"country"</span>: <span class="st">"Country"</span>,</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>            <span class="st">"count_x"</span>: <span class="st">"Extracted News (n)"</span>,</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>            <span class="st">"count_y"</span>: <span class="st">"Translated News (n)"</span>,</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>            <span class="st">"success"</span>: <span class="st">"Translated News (%)"</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>        },</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>        <span class="co"># inplace = True</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>total_row <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>    [[</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>        <span class="st">"European Union"</span>, </span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>        tbl02[<span class="st">"Extracted News (n)"</span>].<span class="bu">sum</span>(),</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>        tbl02[<span class="st">"Translated News (n)"</span>].<span class="bu">sum</span>(),</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>        tbl02[<span class="st">"Translated News (%)"</span>].mean(),</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>    ]], </span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>tbl02.columns</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>tbl02_total <span class="op">=</span> pd.concat([tbl02, total_row], ignore_index<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>tbl02_total.style.hide(axis<span class="op">=</span><span class="st">"index"</span>).<span class="bu">format</span>({</span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Extracted News (n)"</span>: <span class="st">"</span><span class="sc">{:,.0f}</span><span class="st">"</span>,</span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Translated News (n)"</span>: <span class="st">"</span><span class="sc">{:,.0f}</span><span class="st">"</span>,</span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Translated News (%)"</span>: <span class="st">"</span><span class="sc">{:,.1f}</span><span class="st">"</span></span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div><div id="tbl-translation" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="45">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-translation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2: Translation Process (Rate of Success)
+</figcaption>
+<div aria-describedby="tbl-translation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output cell-output-display" data-execution_count="45">
+<style type="text/css">
+</style>
+
+<table id="T_542c5" class="do-not-create-environment cell caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th id="T_542c5_level0_col0" class="col_heading level0 col0" data-quarto-table-cell-role="th">Country</th>
+<th id="T_542c5_level0_col1" class="col_heading level0 col1" data-quarto-table-cell-role="th">Extracted News (n)</th>
+<th id="T_542c5_level0_col2" class="col_heading level0 col2" data-quarto-table-cell-role="th">Translated News (n)</th>
+<th id="T_542c5_level0_col3" class="col_heading level0 col3" data-quarto-table-cell-role="th">Translated News (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td id="T_542c5_row0_col0" class="data row0 col0">Austria</td>
+<td id="T_542c5_row0_col1" class="data row0 col1">46,145</td>
+<td id="T_542c5_row0_col2" class="data row0 col2">44,181</td>
+<td id="T_542c5_row0_col3" class="data row0 col3">95.7</td>
+</tr>
+<tr class="even">
+<td id="T_542c5_row1_col0" class="data row1 col0">Belgium</td>
+<td id="T_542c5_row1_col1" class="data row1 col1">21,287</td>
+<td id="T_542c5_row1_col2" class="data row1 col2">19,846</td>
+<td id="T_542c5_row1_col3" class="data row1 col3">93.2</td>
+</tr>
+<tr class="odd">
+<td id="T_542c5_row2_col0" class="data row2 col0">Bulgaria</td>
+<td id="T_542c5_row2_col1" class="data row2 col1">38,118</td>
+<td id="T_542c5_row2_col2" class="data row2 col2">33,070</td>
+<td id="T_542c5_row2_col3" class="data row2 col3">86.8</td>
+</tr>
+<tr class="even">
+<td id="T_542c5_row3_col0" class="data row3 col0">Croatia</td>
+<td id="T_542c5_row3_col1" class="data row3 col1">37,068</td>
+<td id="T_542c5_row3_col2" class="data row3 col2">36,595</td>
+<td id="T_542c5_row3_col3" class="data row3 col3">98.7</td>
+</tr>
+<tr class="odd">
+<td id="T_542c5_row4_col0" class="data row4 col0">Cyprus</td>
+<td id="T_542c5_row4_col1" class="data row4 col1">34,955</td>
+<td id="T_542c5_row4_col2" class="data row4 col2">33,772</td>
+<td id="T_542c5_row4_col3" class="data row4 col3">96.6</td>
+</tr>
+<tr class="even">
+<td id="T_542c5_row5_col0" class="data row5 col0">Czechia</td>
+<td id="T_542c5_row5_col1" class="data row5 col1">41,415</td>
+<td id="T_542c5_row5_col2" class="data row5 col2">40,620</td>
+<td id="T_542c5_row5_col3" class="data row5 col3">98.1</td>
+</tr>
+<tr class="odd">
+<td id="T_542c5_row6_col0" class="data row6 col0">Denmark</td>
+<td id="T_542c5_row6_col1" class="data row6 col1">11,312</td>
+<td id="T_542c5_row6_col2" class="data row6 col2">10,761</td>
+<td id="T_542c5_row6_col3" class="data row6 col3">95.1</td>
+</tr>
+<tr class="even">
+<td id="T_542c5_row7_col0" class="data row7 col0">Estonia</td>
+<td id="T_542c5_row7_col1" class="data row7 col1">12,370</td>
+<td id="T_542c5_row7_col2" class="data row7 col2">11,334</td>
+<td id="T_542c5_row7_col3" class="data row7 col3">91.6</td>
+</tr>
+<tr class="odd">
+<td id="T_542c5_row8_col0" class="data row8 col0">Finland</td>
+<td id="T_542c5_row8_col1" class="data row8 col1">6,647</td>
+<td id="T_542c5_row8_col2" class="data row8 col2">6,399</td>
+<td id="T_542c5_row8_col3" class="data row8 col3">96.3</td>
+</tr>
+<tr class="even">
+<td id="T_542c5_row9_col0" class="data row9 col0">France</td>
+<td id="T_542c5_row9_col1" class="data row9 col1">64,527</td>
+<td id="T_542c5_row9_col2" class="data row9 col2">62,900</td>
+<td id="T_542c5_row9_col3" class="data row9 col3">97.5</td>
+</tr>
+<tr class="odd">
+<td id="T_542c5_row10_col0" class="data row10 col0">Germany</td>
+<td id="T_542c5_row10_col1" class="data row10 col1">45,321</td>
+<td id="T_542c5_row10_col2" class="data row10 col2">40,444</td>
+<td id="T_542c5_row10_col3" class="data row10 col3">89.2</td>
+</tr>
+<tr class="even">
+<td id="T_542c5_row11_col0" class="data row11 col0">Greece</td>
+<td id="T_542c5_row11_col1" class="data row11 col1">49,504</td>
+<td id="T_542c5_row11_col2" class="data row11 col2">47,182</td>
+<td id="T_542c5_row11_col3" class="data row11 col3">95.3</td>
+</tr>
+<tr class="odd">
+<td id="T_542c5_row12_col0" class="data row12 col0">Hungary</td>
+<td id="T_542c5_row12_col1" class="data row12 col1">18,111</td>
+<td id="T_542c5_row12_col2" class="data row12 col2">17,965</td>
+<td id="T_542c5_row12_col3" class="data row12 col3">99.2</td>
+</tr>
+<tr class="even">
+<td id="T_542c5_row13_col0" class="data row13 col0">Ireland</td>
+<td id="T_542c5_row13_col1" class="data row13 col1">48,409</td>
+<td id="T_542c5_row13_col2" class="data row13 col2">48,409</td>
+<td id="T_542c5_row13_col3" class="data row13 col3">100.0</td>
+</tr>
+<tr class="odd">
+<td id="T_542c5_row14_col0" class="data row14 col0">Italy</td>
+<td id="T_542c5_row14_col1" class="data row14 col1">93,858</td>
+<td id="T_542c5_row14_col2" class="data row14 col2">82,885</td>
+<td id="T_542c5_row14_col3" class="data row14 col3">88.3</td>
+</tr>
+<tr class="even">
+<td id="T_542c5_row15_col0" class="data row15 col0">Latvia</td>
+<td id="T_542c5_row15_col1" class="data row15 col1">5,487</td>
+<td id="T_542c5_row15_col2" class="data row15 col2">5,467</td>
+<td id="T_542c5_row15_col3" class="data row15 col3">99.6</td>
+</tr>
+<tr class="odd">
+<td id="T_542c5_row16_col0" class="data row16 col0">Lithuania</td>
+<td id="T_542c5_row16_col1" class="data row16 col1">14,396</td>
+<td id="T_542c5_row16_col2" class="data row16 col2">13,287</td>
+<td id="T_542c5_row16_col3" class="data row16 col3">92.3</td>
+</tr>
+<tr class="even">
+<td id="T_542c5_row17_col0" class="data row17 col0">Luxembourg</td>
+<td id="T_542c5_row17_col1" class="data row17 col1">7,894</td>
+<td id="T_542c5_row17_col2" class="data row17 col2">7,636</td>
+<td id="T_542c5_row17_col3" class="data row17 col3">96.7</td>
+</tr>
+<tr class="odd">
+<td id="T_542c5_row18_col0" class="data row18 col0">Malta</td>
+<td id="T_542c5_row18_col1" class="data row18 col1">10,842</td>
+<td id="T_542c5_row18_col2" class="data row18 col2">10,556</td>
+<td id="T_542c5_row18_col3" class="data row18 col3">97.4</td>
+</tr>
+<tr class="even">
+<td id="T_542c5_row19_col0" class="data row19 col0">Netherlands</td>
+<td id="T_542c5_row19_col1" class="data row19 col1">23,935</td>
+<td id="T_542c5_row19_col2" class="data row19 col2">22,642</td>
+<td id="T_542c5_row19_col3" class="data row19 col3">94.6</td>
+</tr>
+<tr class="odd">
+<td id="T_542c5_row20_col0" class="data row20 col0">Poland</td>
+<td id="T_542c5_row20_col1" class="data row20 col1">21,434</td>
+<td id="T_542c5_row20_col2" class="data row20 col2">17,490</td>
+<td id="T_542c5_row20_col3" class="data row20 col3">81.6</td>
+</tr>
+<tr class="even">
+<td id="T_542c5_row21_col0" class="data row21 col0">Portugal</td>
+<td id="T_542c5_row21_col1" class="data row21 col1">29,624</td>
+<td id="T_542c5_row21_col2" class="data row21 col2">29,416</td>
+<td id="T_542c5_row21_col3" class="data row21 col3">99.3</td>
+</tr>
+<tr class="odd">
+<td id="T_542c5_row22_col0" class="data row22 col0">Romania</td>
+<td id="T_542c5_row22_col1" class="data row22 col1">33,264</td>
+<td id="T_542c5_row22_col2" class="data row22 col2">32,234</td>
+<td id="T_542c5_row22_col3" class="data row22 col3">96.9</td>
+</tr>
+<tr class="even">
+<td id="T_542c5_row23_col0" class="data row23 col0">Slovakia</td>
+<td id="T_542c5_row23_col1" class="data row23 col1">34,874</td>
+<td id="T_542c5_row23_col2" class="data row23 col2">28,973</td>
+<td id="T_542c5_row23_col3" class="data row23 col3">83.1</td>
+</tr>
+<tr class="odd">
+<td id="T_542c5_row24_col0" class="data row24 col0">Slovenia</td>
+<td id="T_542c5_row24_col1" class="data row24 col1">10,211</td>
+<td id="T_542c5_row24_col2" class="data row24 col2">9,818</td>
+<td id="T_542c5_row24_col3" class="data row24 col3">96.2</td>
+</tr>
+<tr class="even">
+<td id="T_542c5_row25_col0" class="data row25 col0">Spain</td>
+<td id="T_542c5_row25_col1" class="data row25 col1">112,820</td>
+<td id="T_542c5_row25_col2" class="data row25 col2">88,324</td>
+<td id="T_542c5_row25_col3" class="data row25 col3">78.3</td>
+</tr>
+<tr class="odd">
+<td id="T_542c5_row26_col0" class="data row26 col0">Sweden</td>
+<td id="T_542c5_row26_col1" class="data row26 col1">6,417</td>
+<td id="T_542c5_row26_col2" class="data row26 col2">6,223</td>
+<td id="T_542c5_row26_col3" class="data row26 col3">97.0</td>
+</tr>
+<tr class="even">
+<td id="T_542c5_row27_col0" class="data row27 col0">European Union</td>
+<td id="T_542c5_row27_col1" class="data row27 col1">880,245</td>
+<td id="T_542c5_row27_col2" class="data row27 col2">808,429</td>
+<td id="T_542c5_row27_col3" class="data row27 col3">93.9</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div></div></div>
+</div></div>
+<div id="cell-11" class="cell markdown">
+<section id="table-3-first-stage-classification" class="level3">
+<h3 class="anchored" data-anchor-id="table-3-first-stage-classification">Table 3: First Stage Classification</h3>
+</section>
+</div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [5]:</pre></div><div id="cell-12" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>path2cldata <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>path2SP<span class="sc">}</span><span class="ss">/data-classification-1/0_compiled"</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>mutate_dict <span class="op">=</span> {</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Unrelated"</span>      : <span class="dv">0</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Related"</span>        : <span class="dv">1</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Justice"</span>        : <span class="dv">1</span>,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Governance"</span>     : <span class="dv">1</span>,</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Rule of Law"</span>    : <span class="dv">1</span>,</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Skipped article"</span>: <span class="dv">2</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [6]:</pre></div><div id="cell-13" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>cldata <span class="op">=</span> [pd.read_parquet(<span class="ss">f"</span><span class="sc">{</span>path2cldata<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>country<span class="sc">}</span><span class="ss">_classified.parquet.gzip"</span>) <span class="cf">for</span> country <span class="kw">in</span> eu_member_states]</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>cldata_master <span class="op">=</span> pd.concat(cldata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [75]:</pre></div><div id="cell-14" class="cell" data-execution_count="75">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> []</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> country <span class="kw">in</span> eu_member_states:</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">file</span> <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>path2cldata<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>country<span class="sc">}</span><span class="ss">_classified.parquet.gzip"</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pd.read_parquet(<span class="bu">file</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"topic_related"</span>] <span class="op">=</span> df[<span class="st">"topic_related"</span>].<span class="bu">str</span>.strip()</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"relation"</span>] <span class="op">=</span> df[<span class="st">"topic_related"</span>].replace(mutate_dict)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> country <span class="op">==</span> <span class="st">"Czechia"</span>:</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>        location_column <span class="op">=</span> <span class="st">"location_Czech"</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>        location_column <span class="op">=</span> <span class="ss">f"location_</span><span class="sc">{</span>country<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"related_within"</span>] <span class="op">=</span> df.<span class="bu">apply</span>(<span class="kw">lambda</span> row: row[location_column] <span class="kw">and</span> row[<span class="st">"relation"</span>] <span class="op">==</span> <span class="dv">1</span>, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    total   <span class="op">=</span> <span class="bu">len</span>(df)</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    related <span class="op">=</span> (df.relation.value_counts()[<span class="dv">1</span>] <span class="op">/</span> total)<span class="op">*</span><span class="dv">100</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>    within  <span class="op">=</span> (df.related_within.value_counts()[<span class="va">True</span>] <span class="op">/</span> total)<span class="op">*</span><span class="dv">100</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>    within_ <span class="op">=</span> (df.related_within.value_counts()[<span class="va">True</span>])</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>    skipped <span class="op">=</span> (df.relation.value_counts()[<span class="dv">2</span>] <span class="op">/</span> total)<span class="op">*</span><span class="dv">100</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>    <span class="bu">dict</span> <span class="op">=</span> {</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Country"</span>: country,</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Related (%)"</span> : related,</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Related - Within (%)"</span>: within,</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Related - Within (n)"</span>: within_,</span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Unclassified (%)"</span>: skipped</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>    data.append(<span class="bu">dict</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [84]:</pre></div><div id="cell-15" class="cell" data-execution_count="84">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>tbl03 <span class="op">=</span> pd.DataFrame(data)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>total_row <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    [[</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">"European Union"</span>, </span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>        tbl02[<span class="st">"Related (%)"</span>].mean(),</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>        tbl02[<span class="st">"Related - Within (%)"</span>].mean(),</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>        tbl02[<span class="st">"Related - Within (n)"</span>].<span class="bu">sum</span>(),</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>        tbl02[<span class="st">"Unclassified (%)"</span>].mean(),</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    ]], </span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>tbl03.columns</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>tbl03_total <span class="op">=</span> pd.concat([tbl03, total_row], ignore_index<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [85]:</pre></div><div class="cell" data-execution_count="85">
+
+<div class="cell-container"><div class="cell-decorator"><pre>In [85]:</pre></div><div><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>tbl03_total.style.hide(axis<span class="op">=</span><span class="st">"index"</span>).<span class="bu">format</span>({</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Related (%)"</span>: <span class="st">"</span><span class="sc">{:,.1f}</span><span class="st">"</span>,</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Related - Within (%)"</span>: <span class="st">"</span><span class="sc">{:,.1f}</span><span class="st">"</span>,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Related - Within (n)"</span>: <span class="st">"</span><span class="sc">{:,.0f}</span><span class="st">"</span>,</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Unclassified (%)"</span>: <span class="st">"</span><span class="sc">{:,.1f}</span><span class="st">"</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div><div id="tbl-classstage1" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="85">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-classstage1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;3: Broad classification results
+</figcaption>
+<div aria-describedby="tbl-classstage1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output cell-output-display" data-execution_count="85">
+<style type="text/css">
+</style>
+
+<table id="T_9487f" class="do-not-create-environment cell caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th id="T_9487f_level0_col0" class="col_heading level0 col0" data-quarto-table-cell-role="th">Country</th>
+<th id="T_9487f_level0_col1" class="col_heading level0 col1" data-quarto-table-cell-role="th">Related (%)</th>
+<th id="T_9487f_level0_col2" class="col_heading level0 col2" data-quarto-table-cell-role="th">Related - Within (%)</th>
+<th id="T_9487f_level0_col3" class="col_heading level0 col3" data-quarto-table-cell-role="th">Related - Within (n)</th>
+<th id="T_9487f_level0_col4" class="col_heading level0 col4" data-quarto-table-cell-role="th">Unclassified (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td id="T_9487f_row0_col0" class="data row0 col0">Austria</td>
+<td id="T_9487f_row0_col1" class="data row0 col1">24.9</td>
+<td id="T_9487f_row0_col2" class="data row0 col2">12.7</td>
+<td id="T_9487f_row0_col3" class="data row0 col3">5,590</td>
+<td id="T_9487f_row0_col4" class="data row0 col4">0.5</td>
+</tr>
+<tr class="even">
+<td id="T_9487f_row1_col0" class="data row1 col0">Belgium</td>
+<td id="T_9487f_row1_col1" class="data row1 col1">24.2</td>
+<td id="T_9487f_row1_col2" class="data row1 col2">13.8</td>
+<td id="T_9487f_row1_col3" class="data row1 col3">2,737</td>
+<td id="T_9487f_row1_col4" class="data row1 col4">1.0</td>
+</tr>
+<tr class="odd">
+<td id="T_9487f_row2_col0" class="data row2 col0">Bulgaria</td>
+<td id="T_9487f_row2_col1" class="data row2 col1">35.1</td>
+<td id="T_9487f_row2_col2" class="data row2 col2">24.4</td>
+<td id="T_9487f_row2_col3" class="data row2 col3">8,071</td>
+<td id="T_9487f_row2_col4" class="data row2 col4">0.3</td>
+</tr>
+<tr class="even">
+<td id="T_9487f_row3_col0" class="data row3 col0">Croatia</td>
+<td id="T_9487f_row3_col1" class="data row3 col1">28.8</td>
+<td id="T_9487f_row3_col2" class="data row3 col2">17.6</td>
+<td id="T_9487f_row3_col3" class="data row3 col3">6,431</td>
+<td id="T_9487f_row3_col4" class="data row3 col4">0.8</td>
+</tr>
+<tr class="odd">
+<td id="T_9487f_row4_col0" class="data row4 col0">Cyprus</td>
+<td id="T_9487f_row4_col1" class="data row4 col1">29.1</td>
+<td id="T_9487f_row4_col2" class="data row4 col2">19.9</td>
+<td id="T_9487f_row4_col3" class="data row4 col3">6,716</td>
+<td id="T_9487f_row4_col4" class="data row4 col4">0.3</td>
+</tr>
+<tr class="even">
+<td id="T_9487f_row5_col0" class="data row5 col0">Czechia</td>
+<td id="T_9487f_row5_col1" class="data row5 col1">21.8</td>
+<td id="T_9487f_row5_col2" class="data row5 col2">17.5</td>
+<td id="T_9487f_row5_col3" class="data row5 col3">7,114</td>
+<td id="T_9487f_row5_col4" class="data row5 col4">1.3</td>
+</tr>
+<tr class="odd">
+<td id="T_9487f_row6_col0" class="data row6 col0">Denmark</td>
+<td id="T_9487f_row6_col1" class="data row6 col1">30.6</td>
+<td id="T_9487f_row6_col2" class="data row6 col2">17.6</td>
+<td id="T_9487f_row6_col3" class="data row6 col3">1,897</td>
+<td id="T_9487f_row6_col4" class="data row6 col4">0.9</td>
+</tr>
+<tr class="even">
+<td id="T_9487f_row7_col0" class="data row7 col0">Estonia</td>
+<td id="T_9487f_row7_col1" class="data row7 col1">22.5</td>
+<td id="T_9487f_row7_col2" class="data row7 col2">14.1</td>
+<td id="T_9487f_row7_col3" class="data row7 col3">1,599</td>
+<td id="T_9487f_row7_col4" class="data row7 col4">0.3</td>
+</tr>
+<tr class="odd">
+<td id="T_9487f_row8_col0" class="data row8 col0">Finland</td>
+<td id="T_9487f_row8_col1" class="data row8 col1">32.8</td>
+<td id="T_9487f_row8_col2" class="data row8 col2">23.5</td>
+<td id="T_9487f_row8_col3" class="data row8 col3">1,501</td>
+<td id="T_9487f_row8_col4" class="data row8 col4">0.8</td>
+</tr>
+<tr class="even">
+<td id="T_9487f_row9_col0" class="data row9 col0">France</td>
+<td id="T_9487f_row9_col1" class="data row9 col1">26.5</td>
+<td id="T_9487f_row9_col2" class="data row9 col2">15.8</td>
+<td id="T_9487f_row9_col3" class="data row9 col3">9,955</td>
+<td id="T_9487f_row9_col4" class="data row9 col4">0.7</td>
+</tr>
+<tr class="odd">
+<td id="T_9487f_row10_col0" class="data row10 col0">Germany</td>
+<td id="T_9487f_row10_col1" class="data row10 col1">29.4</td>
+<td id="T_9487f_row10_col2" class="data row10 col2">23.0</td>
+<td id="T_9487f_row10_col3" class="data row10 col3">9,292</td>
+<td id="T_9487f_row10_col4" class="data row10 col4">0.8</td>
+</tr>
+<tr class="even">
+<td id="T_9487f_row11_col0" class="data row11 col0">Greece</td>
+<td id="T_9487f_row11_col1" class="data row11 col1">26.6</td>
+<td id="T_9487f_row11_col2" class="data row11 col2">17.1</td>
+<td id="T_9487f_row11_col3" class="data row11 col3">8,027</td>
+<td id="T_9487f_row11_col4" class="data row11 col4">1.2</td>
+</tr>
+<tr class="odd">
+<td id="T_9487f_row12_col0" class="data row12 col0">Hungary</td>
+<td id="T_9487f_row12_col1" class="data row12 col1">25.8</td>
+<td id="T_9487f_row12_col2" class="data row12 col2">15.4</td>
+<td id="T_9487f_row12_col3" class="data row12 col3">2,768</td>
+<td id="T_9487f_row12_col4" class="data row12 col4">0.8</td>
+</tr>
+<tr class="even">
+<td id="T_9487f_row13_col0" class="data row13 col0">Ireland</td>
+<td id="T_9487f_row13_col1" class="data row13 col1">8.0</td>
+<td id="T_9487f_row13_col2" class="data row13 col2">5.5</td>
+<td id="T_9487f_row13_col3" class="data row13 col3">2,676</td>
+<td id="T_9487f_row13_col4" class="data row13 col4">0.2</td>
+</tr>
+<tr class="odd">
+<td id="T_9487f_row14_col0" class="data row14 col0">Italy</td>
+<td id="T_9487f_row14_col1" class="data row14 col1">29.1</td>
+<td id="T_9487f_row14_col2" class="data row14 col2">24.1</td>
+<td id="T_9487f_row14_col3" class="data row14 col3">18,800</td>
+<td id="T_9487f_row14_col4" class="data row14 col4">0.8</td>
+</tr>
+<tr class="even">
+<td id="T_9487f_row15_col0" class="data row15 col0">Latvia</td>
+<td id="T_9487f_row15_col1" class="data row15 col1">15.1</td>
+<td id="T_9487f_row15_col2" class="data row15 col2">11.6</td>
+<td id="T_9487f_row15_col3" class="data row15 col3">636</td>
+<td id="T_9487f_row15_col4" class="data row15 col4">0.6</td>
+</tr>
+<tr class="odd">
+<td id="T_9487f_row16_col0" class="data row16 col0">Lithuania</td>
+<td id="T_9487f_row16_col1" class="data row16 col1">31.5</td>
+<td id="T_9487f_row16_col2" class="data row16 col2">24.6</td>
+<td id="T_9487f_row16_col3" class="data row16 col3">3,272</td>
+<td id="T_9487f_row16_col4" class="data row16 col4">0.7</td>
+</tr>
+<tr class="even">
+<td id="T_9487f_row17_col0" class="data row17 col0">Luxembourg</td>
+<td id="T_9487f_row17_col1" class="data row17 col1">26.7</td>
+<td id="T_9487f_row17_col2" class="data row17 col2">14.7</td>
+<td id="T_9487f_row17_col3" class="data row17 col3">1,119</td>
+<td id="T_9487f_row17_col4" class="data row17 col4">0.5</td>
+</tr>
+<tr class="odd">
+<td id="T_9487f_row18_col0" class="data row18 col0">Malta</td>
+<td id="T_9487f_row18_col1" class="data row18 col1">37.6</td>
+<td id="T_9487f_row18_col2" class="data row18 col2">30.4</td>
+<td id="T_9487f_row18_col3" class="data row18 col3">3,205</td>
+<td id="T_9487f_row18_col4" class="data row18 col4">0.4</td>
+</tr>
+<tr class="even">
+<td id="T_9487f_row19_col0" class="data row19 col0">Netherlands</td>
+<td id="T_9487f_row19_col1" class="data row19 col1">24.8</td>
+<td id="T_9487f_row19_col2" class="data row19 col2">14.2</td>
+<td id="T_9487f_row19_col3" class="data row19 col3">3,223</td>
+<td id="T_9487f_row19_col4" class="data row19 col4">0.6</td>
+</tr>
+<tr class="odd">
+<td id="T_9487f_row20_col0" class="data row20 col0">Poland</td>
+<td id="T_9487f_row20_col1" class="data row20 col1">40.7</td>
+<td id="T_9487f_row20_col2" class="data row20 col2">33.7</td>
+<td id="T_9487f_row20_col3" class="data row20 col3">5,902</td>
+<td id="T_9487f_row20_col4" class="data row20 col4">0.8</td>
+</tr>
+<tr class="even">
+<td id="T_9487f_row21_col0" class="data row21 col0">Portugal</td>
+<td id="T_9487f_row21_col1" class="data row21 col1">23.2</td>
+<td id="T_9487f_row21_col2" class="data row21 col2">14.8</td>
+<td id="T_9487f_row21_col3" class="data row21 col3">4,217</td>
+<td id="T_9487f_row21_col4" class="data row21 col4">0.3</td>
+</tr>
+<tr class="odd">
+<td id="T_9487f_row22_col0" class="data row22 col0">Romania</td>
+<td id="T_9487f_row22_col1" class="data row22 col1">43.6</td>
+<td id="T_9487f_row22_col2" class="data row22 col2">27.2</td>
+<td id="T_9487f_row22_col3" class="data row22 col3">8,765</td>
+<td id="T_9487f_row22_col4" class="data row22 col4">1.0</td>
+</tr>
+<tr class="even">
+<td id="T_9487f_row23_col0" class="data row23 col0">Slovakia</td>
+<td id="T_9487f_row23_col1" class="data row23 col1">26.8</td>
+<td id="T_9487f_row23_col2" class="data row23 col2">17.9</td>
+<td id="T_9487f_row23_col3" class="data row23 col3">5,172</td>
+<td id="T_9487f_row23_col4" class="data row23 col4">0.4</td>
+</tr>
+<tr class="odd">
+<td id="T_9487f_row24_col0" class="data row24 col0">Slovenia</td>
+<td id="T_9487f_row24_col1" class="data row24 col1">30.7</td>
+<td id="T_9487f_row24_col2" class="data row24 col2">18.2</td>
+<td id="T_9487f_row24_col3" class="data row24 col3">1,786</td>
+<td id="T_9487f_row24_col4" class="data row24 col4">0.7</td>
+</tr>
+<tr class="even">
+<td id="T_9487f_row25_col0" class="data row25 col0">Spain</td>
+<td id="T_9487f_row25_col1" class="data row25 col1">27.7</td>
+<td id="T_9487f_row25_col2" class="data row25 col2">18.9</td>
+<td id="T_9487f_row25_col3" class="data row25 col3">16,685</td>
+<td id="T_9487f_row25_col4" class="data row25 col4">1.0</td>
+</tr>
+<tr class="odd">
+<td id="T_9487f_row26_col0" class="data row26 col0">Sweden</td>
+<td id="T_9487f_row26_col1" class="data row26 col1">26.7</td>
+<td id="T_9487f_row26_col2" class="data row26 col2">15.6</td>
+<td id="T_9487f_row26_col3" class="data row26 col3">968</td>
+<td id="T_9487f_row26_col4" class="data row26 col4">2.5</td>
+</tr>
+<tr class="even">
+<td id="T_9487f_row27_col0" class="data row27 col0">European Union</td>
+<td id="T_9487f_row27_col1" class="data row27 col1">27.8</td>
+<td id="T_9487f_row27_col2" class="data row27 col2">18.7</td>
+<td id="T_9487f_row27_col3" class="data row27 col3">148,124</td>
+<td id="T_9487f_row27_col4" class="data row27 col4">0.8</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div></div></div>
+</div></div>
+<div id="cell-17" class="cell markdown">
+<section id="table-4-second-stage-classification" class="level3">
+<h3 class="anchored" data-anchor-id="table-4-second-stage-classification">Table 4: Second Stage Classification</h3>
+</section>
+</div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [27]:</pre></div><div id="cell-18" class="cell" data-execution_count="27">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>tbl04_data <span class="op">=</span> (</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    cldata_master.copy()</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    .drop_duplicates(subset <span class="op">=</span> <span class="st">"id"</span>)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    .loc[:,[<span class="st">"country"</span>, <span class="st">"pillar_1"</span>, <span class="st">"pillar_2"</span>, <span class="st">"pillar_3"</span>, <span class="st">"pillar_4"</span>, <span class="st">"pillar_5"</span>, <span class="st">"pillar_6"</span>, <span class="st">"pillar_7"</span>, <span class="st">"pillar_8"</span>]]</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    .groupby(<span class="st">"country"</span>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    .agg(<span class="st">"mean"</span>)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">apply</span>(<span class="kw">lambda</span> x: x<span class="op">*</span><span class="dv">100</span>)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    .reset_index()</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    .rename(</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>        columns <span class="op">=</span> {</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>            <span class="st">"country"</span> : <span class="st">"Country"</span>,</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>            <span class="st">"pillar_1"</span>: <span class="st">"Pillar 1"</span>,</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>            <span class="st">"pillar_2"</span>: <span class="st">"Pillar 2"</span>,</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>            <span class="st">"pillar_3"</span>: <span class="st">"Pillar 3"</span>,</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>            <span class="st">"pillar_4"</span>: <span class="st">"Pillar 4"</span>,</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>            <span class="st">"pillar_5"</span>: <span class="st">"Pillar 5"</span>,</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>            <span class="st">"pillar_6"</span>: <span class="st">"Pillar 6"</span>,</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>            <span class="st">"pillar_7"</span>: <span class="st">"Pillar 7"</span>,</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>            <span class="st">"pillar_8"</span>: <span class="st">"Pillar 8"</span>,</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>total_row <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>    [[<span class="st">"European Union"</span>] <span class="op">+</span> tbl04_data.iloc[:, <span class="dv">1</span>:].mean().values.tolist()], </span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>tbl04_data.columns</span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>tbl04_total <span class="op">=</span> pd.concat([tbl04_data, total_row], ignore_index<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [28]:</pre></div><div class="cell" data-execution_count="28">
+
+<div class="cell-container"><div class="cell-decorator"><pre>In [28]:</pre></div><div><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>tbl04_total.style.hide(axis<span class="op">=</span><span class="st">"index"</span>).<span class="bu">format</span>(precision<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div><div id="tbl-classstage2" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="28">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-classstage2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4: Pillar classification results (%)
+</figcaption>
+<div aria-describedby="tbl-classstage2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output cell-output-display" data-execution_count="28">
+<style type="text/css">
+</style>
+
+<table id="T_259f0" class="do-not-create-environment cell caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th id="T_259f0_level0_col0" class="col_heading level0 col0" data-quarto-table-cell-role="th">Country</th>
+<th id="T_259f0_level0_col1" class="col_heading level0 col1" data-quarto-table-cell-role="th">Pillar 1</th>
+<th id="T_259f0_level0_col2" class="col_heading level0 col2" data-quarto-table-cell-role="th">Pillar 2</th>
+<th id="T_259f0_level0_col3" class="col_heading level0 col3" data-quarto-table-cell-role="th">Pillar 3</th>
+<th id="T_259f0_level0_col4" class="col_heading level0 col4" data-quarto-table-cell-role="th">Pillar 4</th>
+<th id="T_259f0_level0_col5" class="col_heading level0 col5" data-quarto-table-cell-role="th">Pillar 5</th>
+<th id="T_259f0_level0_col6" class="col_heading level0 col6" data-quarto-table-cell-role="th">Pillar 6</th>
+<th id="T_259f0_level0_col7" class="col_heading level0 col7" data-quarto-table-cell-role="th">Pillar 7</th>
+<th id="T_259f0_level0_col8" class="col_heading level0 col8" data-quarto-table-cell-role="th">Pillar 8</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td id="T_259f0_row0_col0" class="data row0 col0">Austria</td>
+<td id="T_259f0_row0_col1" class="data row0 col1">18.9</td>
+<td id="T_259f0_row0_col2" class="data row0 col2">9.8</td>
+<td id="T_259f0_row0_col3" class="data row0 col3">2.2</td>
+<td id="T_259f0_row0_col4" class="data row0 col4">15.3</td>
+<td id="T_259f0_row0_col5" class="data row0 col5">5.8</td>
+<td id="T_259f0_row0_col6" class="data row0 col6">2.5</td>
+<td id="T_259f0_row0_col7" class="data row0 col7">6.1</td>
+<td id="T_259f0_row0_col8" class="data row0 col8">15.8</td>
+</tr>
+<tr class="even">
+<td id="T_259f0_row1_col0" class="data row1 col0">Belgium</td>
+<td id="T_259f0_row1_col1" class="data row1 col1">13.3</td>
+<td id="T_259f0_row1_col2" class="data row1 col2">9.0</td>
+<td id="T_259f0_row1_col3" class="data row1 col3">1.4</td>
+<td id="T_259f0_row1_col4" class="data row1 col4">12.8</td>
+<td id="T_259f0_row1_col5" class="data row1 col5">5.8</td>
+<td id="T_259f0_row1_col6" class="data row1 col6">1.9</td>
+<td id="T_259f0_row1_col7" class="data row1 col7">6.5</td>
+<td id="T_259f0_row1_col8" class="data row1 col8">17.1</td>
+</tr>
+<tr class="odd">
+<td id="T_259f0_row2_col0" class="data row2 col0">Bulgaria</td>
+<td id="T_259f0_row2_col1" class="data row2 col1">27.4</td>
+<td id="T_259f0_row2_col2" class="data row2 col2">16.7</td>
+<td id="T_259f0_row2_col3" class="data row2 col3">3.6</td>
+<td id="T_259f0_row2_col4" class="data row2 col4">17.8</td>
+<td id="T_259f0_row2_col5" class="data row2 col5">8.1</td>
+<td id="T_259f0_row2_col6" class="data row2 col6">5.2</td>
+<td id="T_259f0_row2_col7" class="data row2 col7">9.2</td>
+<td id="T_259f0_row2_col8" class="data row2 col8">21.3</td>
+</tr>
+<tr class="even">
+<td id="T_259f0_row3_col0" class="data row3 col0">Croatia</td>
+<td id="T_259f0_row3_col1" class="data row3 col1">20.6</td>
+<td id="T_259f0_row3_col2" class="data row3 col2">13.0</td>
+<td id="T_259f0_row3_col3" class="data row3 col3">2.3</td>
+<td id="T_259f0_row3_col4" class="data row3 col4">15.6</td>
+<td id="T_259f0_row3_col5" class="data row3 col5">8.1</td>
+<td id="T_259f0_row3_col6" class="data row3 col6">3.0</td>
+<td id="T_259f0_row3_col7" class="data row3 col7">6.5</td>
+<td id="T_259f0_row3_col8" class="data row3 col8">19.8</td>
+</tr>
+<tr class="odd">
+<td id="T_259f0_row4_col0" class="data row4 col0">Cyprus</td>
+<td id="T_259f0_row4_col1" class="data row4 col1">22.6</td>
+<td id="T_259f0_row4_col2" class="data row4 col2">13.7</td>
+<td id="T_259f0_row4_col3" class="data row4 col3">3.9</td>
+<td id="T_259f0_row4_col4" class="data row4 col4">16.2</td>
+<td id="T_259f0_row4_col5" class="data row4 col5">7.5</td>
+<td id="T_259f0_row4_col6" class="data row4 col6">6.1</td>
+<td id="T_259f0_row4_col7" class="data row4 col7">7.9</td>
+<td id="T_259f0_row4_col8" class="data row4 col8">15.6</td>
+</tr>
+<tr class="even">
+<td id="T_259f0_row5_col0" class="data row5 col0">Czechia</td>
+<td id="T_259f0_row5_col1" class="data row5 col1">14.7</td>
+<td id="T_259f0_row5_col2" class="data row5 col2">9.1</td>
+<td id="T_259f0_row5_col3" class="data row5 col3">1.7</td>
+<td id="T_259f0_row5_col4" class="data row5 col4">10.8</td>
+<td id="T_259f0_row5_col5" class="data row5 col5">6.6</td>
+<td id="T_259f0_row5_col6" class="data row5 col6">2.7</td>
+<td id="T_259f0_row5_col7" class="data row5 col7">4.6</td>
+<td id="T_259f0_row5_col8" class="data row5 col8">14.6</td>
+</tr>
+<tr class="odd">
+<td id="T_259f0_row6_col0" class="data row6 col0">Denmark</td>
+<td id="T_259f0_row6_col1" class="data row6 col1">24.3</td>
+<td id="T_259f0_row6_col2" class="data row6 col2">12.8</td>
+<td id="T_259f0_row6_col3" class="data row6 col3">3.0</td>
+<td id="T_259f0_row6_col4" class="data row6 col4">20.2</td>
+<td id="T_259f0_row6_col5" class="data row6 col5">9.2</td>
+<td id="T_259f0_row6_col6" class="data row6 col6">3.0</td>
+<td id="T_259f0_row6_col7" class="data row6 col7">8.2</td>
+<td id="T_259f0_row6_col8" class="data row6 col8">20.5</td>
+</tr>
+<tr class="even">
+<td id="T_259f0_row7_col0" class="data row7 col0">Estonia</td>
+<td id="T_259f0_row7_col1" class="data row7 col1">16.9</td>
+<td id="T_259f0_row7_col2" class="data row7 col2">8.9</td>
+<td id="T_259f0_row7_col3" class="data row7 col3">2.0</td>
+<td id="T_259f0_row7_col4" class="data row7 col4">11.7</td>
+<td id="T_259f0_row7_col5" class="data row7 col5">4.3</td>
+<td id="T_259f0_row7_col6" class="data row7 col6">3.4</td>
+<td id="T_259f0_row7_col7" class="data row7 col7">5.9</td>
+<td id="T_259f0_row7_col8" class="data row7 col8">13.2</td>
+</tr>
+<tr class="odd">
+<td id="T_259f0_row8_col0" class="data row8 col0">Finland</td>
+<td id="T_259f0_row8_col1" class="data row8 col1">24.2</td>
+<td id="T_259f0_row8_col2" class="data row8 col2">12.9</td>
+<td id="T_259f0_row8_col3" class="data row8 col3">1.9</td>
+<td id="T_259f0_row8_col4" class="data row8 col4">20.3</td>
+<td id="T_259f0_row8_col5" class="data row8 col5">10.2</td>
+<td id="T_259f0_row8_col6" class="data row8 col6">3.6</td>
+<td id="T_259f0_row8_col7" class="data row8 col7">8.2</td>
+<td id="T_259f0_row8_col8" class="data row8 col8">22.5</td>
+</tr>
+<tr class="even">
+<td id="T_259f0_row9_col0" class="data row9 col0">France</td>
+<td id="T_259f0_row9_col1" class="data row9 col1">20.5</td>
+<td id="T_259f0_row9_col2" class="data row9 col2">9.7</td>
+<td id="T_259f0_row9_col3" class="data row9 col3">2.3</td>
+<td id="T_259f0_row9_col4" class="data row9 col4">18.5</td>
+<td id="T_259f0_row9_col5" class="data row9 col5">7.1</td>
+<td id="T_259f0_row9_col6" class="data row9 col6">3.1</td>
+<td id="T_259f0_row9_col7" class="data row9 col7">5.6</td>
+<td id="T_259f0_row9_col8" class="data row9 col8">15.3</td>
+</tr>
+<tr class="odd">
+<td id="T_259f0_row10_col0" class="data row10 col0">Germany</td>
+<td id="T_259f0_row10_col1" class="data row10 col1">20.9</td>
+<td id="T_259f0_row10_col2" class="data row10 col2">9.5</td>
+<td id="T_259f0_row10_col3" class="data row10 col3">2.1</td>
+<td id="T_259f0_row10_col4" class="data row10 col4">17.7</td>
+<td id="T_259f0_row10_col5" class="data row10 col5">9.2</td>
+<td id="T_259f0_row10_col6" class="data row10 col6">2.5</td>
+<td id="T_259f0_row10_col7" class="data row10 col7">7.0</td>
+<td id="T_259f0_row10_col8" class="data row10 col8">19.4</td>
+</tr>
+<tr class="even">
+<td id="T_259f0_row11_col0" class="data row11 col0">Greece</td>
+<td id="T_259f0_row11_col1" class="data row11 col1">20.2</td>
+<td id="T_259f0_row11_col2" class="data row11 col2">12.1</td>
+<td id="T_259f0_row11_col3" class="data row11 col3">2.6</td>
+<td id="T_259f0_row11_col4" class="data row11 col4">16.7</td>
+<td id="T_259f0_row11_col5" class="data row11 col5">8.6</td>
+<td id="T_259f0_row11_col6" class="data row11 col6">3.9</td>
+<td id="T_259f0_row11_col7" class="data row11 col7">6.3</td>
+<td id="T_259f0_row11_col8" class="data row11 col8">17.4</td>
+</tr>
+<tr class="odd">
+<td id="T_259f0_row12_col0" class="data row12 col0">Hungary</td>
+<td id="T_259f0_row12_col1" class="data row12 col1">21.8</td>
+<td id="T_259f0_row12_col2" class="data row12 col2">13.2</td>
+<td id="T_259f0_row12_col3" class="data row12 col3">2.6</td>
+<td id="T_259f0_row12_col4" class="data row12 col4">16.4</td>
+<td id="T_259f0_row12_col5" class="data row12 col5">5.9</td>
+<td id="T_259f0_row12_col6" class="data row12 col6">3.6</td>
+<td id="T_259f0_row12_col7" class="data row12 col7">4.0</td>
+<td id="T_259f0_row12_col8" class="data row12 col8">14.0</td>
+</tr>
+<tr class="even">
+<td id="T_259f0_row13_col0" class="data row13 col0">Ireland</td>
+<td id="T_259f0_row13_col1" class="data row13 col1">18.6</td>
+<td id="T_259f0_row13_col2" class="data row13 col2">9.4</td>
+<td id="T_259f0_row13_col3" class="data row13 col3">2.7</td>
+<td id="T_259f0_row13_col4" class="data row13 col4">16.5</td>
+<td id="T_259f0_row13_col5" class="data row13 col5">7.0</td>
+<td id="T_259f0_row13_col6" class="data row13 col6">3.7</td>
+<td id="T_259f0_row13_col7" class="data row13 col7">8.0</td>
+<td id="T_259f0_row13_col8" class="data row13 col8">16.2</td>
+</tr>
+<tr class="odd">
+<td id="T_259f0_row14_col0" class="data row14 col0">Italy</td>
+<td id="T_259f0_row14_col1" class="data row14 col1">17.9</td>
+<td id="T_259f0_row14_col2" class="data row14 col2">12.3</td>
+<td id="T_259f0_row14_col3" class="data row14 col3">2.5</td>
+<td id="T_259f0_row14_col4" class="data row14 col4">17.2</td>
+<td id="T_259f0_row14_col5" class="data row14 col5">8.2</td>
+<td id="T_259f0_row14_col6" class="data row14 col6">4.1</td>
+<td id="T_259f0_row14_col7" class="data row14 col7">7.4</td>
+<td id="T_259f0_row14_col8" class="data row14 col8">18.4</td>
+</tr>
+<tr class="even">
+<td id="T_259f0_row15_col0" class="data row15 col0">Latvia</td>
+<td id="T_259f0_row15_col1" class="data row15 col1">10.4</td>
+<td id="T_259f0_row15_col2" class="data row15 col2">6.1</td>
+<td id="T_259f0_row15_col3" class="data row15 col3">2.0</td>
+<td id="T_259f0_row15_col4" class="data row15 col4">7.5</td>
+<td id="T_259f0_row15_col5" class="data row15 col5">3.1</td>
+<td id="T_259f0_row15_col6" class="data row15 col6">3.3</td>
+<td id="T_259f0_row15_col7" class="data row15 col7">2.1</td>
+<td id="T_259f0_row15_col8" class="data row15 col8">6.2</td>
+</tr>
+<tr class="odd">
+<td id="T_259f0_row16_col0" class="data row16 col0">Lithuania</td>
+<td id="T_259f0_row16_col1" class="data row16 col1">22.7</td>
+<td id="T_259f0_row16_col2" class="data row16 col2">14.1</td>
+<td id="T_259f0_row16_col3" class="data row16 col3">2.4</td>
+<td id="T_259f0_row16_col4" class="data row16 col4">15.3</td>
+<td id="T_259f0_row16_col5" class="data row16 col5">6.6</td>
+<td id="T_259f0_row16_col6" class="data row16 col6">4.4</td>
+<td id="T_259f0_row16_col7" class="data row16 col7">7.7</td>
+<td id="T_259f0_row16_col8" class="data row16 col8">20.7</td>
+</tr>
+<tr class="even">
+<td id="T_259f0_row17_col0" class="data row17 col0">Luxembourg</td>
+<td id="T_259f0_row17_col1" class="data row17 col1">16.4</td>
+<td id="T_259f0_row17_col2" class="data row17 col2">8.3</td>
+<td id="T_259f0_row17_col3" class="data row17 col3">3.8</td>
+<td id="T_259f0_row17_col4" class="data row17 col4">15.8</td>
+<td id="T_259f0_row17_col5" class="data row17 col5">6.6</td>
+<td id="T_259f0_row17_col6" class="data row17 col6">3.7</td>
+<td id="T_259f0_row17_col7" class="data row17 col7">5.8</td>
+<td id="T_259f0_row17_col8" class="data row17 col8">13.1</td>
+</tr>
+<tr class="odd">
+<td id="T_259f0_row18_col0" class="data row18 col0">Malta</td>
+<td id="T_259f0_row18_col1" class="data row18 col1">30.1</td>
+<td id="T_259f0_row18_col2" class="data row18 col2">19.3</td>
+<td id="T_259f0_row18_col3" class="data row18 col3">7.4</td>
+<td id="T_259f0_row18_col4" class="data row18 col4">24.0</td>
+<td id="T_259f0_row18_col5" class="data row18 col5">6.4</td>
+<td id="T_259f0_row18_col6" class="data row18 col6">9.2</td>
+<td id="T_259f0_row18_col7" class="data row18 col7">13.0</td>
+<td id="T_259f0_row18_col8" class="data row18 col8">21.4</td>
+</tr>
+<tr class="even">
+<td id="T_259f0_row19_col0" class="data row19 col0">Netherlands</td>
+<td id="T_259f0_row19_col1" class="data row19 col1">16.6</td>
+<td id="T_259f0_row19_col2" class="data row19 col2">9.6</td>
+<td id="T_259f0_row19_col3" class="data row19 col3">2.6</td>
+<td id="T_259f0_row19_col4" class="data row19 col4">15.5</td>
+<td id="T_259f0_row19_col5" class="data row19 col5">5.6</td>
+<td id="T_259f0_row19_col6" class="data row19 col6">3.0</td>
+<td id="T_259f0_row19_col7" class="data row19 col7">6.0</td>
+<td id="T_259f0_row19_col8" class="data row19 col8">14.8</td>
+</tr>
+<tr class="odd">
+<td id="T_259f0_row20_col0" class="data row20 col0">Poland</td>
+<td id="T_259f0_row20_col1" class="data row20 col1">31.6</td>
+<td id="T_259f0_row20_col2" class="data row20 col2">18.1</td>
+<td id="T_259f0_row20_col3" class="data row20 col3">3.8</td>
+<td id="T_259f0_row20_col4" class="data row20 col4">23.1</td>
+<td id="T_259f0_row20_col5" class="data row20 col5">7.6</td>
+<td id="T_259f0_row20_col6" class="data row20 col6">5.6</td>
+<td id="T_259f0_row20_col7" class="data row20 col7">11.4</td>
+<td id="T_259f0_row20_col8" class="data row20 col8">23.5</td>
+</tr>
+<tr class="even">
+<td id="T_259f0_row21_col0" class="data row21 col0">Portugal</td>
+<td id="T_259f0_row21_col1" class="data row21 col1">18.6</td>
+<td id="T_259f0_row21_col2" class="data row21 col2">9.5</td>
+<td id="T_259f0_row21_col3" class="data row21 col3">3.0</td>
+<td id="T_259f0_row21_col4" class="data row21 col4">13.6</td>
+<td id="T_259f0_row21_col5" class="data row21 col5">3.1</td>
+<td id="T_259f0_row21_col6" class="data row21 col6">3.6</td>
+<td id="T_259f0_row21_col7" class="data row21 col7">5.2</td>
+<td id="T_259f0_row21_col8" class="data row21 col8">10.6</td>
+</tr>
+<tr class="odd">
+<td id="T_259f0_row22_col0" class="data row22 col0">Romania</td>
+<td id="T_259f0_row22_col1" class="data row22 col1">28.6</td>
+<td id="T_259f0_row22_col2" class="data row22 col2">23.3</td>
+<td id="T_259f0_row22_col3" class="data row22 col3">4.1</td>
+<td id="T_259f0_row22_col4" class="data row22 col4">22.5</td>
+<td id="T_259f0_row22_col5" class="data row22 col5">9.5</td>
+<td id="T_259f0_row22_col6" class="data row22 col6">7.0</td>
+<td id="T_259f0_row22_col7" class="data row22 col7">8.1</td>
+<td id="T_259f0_row22_col8" class="data row22 col8">25.0</td>
+</tr>
+<tr class="even">
+<td id="T_259f0_row23_col0" class="data row23 col0">Slovakia</td>
+<td id="T_259f0_row23_col1" class="data row23 col1">23.1</td>
+<td id="T_259f0_row23_col2" class="data row23 col2">13.0</td>
+<td id="T_259f0_row23_col3" class="data row23 col3">3.6</td>
+<td id="T_259f0_row23_col4" class="data row23 col4">16.0</td>
+<td id="T_259f0_row23_col5" class="data row23 col5">4.6</td>
+<td id="T_259f0_row23_col6" class="data row23 col6">3.0</td>
+<td id="T_259f0_row23_col7" class="data row23 col7">4.9</td>
+<td id="T_259f0_row23_col8" class="data row23 col8">15.5</td>
+</tr>
+<tr class="odd">
+<td id="T_259f0_row24_col0" class="data row24 col0">Slovenia</td>
+<td id="T_259f0_row24_col1" class="data row24 col1">24.4</td>
+<td id="T_259f0_row24_col2" class="data row24 col2">11.9</td>
+<td id="T_259f0_row24_col3" class="data row24 col3">3.1</td>
+<td id="T_259f0_row24_col4" class="data row24 col4">18.4</td>
+<td id="T_259f0_row24_col5" class="data row24 col5">7.4</td>
+<td id="T_259f0_row24_col6" class="data row24 col6">4.3</td>
+<td id="T_259f0_row24_col7" class="data row24 col7">7.4</td>
+<td id="T_259f0_row24_col8" class="data row24 col8">16.4</td>
+</tr>
+<tr class="even">
+<td id="T_259f0_row25_col0" class="data row25 col0">Spain</td>
+<td id="T_259f0_row25_col1" class="data row25 col1">20.6</td>
+<td id="T_259f0_row25_col2" class="data row25 col2">11.0</td>
+<td id="T_259f0_row25_col3" class="data row25 col3">2.6</td>
+<td id="T_259f0_row25_col4" class="data row25 col4">17.3</td>
+<td id="T_259f0_row25_col5" class="data row25 col5">6.3</td>
+<td id="T_259f0_row25_col6" class="data row25 col6">3.3</td>
+<td id="T_259f0_row25_col7" class="data row25 col7">6.1</td>
+<td id="T_259f0_row25_col8" class="data row25 col8">15.8</td>
+</tr>
+<tr class="odd">
+<td id="T_259f0_row26_col0" class="data row26 col0">Sweden</td>
+<td id="T_259f0_row26_col1" class="data row26 col1">19.8</td>
+<td id="T_259f0_row26_col2" class="data row26 col2">10.2</td>
+<td id="T_259f0_row26_col3" class="data row26 col3">1.9</td>
+<td id="T_259f0_row26_col4" class="data row26 col4">18.1</td>
+<td id="T_259f0_row26_col5" class="data row26 col5">9.7</td>
+<td id="T_259f0_row26_col6" class="data row26 col6">2.0</td>
+<td id="T_259f0_row26_col7" class="data row26 col7">6.3</td>
+<td id="T_259f0_row26_col8" class="data row26 col8">19.1</td>
+</tr>
+<tr class="even">
+<td id="T_259f0_row27_col0" class="data row27 col0">European Union</td>
+<td id="T_259f0_row27_col1" class="data row27 col1">20.9</td>
+<td id="T_259f0_row27_col2" class="data row27 col2">12.1</td>
+<td id="T_259f0_row27_col3" class="data row27 col3">2.9</td>
+<td id="T_259f0_row27_col4" class="data row27 col4">16.7</td>
+<td id="T_259f0_row27_col5" class="data row27 col5">7.0</td>
+<td id="T_259f0_row27_col6" class="data row27 col6">3.9</td>
+<td id="T_259f0_row27_col7" class="data row27 col7">6.9</td>
+<td id="T_259f0_row27_col8" class="data row27 col8">17.1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div></div></div>
+</div></div>
+     </main>
+<!-- /main column -->  <script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>  </div> <!-- /content --> 
+  
+</body></html>

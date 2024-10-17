@@ -287,29 +287,38 @@ of news articles archives and Large Language Models (LLM) in order to
 produce a systematized database for researchers to assess and validate
 perceptions on the rule of Law in the targeted countries.
 
-The document is structured in six sections. After this brief
-introduction, we introduced some guidelines on how the extraction and
-translation of the input data was performed. The third section is
+The document is structured in seven sections. After this brief
+introduction, we introduce the conceptual framework that will guide the
+classification, analysis, structure, and organization of our data. In
+the third section, we discuss the process and logic followed for the
+extraction and translation of the input data. The fourth section is
 focused on the use of LLMs to help us classify the extracted data. The
-fourth section covers the use of LLMs to help us summarize the
+fifth section covers the use of LLMs to help us summarize the
 information into brief media reports that can complement and facilitate
 the work of researchers when having to assess changes in people's
-perceptions. The fifth section explain the use of some Natural Language
+perceptions. The sixth section explain the use of some Natural Language
 Processing (NLP) techniques to get further insights from the final
 database. Finally, the last section provides some brief overview on the
 next steps and potential extensions.
 
 \begin{figure}
 
-\caption{Figure 1: Overview of the Process}
+\caption{\label{fig-flow}Overview of the Process}
 
-{\centering \includegraphics{images/Massive-News-Country-Reports.png}
+\centering{
+
+\includegraphics{images/Massive-News-Country-Reports.png}
 
 }
 
 \end{figure}%
 
-\section{Conceptual Framework}\label{conceptual-framework}
+\section[Conceptual Framework]{\texorpdfstring{Conceptual
+Framework\sidenote{\footnotesize The concepts outlined in this documents are largely
+  based on a preliminary version of the \emph{European Union Subnational
+  Indicators: Conceptual and Measurement Framework} document developed
+  by The World Justice Project. For more information please consult the
+  document here.}}{Conceptual Framework}}\label{conceptual-framework1}
 
 \subsection{Macro-concepts}\label{macro-concepts}
 
@@ -713,7 +722,7 @@ In more detail, this pillar is related to the following topics:
   system in reducing recidivism.
 \end{itemize}
 
-\section{Extraction and translation}\label{extraction-and-translation}
+\section{Extraction and Translation}\label{extraction-and-translation}
 
 The first step in designing the \emph{EU Rule of Law Tracker} was to
 identify, gather, and compile the information that would serve as the
@@ -807,20 +816,33 @@ German newspapers might refer to it as
 ``\emph{Bundesverfassungsgericht}''.
 
 Depending on the language of publication of each targeted newspaper, we
-will use a combination of language- and country-based keywords. For
-example, the newspaper ``\emph{De Standaard}'' in Belgium publishes news
-in Dutch. Therefore, we will use the 123 language-based keywords in
-Dutch (also used in some newspapers from the Netherlands), as well as
-the 14 Belgium institutions names in Dutch (unique for Belgium). On the
-other hand, the Belgium newspaper ``\emph{Le Soir}'' publishes their
-news in French. As a result, we use the 123 french keywords (also used
-for Newspapers in France), as well as the 14 Belgium institution names
-in French (unique for Belgium newspapers). The definition of keywords
-was made in English and then manually translated to the other 22
-languages used by the rest of the targeted newspapers.\sidenote{\footnotesize The
-  translation of these keywords involved a combination of desk research,
-  translation engines, and native speaker consultations when possible.}
-The full list of keywords can be consulted in Section~\ref{sec-keys}.
+will use a combination of language- and country-based keywords (see
+Figure~\ref{fig-keywords}). For example, the newspaper ``\emph{De
+Standaard}'' in Belgium publishes news in Dutch. Therefore, we will use
+the 123 language-based keywords in Dutch (also used in some newspapers
+from the Netherlands), as well as the 14 Belgium institutions names in
+Dutch (unique for Belgium). On the other hand, the Belgium newspaper
+``\emph{Le Soir}'' publishes their news in French. As a result, we use
+the 123 french keywords (also used for Newspapers in France), as well as
+the 14 Belgium institution names in French (unique for Belgium
+newspapers). The definition of keywords was made in English and then
+manually translated to the other 22 languages used by the rest of the
+targeted newspapers.\sidenote{\footnotesize The translation of these keywords involved
+  a combination of desk research, translation engines, and native
+  speaker consultations when possible.} The full list of keywords can be
+consulted in Section~\ref{sec-keys}.
+
+\begin{figure}
+
+\caption{\label{fig-keywords}Keywords used for extraction}
+
+\centering{
+
+\includegraphics[width=0.75\textwidth,height=\textheight]{images/keywords.png}
+
+}
+
+\end{figure}%
 
 Due to quota limitations at the time of the extraction,\sidenote{\footnotesize At the
   time of the extraction, Newscatcher was transitioning from version 2
@@ -835,32 +857,24 @@ articles were gathered from the Newscatcher data archive. The data
 consisted of tabular data in JSON format. The response object returned
 by the API contained some information from the news articles such as the
 published date, title, content, language, URL, and if the article was
-coming from an opinion column or a regular section of the newspaper.
+coming from an opinion column or a regular section of the newspaper. The
+code used for the extraction phase can be found in the
+\href{https://ctoruno.github.io/eu-rol-tracker/notebooks/0_EU_news_gathering_1-preview.html}{Extraction
+notebook} in the supplementary materials to this manuscript.
 
-\begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.1857}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3714}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.4429}}@{}}
-\caption{Total news extracted per
-country}\label{tbl-extraction}\tabularnewline
+\begin{longtable}[]{@{}lll@{}}
+
+\caption{\label{tbl-extraction}Total news extracted per country}
+
+\tabularnewline
+
+\caption{}\label{T_1f17c}\tabularnewline
 \toprule\noalign{}
-\begin{minipage}[b]{\linewidth}\raggedright
-\textbf{Country}
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-\textbf{Total News Extracted}
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-\textbf{Date Range}
-\end{minipage} \\
+Country & Total News Extracted & Date Range \\
 \midrule\noalign{}
 \endfirsthead
 \toprule\noalign{}
-\begin{minipage}[b]{\linewidth}\raggedright
-\textbf{Country}
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-\textbf{Total News Extracted}
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-\textbf{Date Range}
-\end{minipage} \\
+Country & Total News Extracted & Date Range \\
 \midrule\noalign{}
 \endhead
 \bottomrule\noalign{}
@@ -892,8 +906,12 @@ Slovakia & 34,874 & Aug 08, 2023 - Mar 07, 2024 \\
 Slovenia & 10,211 & Aug 08, 2023 - Mar 07, 2024 \\
 Spain & 112,820 & Aug 08, 2023 - Mar 07, 2024 \\
 Sweden & 6,417 & Jan 08, 2024 - Mar 07, 2024 \\
-\textbf{Total} & \textbf{904,944} & \\
+Total & 880,245 & \\
+
 \end{longtable}
+
+\textsubscript{Source:
+\href{https://ctoruno.github.io/eu-rol-tracker/notebooks/tables-preview.html\#cell-tbl-extraction}{Tables}}
 
 The titles and content of the news articles were returned in their
 original publication languages, resulting in a diverse collection of
@@ -911,7 +929,71 @@ to facilitate the use of NLP techniques in the data analysis phase, we
 decided to translate all the data into a single language. Since most
 LLMs are primarily trained on English data, we chose English as the
 target language for translation. To guarantee the highest quality, we
-used the Google Translation API to translate all of our text data.
+used the Google Translation API to translate all of our text data. The
+code used for the translation phase can be found in the
+\href{https://ctoruno.github.io/eu-rol-tracker/notebooks/1_EU_news_translation_1-preview.html}{Translation
+notebook} in the supplementary materials to this manuscript.
+
+A total of 808,429 news articles, equivalent to 93.9\% of the total
+number of articles extracted, were successfully translated. This lost of
+information was due to several reasons such as API connection failures,
+news articles with empty content, corrupted text data, unidentified
+source language, among other reasons, unusually long text, among other
+reasons. Column 4 in Table~\ref{tbl-translation} contains information on
+the success rate per country during the translation process.
+
+\begin{longtable}[]{@{}llll@{}}
+
+\caption{\label{tbl-translation}Translation Process (Rate of Success)}
+
+\tabularnewline
+
+\caption{}\label{T_542c5}\tabularnewline
+\toprule\noalign{}
+Country & Extracted News (n) & Translated News (n) & Translated News
+(\%) \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+Country & Extracted News (n) & Translated News (n) & Translated News
+(\%) \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Austria & 46,145 & 44,181 & 95.7 \\
+Belgium & 21,287 & 19,846 & 93.2 \\
+Bulgaria & 38,118 & 33,070 & 86.8 \\
+Croatia & 37,068 & 36,595 & 98.7 \\
+Cyprus & 34,955 & 33,772 & 96.6 \\
+Czechia & 41,415 & 40,620 & 98.1 \\
+Denmark & 11,312 & 10,761 & 95.1 \\
+Estonia & 12,370 & 11,334 & 91.6 \\
+Finland & 6,647 & 6,399 & 96.3 \\
+France & 64,527 & 62,900 & 97.5 \\
+Germany & 45,321 & 40,444 & 89.2 \\
+Greece & 49,504 & 47,182 & 95.3 \\
+Hungary & 18,111 & 17,965 & 99.2 \\
+Ireland & 48,409 & 48,409 & 100.0 \\
+Italy & 93,858 & 82,885 & 88.3 \\
+Latvia & 5,487 & 5,467 & 99.6 \\
+Lithuania & 14,396 & 13,287 & 92.3 \\
+Luxembourg & 7,894 & 7,636 & 96.7 \\
+Malta & 10,842 & 10,556 & 97.4 \\
+Netherlands & 23,935 & 22,642 & 94.6 \\
+Poland & 21,434 & 17,490 & 81.6 \\
+Portugal & 29,624 & 29,416 & 99.3 \\
+Romania & 33,264 & 32,234 & 96.9 \\
+Slovakia & 34,874 & 28,973 & 83.1 \\
+Slovenia & 10,211 & 9,818 & 96.2 \\
+Spain & 112,820 & 88,324 & 78.3 \\
+Sweden & 6,417 & 6,223 & 97.0 \\
+European Union & 880,245 & 808,429 & 93.9 \\
+
+\end{longtable}
+
+\textsubscript{Source:
+\href{https://ctoruno.github.io/eu-rol-tracker/notebooks/tables-preview.html\#cell-tbl-translation}{Tables}}
 
 \section{Classification}\label{sec-class}
 
@@ -925,21 +1007,27 @@ our macro-concepts and those that are not, but also accurately classify
 the relevant articles according to the specific pillars of the rule of
 law that they are related to. In order to achieve this, we made use of
 the text classification capabilities of Large Language Models such as
-GPT and Gemini.\sidenote{\footnotesize GPT refers to a family of models developed by
-  OpenAI, while Gemini refers to a family of models developed by Google.
-  During the pilot phase of this study, we tested the \emph{GPT-4-Turbo}
-  and the \emph{Gemini-1.5} models, respectively.}
+\href{https://platform.openai.com/docs/concepts}{GPT} and
+\href{https://ai.google.dev/gemini-api/docs?_gl=1*1ixp628*_ga*NzAxMDUzNTUyLjE3MDQ0NTQ0NzA.*_ga_P1DBVKWT6V*MTcyNTkwNDYyMi40OC4wLjE3MjU5MDQ2MjIuNjAuMC41MjU1MDg0ODg.}{Gemini}.\sidenote{\footnotesize GPT
+  refers to a family of models developed by OpenAI, while Gemini refers
+  to a family of models developed by Google. During the pilot phase of
+  this study, we tested the \emph{GPT-4-Turbo} and the \emph{Gemini-1.5}
+  models, respectively.}
 
 We divided the classification phase into two stages. In the first stage,
 the system aims to categorize news articles based on whether they are
 related to our concepts of Rule of Law, Justice, and Governance, or not.
 Additionally, the system will identify the location where the events
-described in the article are taking place. In the second stage, the
-system will further classify the relevant articles according to which
-specific pillars of the rule of law the events are related to. This
-second stage will focus exclusively on articles that were classified as
-relevant to our macro-concepts and that report on events occurring in
-one of the 27 member states of the European Union.
+described in the article are taking place. During this stage, the total
+number of news articles that were successfully translated are passed to
+the model.
+
+In the second stage, the system will further classify the relevant
+articles according to which specific pillars of the rule of law the
+events are related to. This stage focuses exclusively on articles that
+were previously classified as related to our macro-concepts and that
+describe events occurring within one of the 27 member states of the
+European Union.
 
 \subsection{Prompt definition}\label{prompt-definition}
 
@@ -957,82 +1045,274 @@ The full text of the prompts used can be found in the
 templates: Text Classification notebook} in the supplementary materials
 to this manuscript.
 
-These prompts were the results of a dynamic process in which we randomly
-selected 100 news articles and then we pro
+These prompts were the results of a dynamic and iterative process of
+\href{https://platform.openai.com/docs/guides/prompt-engineering/strategy-write-clear-instructions}{prompt
+engineering}. More specifically, we randomly selected a batch 100 news
+articles and then we proceeded to classify them using the GPT and Gemini
+models along with a project-specific
+\href{https://www.langchain.com/}{LangChain workflow}.\sidenote{\footnotesize LangChain
+  is an open-source framework that facilitates the integration of
+  generative AI models into your own framework. You can see it as a
+  toolkit that covers and provide easy and fast solutions to many of the
+  usual tasks that programmers face when dealing with language models.}
+Once that the models finished classifying the testing batch, two experts
+were consulted to evaluate and provide feedback on the accuracy of the
+classification. The experts were contextualized on the purpose of the
+exercise in order to get a correct assessment on how well the models
+were classifying the news articles and how can it be improved through
+clear instructions. Once that their feedback was received, we proceeded
+to adjust the prompts and repeat the exercise once again. This exercise
+was repeated four times until reaching a point in which further
+instructions were reducing the accuracy of the classification due to an
+increase in the complexity of the prompt.
 
-\subsection{Stage 1: Is the news article related to the Rule of Law,
-Justice, and/or
-Governance?}\label{stage-1-is-the-news-article-related-to-the-rule-of-law-justice-andor-governance}
+In all rounds of testing, the \emph{GPT-4-Turbo} model exhibited higher
+accuracy and precision than the \emph{Gemini-1.0-Pro} model. However,
+both models exhibited a good performance when compared to human
+classification (see Section~\ref{sec-accuracy}). Due to costs restraints
+for this project, the classification stage for the full sample of news
+article was performed using only the \emph{Gemini-1.0-Pro}
+model.\sidenote{\footnotesize The Gemini model was introduced to the market in
+  December 2023. Sending calls to the model through the Google AI API
+  was free as long as the overall use remained under 60 requests per
+  minute (RPM). This policy was in place until May 2024.}
+
+\subsection{First stage: Broad
+classification}\label{first-stage-broad-classification}
 
 For the first stage, we used an 85-word system context that remained
 fixed in every call made to the LLM, along with a 583-word instruction
 prompt template.\sidenote{\footnotesize The final instruction prompt would usually be
   longer due to the inclusion of the title and full content of the news
-  article.}
+  article.} During this stage, the main objective is to reduce the
+universe of news articles to be classified. The process was outlined
+this way to reduce the monetary and computing costs of passing more
+detailed instructions over the whole universe of news
+articles.\sidenote{\footnotesize Monetary and computational costs of using Large
+  Language Models are based on token counts. By breaking the process in
+  two stages, we were able to reduce the total token count
+  (instructions-only) to 99 million tokens in comparison to an
+  hypothetical scenario of 2,459 million tokens (instructions-only) if
+  we had passed the detailed instructions to all 808,429 news articles
+  from the beginning.} Therefore, the instructions prompt used in this
+stage contains very general definitions of our macro-concepts and the
+main outcome is a binary answer classifying the articles as related or
+not to our conceptual framework.
 
-\begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.2097}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3548}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.4355}}@{}}
-\caption{Total news extracted per
-country}\label{tbl-classstage1}\tabularnewline
+Out of the 808,429 articles that were passed to the
+\emph{Gemini-1.0-Pro} model, an average of 27.8\% were categorized as
+related to our definitions of rule of law, justice, and governance.
+However, this proportion varied significantly, reaching as high as
+43.6\% in Romania and dropping to just 8\% in Ireland (column {[}2{]},
+Table~\ref{tbl-classstage1}). However, articles from a newspaper in
+France, for example, might narrate events occurring in other parts of
+the world. When focusing only on those articles narrating events that
+happened within the same country in which the newspaper is based, an
+average of 18.7\% were classified by the model as related to our
+macro-concepts. Similarly, this proportion can reach as high as 33.7\%
+in Poland and as low as 5.5\% in Ireland (column {[}3{]},
+Table~\ref{tbl-classstage1}).
+
+During this stage, a small percentage of news articles could not be
+classified because the prompt sent to the model was blocked by the API.
+Like other large language models, Gemini employs various techniques to
+filter and block harmful or inappropriate prompts. These measures are
+designed to ensure that the model generates safe, helpful, and unbiased
+content. Even after reducing the security settings to the minimum, some
+prompts were still blocked due to their content. On average, less than
+1\% of the total news articles were unable to be classified for this
+reason (column {[}5{]}, Table~\ref{tbl-classstage1}).
+
+A total of 148,124 news articles were passed to the
+\emph{Gemini-1.0-Pro} model for further classification.
+
+\begin{longtable}[]{@{}lllll@{}}
+
+\caption{\label{tbl-classstage1}Broad classification results}
+
+\tabularnewline
+
+\caption{}\label{T_9487f}\tabularnewline
 \toprule\noalign{}
-\begin{minipage}[b]{\linewidth}\raggedright
-\textbf{Country}
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-\textbf{Related Articles (\%)}
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-\textbf{Unclassified Articles (\%)}
-\end{minipage} \\
+Country & Related (\%) & Related - Within (\%) & Related - Within (n) &
+Unclassified (\%) \\
 \midrule\noalign{}
 \endfirsthead
 \toprule\noalign{}
-\begin{minipage}[b]{\linewidth}\raggedright
-\textbf{Country}
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-\textbf{Related Articles (\%)}
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-\textbf{Unclassified Articles (\%)}
-\end{minipage} \\
+Country & Related (\%) & Related - Within (\%) & Related - Within (n) &
+Unclassified (\%) \\
 \midrule\noalign{}
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-Austria & 24.9 & 0.5 \\
-Belgium & 24.2 & 1.0 \\
-Bulgaria & 35.1 & 0.3 \\
-Croatia & 28.8 & 0.8 \\
-Cyprus & 29.1 & 0.3 \\
-Czechia & 21.8 & 1.3 \\
-Denmark & 30.6 & 0.9 \\
-Estonia & 22.5 & 0.3 \\
-Finland & 32.8 & 0.8 \\
-France & 26.5 & 0.7 \\
-Germany & 29.4 & 0.8 \\
-Greece & 26.6 & 1.2 \\
-Hungary & 25.8 & 0.8 \\
-Ireland & 8.0 & 0.2 \\
-Italy & 29.1 & 0.8 \\
-Latvia & 15.1 & 0.6 \\
-Lithuania & 31.5 & 0.7 \\
-Luxembourg & 26.7 & 0.5 \\
-Malta & 37.6 & 0.4 \\
-Netherlands & 24.8 & 0.6 \\
-Poland & 40.7 & 0.8 \\
-Portugal & 23.2 & 0.3 \\
-Romania & 43.6 & 1.0 \\
-Slovakia & 26.8 & 0.4 \\
-Slovenia & 30.7 & 0.7 \\
-Spain & 27.7 & 1.0 \\
-Sweden & 26.7 & 2.5 \\
-\textbf{Average} & \textbf{27.8} & \textbf{0.8} \\
+Austria & 24.9 & 12.7 & 5,590 & 0.5 \\
+Belgium & 24.2 & 13.8 & 2,737 & 1.0 \\
+Bulgaria & 35.1 & 24.4 & 8,071 & 0.3 \\
+Croatia & 28.8 & 17.6 & 6,431 & 0.8 \\
+Cyprus & 29.1 & 19.9 & 6,716 & 0.3 \\
+Czechia & 21.8 & 17.5 & 7,114 & 1.3 \\
+Denmark & 30.6 & 17.6 & 1,897 & 0.9 \\
+Estonia & 22.5 & 14.1 & 1,599 & 0.3 \\
+Finland & 32.8 & 23.5 & 1,501 & 0.8 \\
+France & 26.5 & 15.8 & 9,955 & 0.7 \\
+Germany & 29.4 & 23.0 & 9,292 & 0.8 \\
+Greece & 26.6 & 17.1 & 8,027 & 1.2 \\
+Hungary & 25.8 & 15.4 & 2,768 & 0.8 \\
+Ireland & 8.0 & 5.5 & 2,676 & 0.2 \\
+Italy & 29.1 & 24.1 & 18,800 & 0.8 \\
+Latvia & 15.1 & 11.6 & 636 & 0.6 \\
+Lithuania & 31.5 & 24.6 & 3,272 & 0.7 \\
+Luxembourg & 26.7 & 14.7 & 1,119 & 0.5 \\
+Malta & 37.6 & 30.4 & 3,205 & 0.4 \\
+Netherlands & 24.8 & 14.2 & 3,223 & 0.6 \\
+Poland & 40.7 & 33.7 & 5,902 & 0.8 \\
+Portugal & 23.2 & 14.8 & 4,217 & 0.3 \\
+Romania & 43.6 & 27.2 & 8,765 & 1.0 \\
+Slovakia & 26.8 & 17.9 & 5,172 & 0.4 \\
+Slovenia & 30.7 & 18.2 & 1,786 & 0.7 \\
+Spain & 27.7 & 18.9 & 16,685 & 1.0 \\
+Sweden & 26.7 & 15.6 & 968 & 2.5 \\
+European Union & 27.8 & 18.7 & 148,124 & 0.8 \\
+
 \end{longtable}
+
+\textsubscript{Source:
+\href{https://ctoruno.github.io/eu-rol-tracker/notebooks/tables-preview.html\#cell-tbl-classstage1}{Tables}}
+
+\subsection{Second stage: Pillar
+classification}\label{second-stage-pillar-classification}
+
+For the second stage, we used a fixed 114-word system context in every
+call to the LLM, along with a 2,928-word instruction prompt template
+that provided detailed definitions of each pillar. The primary objective
+during this stage was for the system to classify articles based on which
+specific pillar of the Rule of Law the events described in the text were
+related to. However, due to the close relationship and theoretical
+overlap between the pillars in our conceptual framework, an article
+could be associated with multiple pillars. As a result, the main output
+of this stage was a vector of eight binary values, where each value
+would be set to one if the events in the article were related to a
+specific pillar, and zero otherwise.
+
+Nevertheless, the overlapping nature of the pillars meant that some
+events could be strongly or mildly correlated with several pillars. If
+left unchecked, this overlap could lead to an ``\emph{overlabeling}''
+scenario where articles would be classified as relevant to nearly all
+dimensions of the rule of law. To mitigate this, the instructions passed
+to the LLM were designed so the model would focus in providing a ranking
+score on how strongly a news article is correlated with each pillar on a
+scale from 0 to 10, with 0 indicating no relevance and 10 indicating a
+strong correlation. This vector is then transformed into a series of
+binary values using the following rule:
+
+Let \(\mathbf{s} = (s_1, s_2, \dots, s_8)\) represent the score vector
+for a news article across the eight pillars, where \(s_i \in [0, 10]\)
+represents the score for pillar (i).
+
+The transformation into binary values is defined by a threshold (\(T\)),
+such that the binary classification for each pillar is given by:
+
+\[
+b_i =
+\begin{cases}
+1 & \text{if } s_i \geq T \\
+0 & \text{if } s_i < T
+\end{cases}
+\]
+
+where (\(b_i\)) is the binary value indicating whether the article is
+related to pillar (i). If (\(s_i \geq T\)), the article is classified as
+related to pillar (i) (i.e., (\(b_i = 1\))); otherwise, it is unrelated
+(i.e., (\(b_i = 0\))).
+
+Table~\ref{tbl-classstage2} displays the results of the second stage.
+More specifically, the percentage of news articles associated to each of
+the eight predefined dimensions of the rule of law. On average, the
+system found a strong presence of news articles related to
+\emph{Constraints on Government Powers} (Pillar 1, 20.9\%),
+\emph{Criminal Justice} (Pillar 8, 17.1\%), and \emph{Fundamental
+Rights} (Pillar 4, 16.7\%). On the other hand, the system found very few
+news articles related to \emph{Open Government} (Pillar 3, 2.9\%) and
+\emph{Regulatory Enforcement} (Pillar 6, 3.9\%). However, these
+percentages present substantial variations when considering the
+associations at the country level.
+
+\begin{longtable}[]{@{}lllllllll@{}}
+
+\caption{\label{tbl-classstage2}Pillar classification results (\%)}
+
+\tabularnewline
+
+\caption{}\label{T_259f0}\tabularnewline
+\toprule\noalign{}
+Country & Pillar 1 & Pillar 2 & Pillar 3 & Pillar 4 & Pillar 5 & Pillar
+6 & Pillar 7 & Pillar 8 \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+Country & Pillar 1 & Pillar 2 & Pillar 3 & Pillar 4 & Pillar 5 & Pillar
+6 & Pillar 7 & Pillar 8 \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Austria & 18.9 & 9.8 & 2.2 & 15.3 & 5.8 & 2.5 & 6.1 & 15.8 \\
+Belgium & 13.3 & 9.0 & 1.4 & 12.8 & 5.8 & 1.9 & 6.5 & 17.1 \\
+Bulgaria & 27.4 & 16.7 & 3.6 & 17.8 & 8.1 & 5.2 & 9.2 & 21.3 \\
+Croatia & 20.6 & 13.0 & 2.3 & 15.6 & 8.1 & 3.0 & 6.5 & 19.8 \\
+Cyprus & 22.6 & 13.7 & 3.9 & 16.2 & 7.5 & 6.1 & 7.9 & 15.6 \\
+Czechia & 14.7 & 9.1 & 1.7 & 10.8 & 6.6 & 2.7 & 4.6 & 14.6 \\
+Denmark & 24.3 & 12.8 & 3.0 & 20.2 & 9.2 & 3.0 & 8.2 & 20.5 \\
+Estonia & 16.9 & 8.9 & 2.0 & 11.7 & 4.3 & 3.4 & 5.9 & 13.2 \\
+Finland & 24.2 & 12.9 & 1.9 & 20.3 & 10.2 & 3.6 & 8.2 & 22.5 \\
+France & 20.5 & 9.7 & 2.3 & 18.5 & 7.1 & 3.1 & 5.6 & 15.3 \\
+Germany & 20.9 & 9.5 & 2.1 & 17.7 & 9.2 & 2.5 & 7.0 & 19.4 \\
+Greece & 20.2 & 12.1 & 2.6 & 16.7 & 8.6 & 3.9 & 6.3 & 17.4 \\
+Hungary & 21.8 & 13.2 & 2.6 & 16.4 & 5.9 & 3.6 & 4.0 & 14.0 \\
+Ireland & 18.6 & 9.4 & 2.7 & 16.5 & 7.0 & 3.7 & 8.0 & 16.2 \\
+Italy & 17.9 & 12.3 & 2.5 & 17.2 & 8.2 & 4.1 & 7.4 & 18.4 \\
+Latvia & 10.4 & 6.1 & 2.0 & 7.5 & 3.1 & 3.3 & 2.1 & 6.2 \\
+Lithuania & 22.7 & 14.1 & 2.4 & 15.3 & 6.6 & 4.4 & 7.7 & 20.7 \\
+Luxembourg & 16.4 & 8.3 & 3.8 & 15.8 & 6.6 & 3.7 & 5.8 & 13.1 \\
+Malta & 30.1 & 19.3 & 7.4 & 24.0 & 6.4 & 9.2 & 13.0 & 21.4 \\
+Netherlands & 16.6 & 9.6 & 2.6 & 15.5 & 5.6 & 3.0 & 6.0 & 14.8 \\
+Poland & 31.6 & 18.1 & 3.8 & 23.1 & 7.6 & 5.6 & 11.4 & 23.5 \\
+Portugal & 18.6 & 9.5 & 3.0 & 13.6 & 3.1 & 3.6 & 5.2 & 10.6 \\
+Romania & 28.6 & 23.3 & 4.1 & 22.5 & 9.5 & 7.0 & 8.1 & 25.0 \\
+Slovakia & 23.1 & 13.0 & 3.6 & 16.0 & 4.6 & 3.0 & 4.9 & 15.5 \\
+Slovenia & 24.4 & 11.9 & 3.1 & 18.4 & 7.4 & 4.3 & 7.4 & 16.4 \\
+Spain & 20.6 & 11.0 & 2.6 & 17.3 & 6.3 & 3.3 & 6.1 & 15.8 \\
+Sweden & 19.8 & 10.2 & 1.9 & 18.1 & 9.7 & 2.0 & 6.3 & 19.1 \\
+European Union & 20.9 & 12.1 & 2.9 & 16.7 & 7.0 & 3.9 & 6.9 & 17.1 \\
+
+\end{longtable}
+
+\textsubscript{Source:
+\href{https://ctoruno.github.io/eu-rol-tracker/notebooks/tables-preview.html\#cell-tbl-classstage2}{Tables}}
+
+Percentages across pillars in Table~\ref{tbl-classstage2} do not sum up
+to 100 due to three reasons. First, one single article could be
+associated to multiple pillars. Second, when given more detailed
+information on the rule of law and its different dimensions, some news
+articles might have received new scores that would reflect their
+disassociation from our theoretical framework. Third, some news articles
+were only mildly related to all of the pillars considered in our
+conceptual framework.
+
+\subsection{How accurate is the text
+classification?}\label{sec-accuracy}
+
+\section{Summarization and Sentiment}\label{summarization-and-sentiment}
+
+\section{Text Insights}\label{text-insights}
+
+\section{Next Steps}\label{next-steps}
 
 \section{Appendix}\label{appendix}
 
 \subsection{List of data sources}\label{sec-sources}
 
-\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-note-color!10!white, left=2mm, leftrule=.75mm, bottomrule=.15mm, rightrule=.15mm, bottomtitle=1mm, coltitle=black, colframe=quarto-callout-note-color-frame, toprule=.15mm, opacitybacktitle=0.6, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Data sources}, titlerule=0mm, opacityback=0, breakable, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-note-color!10!white, leftrule=.75mm, colframe=quarto-callout-note-color-frame, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Data sources}, coltitle=black, bottomrule=.15mm, rightrule=.15mm, opacityback=0, breakable, bottomtitle=1mm, arc=.35mm, titlerule=0mm, toprule=.15mm, left=2mm, toptitle=1mm, opacitybacktitle=0.6]
 
 \begin{longtable}[]{@{}
   >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.0706}}
@@ -1494,14 +1774,14 @@ left & No & No \\
 \end{longtable}
 
 \textsubscript{Source:
-\href{https://ctoruno.github.io/eu-rol-tracker/index.qmd.html}{Article
+\href{https://ctoruno.github.io/eu-rol-tracker/index-preview.html}{Article
 Notebook}}
 
 \end{tcolorbox}
 
 \subsection{List of keywords used for extraction}\label{sec-keys}
 
-\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-note-color!10!white, left=2mm, leftrule=.75mm, bottomrule=.15mm, rightrule=.15mm, bottomtitle=1mm, coltitle=black, colframe=quarto-callout-note-color-frame, toprule=.15mm, opacitybacktitle=0.6, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Language-based keywords}, titlerule=0mm, opacityback=0, breakable, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-note-color!10!white, leftrule=.75mm, colframe=quarto-callout-note-color-frame, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Language-based keywords}, coltitle=black, bottomrule=.15mm, rightrule=.15mm, opacityback=0, breakable, bottomtitle=1mm, arc=.35mm, titlerule=0mm, toprule=.15mm, left=2mm, toptitle=1mm, opacitybacktitle=0.6]
 
 \begin{longtable}[]{@{}
   >{\raggedright\arraybackslash}p{(\columnwidth - 46\tabcolsep) * \real{0.0097}}
@@ -2287,12 +2567,12 @@ izsiljevanje & extorsión \\
 \end{longtable}
 
 \textsubscript{Source:
-\href{https://ctoruno.github.io/eu-rol-tracker/index.qmd.html}{Article
+\href{https://ctoruno.github.io/eu-rol-tracker/index-preview.html}{Article
 Notebook}}
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-note-color!10!white, left=2mm, leftrule=.75mm, bottomrule=.15mm, rightrule=.15mm, bottomtitle=1mm, coltitle=black, colframe=quarto-callout-note-color-frame, toprule=.15mm, opacitybacktitle=0.6, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Country-based keywords}, titlerule=0mm, opacityback=0, breakable, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-note-color!10!white, leftrule=.75mm, colframe=quarto-callout-note-color-frame, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Country-based keywords}, coltitle=black, bottomrule=.15mm, rightrule=.15mm, opacityback=0, breakable, bottomtitle=1mm, arc=.35mm, titlerule=0mm, toprule=.15mm, left=2mm, toptitle=1mm, opacitybacktitle=0.6]
 
 \begin{longtable}[]{@{}
   >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.0833}}
@@ -2924,7 +3204,7 @@ Sweden & Swedish & Supreme Court & Högsta domstolen \\
 \end{longtable}
 
 \textsubscript{Source:
-\href{https://ctoruno.github.io/eu-rol-tracker/index.qmd.html}{Article
+\href{https://ctoruno.github.io/eu-rol-tracker/index-preview.html}{Article
 Notebook}}
 
 \end{tcolorbox}
