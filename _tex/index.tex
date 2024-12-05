@@ -1028,7 +1028,7 @@ were previously classified as related to our macro-concepts and that
 describe events occurring within one of the 27 member states of the
 European Union.
 
-\subsection{Prompt definition}\label{prompt-definition}
+\subsection{Prompt definition}\label{sec-promptdef}
 
 In both stages, we defined two prompt templates to pass to the LLM: a
 system context and the instructions. The system context is a type of
@@ -1301,6 +1301,208 @@ conceptual framework.
 \subsection{How accurate is the text
 classification?}\label{sec-accuracy}
 
+To evaluate the accuracy of our tracker, we conducted an experiment
+comparing the performance of two large language models (LLMs),
+\emph{GPT-4-Turbo} and \emph{Gemini-1.0-Pro}, with human annotators. The
+experiment was designed under the assumption that human labeling would
+serve as a counterfactual benchmark for AI-based classification.
+
+First, the political scientist who developed the conceptual framework
+manually classified a sample of 200 news articles. These expert
+annotations served as the ``ground truth'' for evaluating both AI and
+human performance. To streamline the annotation process, we developed a
+web application with the following features:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Article Display}: Each annotator was presented with a randomly
+  selected news article, including its headline, a brief summary
+  (provided by the news API), and the full text. All content was
+  displayed in English.
+\item
+  \textbf{Primary Question}: Annotators answered the question: \emph{Is
+  this news article related to the Rule of Law?}
+\item
+  \textbf{Conditional Questions}:
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  If \textbf{YES}, additional questions were displayed:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \emph{To which pillar(s) of the Rule of Law does this article
+    relate?} (Multiple selections allowed)
+  \item
+    \emph{What is the impact of the events described on the Rule of
+    Law?} (Very Positive, Positive, Neutral, Negative, Very Negative)
+  \item
+    \emph{In which country are the events described taking place?} (List
+    of countries provided)
+  \item
+    After answering, the annotation was recorded, and the next article
+    was shown.
+  \end{itemize}
+\item
+  If \textbf{NO}, the annotation was recorded immediately, and the next
+  article was shown.
+\end{itemize}
+
+Using the expert's annotations, we applied the LLM prompts defined in
+Section~\ref{sec-promptdef} to classify the same 200 news articles in
+both the first and second classification stages. The output of
+\textbf{GPT-4-Turbo} and \textbf{Gemini-1.0-Pro} was evaluated using a
+set of metrics to measure their classification accuracy against the
+ground truth.
+
+Finally, we trained a team of 20 human annotators through a workshop
+designed to familiarize them with the project's conceptual framework.
+After the training, each participant labeled a set of 200 news articles
+using the same web app. To ensure consistency and enable comparison, a
+hidden subset of 40 articles (shared with the expert-labeled set) was
+included for each participant. The responses to this hidden subset were
+used to estimate metrics and assess the accuracy of human classification
+relative to the expert benchmark.
+
+A set of six metrics were estimated to assess the accuracy of the
+classification:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Accuracy}: The ratio of correctly predicted instances to the
+  total instances.
+\item
+  \textbf{Precision}: The ratio of correctly predicted positive
+  instances to the total predicted positive
+\item
+  \textbf{Sensitivity (TPR)}: The ratio of correctly predicted positive
+  instances to all actual positive instances.
+\item
+  \textbf{Fall-Out (FPR)}: The proportion of actual negative instances
+  that are incorrectly classified as positive by the model.
+\item
+  \textbf{F1 Score}: The harmonic mean of precision and recall, giving a
+  balance between the two.
+\item
+  \textbf{Matthews Correlation Coefficient}: A balanced measure of
+  classification quality that considers true and false positives and
+  negatives.
+\item
+  \textbf{Confusion Matrix}: A table that shows the actual vs predicted
+  classifications and helps visualize the performance of the classifier.
+\end{enumerate}
+
+Due to the significant imabalnce of negatives in the sample, we focused
+our attention in the \emph{sensitivity}, \emph{fall-out}, and
+\emph{confusion matrix}. The results of the classification for the first
+stage are shown in the Table~\ref{tbl-classacc1}.
+
+As we can observe, the \textbf{GPT model} performed accurately in the
+small subset of news articles during the first stage of classification
+while the \textbf{Gemini model} had a low sensitivity performance due to
+a significant number of false negatives (31). This is a dangerous
+statistic given that, unlike the false positives, this is information
+that will be lost during the second stage of the classification. This is
+a cost that is assumed by this project in order to reduce the costs of
+the pilot.
+
+When comparing the performance of the AI models to those of the human
+annotators, only 7 out of the 20 human annotators performed better than
+Gemini. This set of ``\emph{Top Human Classifiers} shown a performance
+almost as high as the \emph{GPT model}. However, when looking at the
+whole human team, we can see that average \emph{Human Annotator}
+performed very closely to the \emph{Gemini Model}. While the Gemini
+model had a lower FPR, the average human annotator exhibited a higher
+TPR.
+
+\begin{longtable}[]{@{}llll@{}}
+
+\caption{\label{tbl-classacc1}Classification Performance Assessment
+(Stage 1)}
+
+\tabularnewline
+
+\caption{}\label{T_54c07}\tabularnewline
+\toprule\noalign{}
+Classifier & TPR & FPR & Confussion Matrix \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+Classifier & TPR & FPR & Confussion Matrix \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+GPT & 1.00 & 0.00 & {[}{[}136 0{]} {[} 0 67{]}{]} \\
+Gemini & 0.54 & 0.07 & {[}{[}126 10{]} {[} 31 36{]}{]} \\
+Top Human Classifiers & 0.92 & 0.14 & {[}{[}241 43{]} {[} 7 75{]}{]} \\
+Human Classifiers & 0.75 & 0.09 & {[}{[}511 56{]} {[} 42 125{]}{]} \\
+
+\end{longtable}
+
+\textsubscript{Source:
+\href{https://ctoruno.github.io/eu-rol-tracker/notebooks/3_EU_news_classification_accuracy-preview.html\#cell-tbl-classacc1}{3.
+Classification Performance Assessment}}
+
+When assessing the accuracy of the classification during the second
+stage, we only have a reliable sample size to evaluate the accuracy on
+pillars one, four, and five. The results shown in
+Table~\ref{tbl-classacc2} reflect that AI models had a better
+performance than humans when classifying news articles related to
+\emph{Constraints on Government Powers}, while humans had a better
+performance than AI models when classifying news articles related to
+\emph{Order and Security}.
+
+\begin{longtable}[]{@{}lllll@{}}
+
+\caption{\label{tbl-classacc2}Classification Performance Assessment
+(Stage 2)}
+
+\tabularnewline
+
+\caption{}\label{T_50cb0}\tabularnewline
+\toprule\noalign{}
+Classifier & Pillar & TPR & FPR & Confussion Matrix \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+Classifier & Pillar & TPR & FPR & Confussion Matrix \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+GPT & Pillar 1 & 0.69 & 0.21 & {[}{[}30 8{]} {[} 9 20{]}{]} \\
+Gemini & Pillar 1 & 0.52 & 0.37 & {[}{[}24 14{]} {[}14 15{]}{]} \\
+Top Human Classifiers & Pillar 1 & 0.55 & 0.16 & {[}{[}89 27{]} {[}38
+52{]}{]} \\
+Human Classifiers & Pillar 1 & 0.35 & 0.07 & {[}{[}85 7{]} {[}50
+25{]}{]} \\
+GPT & Pillar 4 & 0.60 & 0.17 & {[}{[}35 7{]} {[}10 15{]}{]} \\
+Gemini & Pillar 4 & 0.24 & 0.26 & {[}{[}31 11{]} {[}19 6{]}{]} \\
+Top Human Classifiers & Pillar 4 & 0.66 & 0.15 & {[}{[}57 11{]} {[}20
+37{]}{]} \\
+Human Classifiers & Pillar 4 & 0.40 & 0.16 & {[}{[}62 13{]} {[}53
+39{]}{]} \\
+GPT & Pillar 5 & 0.33 & 0.10 & {[}{[}44 5{]} {[}12 6{]}{]} \\
+Gemini & Pillar 5 & 0.22 & 0.14 & {[}{[}42 7{]} {[}14 4{]}{]} \\
+Top Human Classifiers & Pillar 5 & 0.67 & 0.18 & {[}{[}69 15{]} {[} 8
+16{]}{]} \\
+Human Classifiers & Pillar 5 & 0.42 & 0.18 & {[}{[}106 25{]} {[} 19
+17{]}{]} \\
+
+\end{longtable}
+
+\textsubscript{Source:
+\href{https://ctoruno.github.io/eu-rol-tracker/notebooks/3_EU_news_classification_accuracy-preview.html\#cell-tbl-classacc2}{3.
+Classification Performance Assessment}}
+
 \section{Summarization and Sentiment}\label{summarization-and-sentiment}
 
 \section{Text Insights}\label{text-insights}
@@ -1311,7 +1513,7 @@ classification?}\label{sec-accuracy}
 
 \subsection{List of data sources}\label{sec-sources}
 
-\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, coltitle=black, left=2mm, leftrule=.75mm, colframe=quarto-callout-note-color-frame, arc=.35mm, bottomrule=.15mm, colback=white, bottomtitle=1mm, toptitle=1mm, opacitybacktitle=0.6, rightrule=.15mm, opacityback=0, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Data sources}, breakable, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white]
+\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-note-color-frame, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, toptitle=1mm, opacityback=0, opacitybacktitle=0.6, arc=.35mm, left=2mm, titlerule=0mm, coltitle=black, bottomtitle=1mm, breakable, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Data sources}, rightrule=.15mm, colback=white, bottomrule=.15mm, leftrule=.75mm]
 
 \begin{longtable}[]{@{}
   >{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.0706}}
@@ -1780,7 +1982,7 @@ Notebook}}
 
 \subsection{List of keywords used for extraction}\label{sec-keys}
 
-\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, coltitle=black, left=2mm, leftrule=.75mm, colframe=quarto-callout-note-color-frame, arc=.35mm, bottomrule=.15mm, colback=white, bottomtitle=1mm, toptitle=1mm, opacitybacktitle=0.6, rightrule=.15mm, opacityback=0, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Language-based keywords}, breakable, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white]
+\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-note-color-frame, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, toptitle=1mm, opacityback=0, opacitybacktitle=0.6, arc=.35mm, left=2mm, titlerule=0mm, coltitle=black, bottomtitle=1mm, breakable, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Language-based keywords}, rightrule=.15mm, colback=white, bottomrule=.15mm, leftrule=.75mm]
 
 \begin{longtable}[]{@{}
   >{\raggedright\arraybackslash}p{(\linewidth - 46\tabcolsep) * \real{0.0097}}
@@ -2571,7 +2773,7 @@ Notebook}}
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, coltitle=black, left=2mm, leftrule=.75mm, colframe=quarto-callout-note-color-frame, arc=.35mm, bottomrule=.15mm, colback=white, bottomtitle=1mm, toptitle=1mm, opacitybacktitle=0.6, rightrule=.15mm, opacityback=0, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Country-based keywords}, breakable, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white]
+\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-note-color-frame, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, toptitle=1mm, opacityback=0, opacitybacktitle=0.6, arc=.35mm, left=2mm, titlerule=0mm, coltitle=black, bottomtitle=1mm, breakable, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Country-based keywords}, rightrule=.15mm, colback=white, bottomrule=.15mm, leftrule=.75mm]
 
 \begin{longtable}[]{@{}
   >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.0833}}

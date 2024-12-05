@@ -58,10 +58,10 @@ and Interchange DTD v1.2 20190208//EN" "JATS-archivearticle1.dtd">
 <corresp id="cor-1">ctoruno@worldjusticeproject.org</corresp>
 </author-notes>
 
-<pub-date date-type="pub" publication-format="electronic" iso-8601-date="2024-10-28">
+<pub-date date-type="pub" publication-format="electronic" iso-8601-date="2024-12-05">
 <year>2024</year>
-<month>10</month>
-<day>28</day>
+<month>12</month>
+<day>5</day>
 </pub-date>
 
 
@@ -1156,7 +1156,7 @@ for the project …</p>
   were previously classified as related to our macro-concepts and that
   describe events occurring within one of the 27 member states of the
   European Union.</p>
-  <sec id="prompt-definition">
+  <sec id="sec-promptdef">
     <title>4.1 Prompt definition</title>
     <p>In both stages, we defined two prompt templates to pass to the
     LLM: a system context and the instructions. The system context is a
@@ -1875,6 +1875,290 @@ for the project …</p>
   </sec>
   <sec id="sec-accuracy">
     <title>4.4 How accurate is the text classification?</title>
+    <p>To evaluate the accuracy of our tracker, we conducted an
+    experiment comparing the performance of two large language models
+    (LLMs), <italic>GPT-4-Turbo</italic> and
+    <italic>Gemini-1.0-Pro</italic>, with human annotators. The
+    experiment was designed under the assumption that human labeling
+    would serve as a counterfactual benchmark for AI-based
+    classification.</p>
+    <p>First, the political scientist who developed the conceptual
+    framework manually classified a sample of 200 news articles. These
+    expert annotations served as the “ground truth” for evaluating both
+    AI and human performance. To streamline the annotation process, we
+    developed a web application with the following features:</p>
+    <list list-type="order">
+      <list-item>
+        <p><bold>Article Display</bold>: Each annotator was presented
+        with a randomly selected news article, including its headline, a
+        brief summary (provided by the news API), and the full text. All
+        content was displayed in English.</p>
+      </list-item>
+      <list-item>
+        <p><bold>Primary Question</bold>: Annotators answered the
+        question: <italic>Is this news article related to the Rule of
+        Law?</italic></p>
+      </list-item>
+      <list-item>
+        <p><bold>Conditional Questions</bold>:</p>
+      </list-item>
+    </list>
+    <list list-type="bullet">
+      <list-item>
+        <p>If <bold>YES</bold>, additional questions were displayed:</p>
+        <list list-type="bullet">
+          <list-item>
+            <p><italic>To which pillar(s) of the Rule of Law does this
+            article relate?</italic> (Multiple selections allowed)</p>
+          </list-item>
+          <list-item>
+            <p><italic>What is the impact of the events described on the
+            Rule of Law?</italic> (Very Positive, Positive, Neutral,
+            Negative, Very Negative)</p>
+          </list-item>
+          <list-item>
+            <p><italic>In which country are the events described taking
+            place?</italic> (List of countries provided)</p>
+          </list-item>
+          <list-item>
+            <p>After answering, the annotation was recorded, and the
+            next article was shown.</p>
+          </list-item>
+        </list>
+      </list-item>
+      <list-item>
+        <p>If <bold>NO</bold>, the annotation was recorded immediately,
+        and the next article was shown.</p>
+      </list-item>
+    </list>
+    <p>Using the expert’s annotations, we applied the LLM prompts
+    defined in
+    <xref alt="Section 4.1" rid="sec-promptdef">Section 4.1</xref> to
+    classify the same 200 news articles in both the first and second
+    classification stages. The output of <bold>GPT-4-Turbo</bold> and
+    <bold>Gemini-1.0-Pro</bold> was evaluated using a set of metrics to
+    measure their classification accuracy against the ground truth.</p>
+    <p>Finally, we trained a team of 20 human annotators through a
+    workshop designed to familiarize them with the project’s conceptual
+    framework. After the training, each participant labeled a set of 200
+    news articles using the same web app. To ensure consistency and
+    enable comparison, a hidden subset of 40 articles (shared with the
+    expert-labeled set) was included for each participant. The responses
+    to this hidden subset were used to estimate metrics and assess the
+    accuracy of human classification relative to the expert
+    benchmark.</p>
+    <p>A set of six metrics were estimated to assess the accuracy of the
+    classification:</p>
+    <list list-type="order">
+      <list-item>
+        <p><bold>Accuracy</bold>: The ratio of correctly predicted
+        instances to the total instances.</p>
+      </list-item>
+      <list-item>
+        <p><bold>Precision</bold>: The ratio of correctly predicted
+        positive instances to the total predicted positive</p>
+      </list-item>
+      <list-item>
+        <p><bold>Sensitivity (TPR)</bold>: The ratio of correctly
+        predicted positive instances to all actual positive
+        instances.</p>
+      </list-item>
+      <list-item>
+        <p><bold>Fall-Out (FPR)</bold>: The proportion of actual
+        negative instances that are incorrectly classified as positive
+        by the model.</p>
+      </list-item>
+      <list-item>
+        <p><bold>F1 Score</bold>: The harmonic mean of precision and
+        recall, giving a balance between the two.</p>
+      </list-item>
+      <list-item>
+        <p><bold>Matthews Correlation Coefficient</bold>: A balanced
+        measure of classification quality that considers true and false
+        positives and negatives.</p>
+      </list-item>
+      <list-item>
+        <p><bold>Confusion Matrix</bold>: A table that shows the actual
+        vs predicted classifications and helps visualize the performance
+        of the classifier.</p>
+      </list-item>
+    </list>
+    <p>Due to the significant imabalnce of negatives in the sample, we
+    focused our attention in the <italic>sensitivity</italic>,
+    <italic>fall-out</italic>, and <italic>confusion matrix</italic>.
+    The results of the classification for the first stage are shown in
+    the <xref alt="Table 5" rid="tbl-classacc1">Table 5</xref>.</p>
+    <p>As we can observe, the <bold>GPT model</bold> performed
+    accurately in the small subset of news articles during the first
+    stage of classification while the <bold>Gemini model</bold> had a
+    low sensitivity performance due to a significant number of false
+    negatives (31). This is a dangerous statistic given that, unlike the
+    false positives, this is information that will be lost during the
+    second stage of the classification. This is a cost that is assumed
+    by this project in order to reduce the costs of the pilot.</p>
+    <p>When comparing the performance of the AI models to those of the
+    human annotators, only 7 out of the 20 human annotators performed
+    better than Gemini. This set of “<italic>Top Human
+    Classifiers</italic> shown a performance almost as high as the
+    <italic>GPT model</italic>. However, when looking at the whole human
+    team, we can see that average <italic>Human Annotator</italic>
+    performed very closely to the <italic>Gemini Model</italic>. While
+    the Gemini model had a lower FPR, the average human annotator
+    exhibited a higher TPR.</p>
+    <fig id="tbl-classacc1">
+      <caption><p>Table 5: Classification Performance Assessment (Stage
+      1)</p></caption>
+      <table-wrap>
+        <table id="T_54c07">
+          <thead>
+            <tr>
+              <th id="T_54c07_level0_col0">Classifier</th>
+              <th id="T_54c07_level0_col1">TPR</th>
+              <th id="T_54c07_level0_col2">FPR</th>
+              <th id="T_54c07_level0_col3">Confussion Matrix</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td id="T_54c07_row0_col0">GPT</td>
+              <td id="T_54c07_row0_col1">1.00</td>
+              <td id="T_54c07_row0_col2">0.00</td>
+              <td id="T_54c07_row0_col3">[[136 0] [ 0 67]]</td>
+            </tr>
+            <tr>
+              <td id="T_54c07_row1_col0">Gemini</td>
+              <td id="T_54c07_row1_col1">0.54</td>
+              <td id="T_54c07_row1_col2">0.07</td>
+              <td id="T_54c07_row1_col3">[[126 10] [ 31 36]]</td>
+            </tr>
+            <tr>
+              <td id="T_54c07_row2_col0">Top Human Classifiers</td>
+              <td id="T_54c07_row2_col1">0.92</td>
+              <td id="T_54c07_row2_col2">0.14</td>
+              <td id="T_54c07_row2_col3">[[241 43] [ 7 75]]</td>
+            </tr>
+            <tr>
+              <td id="T_54c07_row3_col0">Human Classifiers</td>
+              <td id="T_54c07_row3_col1">0.75</td>
+              <td id="T_54c07_row3_col2">0.09</td>
+              <td id="T_54c07_row3_col3">[[511 56] [ 42 125]]</td>
+            </tr>
+          </tbody>
+        </table>
+      </table-wrap>
+    </fig>
+    <p>When assessing the accuracy of the classification during the
+    second stage, we only have a reliable sample size to evaluate the
+    accuracy on pillars one, four, and five. The results shown in
+    <xref alt="Table 6" rid="tbl-classacc2">Table 6</xref> reflect that
+    AI models had a better performance than humans when classifying news
+    articles related to <italic>Constraints on Government
+    Powers</italic>, while humans had a better performance than AI
+    models when classifying news articles related to <italic>Order and
+    Security</italic>.</p>
+    <fig id="tbl-classacc2">
+      <caption><p>Table 6: Classification Performance Assessment (Stage
+      2)</p></caption>
+      <table-wrap>
+        <table id="T_50cb0">
+          <thead>
+            <tr>
+              <th id="T_50cb0_level0_col0">Classifier</th>
+              <th id="T_50cb0_level0_col1">Pillar</th>
+              <th id="T_50cb0_level0_col2">TPR</th>
+              <th id="T_50cb0_level0_col3">FPR</th>
+              <th id="T_50cb0_level0_col4">Confussion Matrix</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td id="T_50cb0_row0_col0">GPT</td>
+              <td id="T_50cb0_row0_col1">Pillar 1</td>
+              <td id="T_50cb0_row0_col2">0.69</td>
+              <td id="T_50cb0_row0_col3">0.21</td>
+              <td id="T_50cb0_row0_col4">[[30 8] [ 9 20]]</td>
+            </tr>
+            <tr>
+              <td id="T_50cb0_row1_col0">Gemini</td>
+              <td id="T_50cb0_row1_col1">Pillar 1</td>
+              <td id="T_50cb0_row1_col2">0.52</td>
+              <td id="T_50cb0_row1_col3">0.37</td>
+              <td id="T_50cb0_row1_col4">[[24 14] [14 15]]</td>
+            </tr>
+            <tr>
+              <td id="T_50cb0_row2_col0">Top Human Classifiers</td>
+              <td id="T_50cb0_row2_col1">Pillar 1</td>
+              <td id="T_50cb0_row2_col2">0.55</td>
+              <td id="T_50cb0_row2_col3">0.16</td>
+              <td id="T_50cb0_row2_col4">[[89 27] [38 52]]</td>
+            </tr>
+            <tr>
+              <td id="T_50cb0_row3_col0">Human Classifiers</td>
+              <td id="T_50cb0_row3_col1">Pillar 1</td>
+              <td id="T_50cb0_row3_col2">0.35</td>
+              <td id="T_50cb0_row3_col3">0.07</td>
+              <td id="T_50cb0_row3_col4">[[85 7] [50 25]]</td>
+            </tr>
+            <tr>
+              <td id="T_50cb0_row4_col0">GPT</td>
+              <td id="T_50cb0_row4_col1">Pillar 4</td>
+              <td id="T_50cb0_row4_col2">0.60</td>
+              <td id="T_50cb0_row4_col3">0.17</td>
+              <td id="T_50cb0_row4_col4">[[35 7] [10 15]]</td>
+            </tr>
+            <tr>
+              <td id="T_50cb0_row5_col0">Gemini</td>
+              <td id="T_50cb0_row5_col1">Pillar 4</td>
+              <td id="T_50cb0_row5_col2">0.24</td>
+              <td id="T_50cb0_row5_col3">0.26</td>
+              <td id="T_50cb0_row5_col4">[[31 11] [19 6]]</td>
+            </tr>
+            <tr>
+              <td id="T_50cb0_row6_col0">Top Human Classifiers</td>
+              <td id="T_50cb0_row6_col1">Pillar 4</td>
+              <td id="T_50cb0_row6_col2">0.66</td>
+              <td id="T_50cb0_row6_col3">0.15</td>
+              <td id="T_50cb0_row6_col4">[[57 11] [20 37]]</td>
+            </tr>
+            <tr>
+              <td id="T_50cb0_row7_col0">Human Classifiers</td>
+              <td id="T_50cb0_row7_col1">Pillar 4</td>
+              <td id="T_50cb0_row7_col2">0.40</td>
+              <td id="T_50cb0_row7_col3">0.16</td>
+              <td id="T_50cb0_row7_col4">[[62 13] [53 39]]</td>
+            </tr>
+            <tr>
+              <td id="T_50cb0_row8_col0">GPT</td>
+              <td id="T_50cb0_row8_col1">Pillar 5</td>
+              <td id="T_50cb0_row8_col2">0.33</td>
+              <td id="T_50cb0_row8_col3">0.10</td>
+              <td id="T_50cb0_row8_col4">[[44 5] [12 6]]</td>
+            </tr>
+            <tr>
+              <td id="T_50cb0_row9_col0">Gemini</td>
+              <td id="T_50cb0_row9_col1">Pillar 5</td>
+              <td id="T_50cb0_row9_col2">0.22</td>
+              <td id="T_50cb0_row9_col3">0.14</td>
+              <td id="T_50cb0_row9_col4">[[42 7] [14 4]]</td>
+            </tr>
+            <tr>
+              <td id="T_50cb0_row10_col0">Top Human Classifiers</td>
+              <td id="T_50cb0_row10_col1">Pillar 5</td>
+              <td id="T_50cb0_row10_col2">0.67</td>
+              <td id="T_50cb0_row10_col3">0.18</td>
+              <td id="T_50cb0_row10_col4">[[69 15] [ 8 16]]</td>
+            </tr>
+            <tr>
+              <td id="T_50cb0_row11_col0">Human Classifiers</td>
+              <td id="T_50cb0_row11_col1">Pillar 5</td>
+              <td id="T_50cb0_row11_col2">0.42</td>
+              <td id="T_50cb0_row11_col3">0.18</td>
+              <td id="T_50cb0_row11_col4">[[106 25] [ 19 17]]</td>
+            </tr>
+          </tbody>
+        </table>
+      </table-wrap>
+    </fig>
   </sec>
 </sec>
 <sec id="summarization-and-sentiment">
@@ -10564,7 +10848,7 @@ for the project …</p>
 </fn-group>
 </back>
 
-<sub-article article-type="notebook" id="nb-25-nb-article">
+<sub-article article-type="notebook" id="nb-28-nb-article">
 <front-stub>
 <title-group>
 <article-title>Introducing the EU Rule of Law Tracker</article-title>
@@ -11747,7 +12031,7 @@ tbl02_total.style.hide(axis=&quot;index&quot;).format({
   were previously classified as related to our macro-concepts and that
   describe events occurring within one of the 27 member states of the
   European Union.</p>
-  <sec id="prompt-definition-nb-article">
+  <sec id="sec-promptdef-nb-article">
     <title>4.1 Prompt definition</title>
     <p>In both stages, we defined two prompt templates to pass to the
     LLM: a system context and the instructions. The system context is a
@@ -12481,6 +12765,325 @@ tbl02_total.style.hide(axis=&quot;index&quot;).format({
   </sec>
   <sec id="sec-accuracy-nb-article">
     <title>4.4 How accurate is the text classification?</title>
+    <p>To evaluate the accuracy of our tracker, we conducted an
+    experiment comparing the performance of two large language models
+    (LLMs), <italic>GPT-4-Turbo</italic> and
+    <italic>Gemini-1.0-Pro</italic>, with human annotators. The
+    experiment was designed under the assumption that human labeling
+    would serve as a counterfactual benchmark for AI-based
+    classification.</p>
+    <p>First, the political scientist who developed the conceptual
+    framework manually classified a sample of 200 news articles. These
+    expert annotations served as the “ground truth” for evaluating both
+    AI and human performance. To streamline the annotation process, we
+    developed a web application with the following features:</p>
+    <list list-type="order">
+      <list-item>
+        <p><bold>Article Display</bold>: Each annotator was presented
+        with a randomly selected news article, including its headline, a
+        brief summary (provided by the news API), and the full text. All
+        content was displayed in English.</p>
+      </list-item>
+      <list-item>
+        <p><bold>Primary Question</bold>: Annotators answered the
+        question: <italic>Is this news article related to the Rule of
+        Law?</italic></p>
+      </list-item>
+      <list-item>
+        <p><bold>Conditional Questions</bold>:</p>
+      </list-item>
+    </list>
+    <list list-type="bullet">
+      <list-item>
+        <p>If <bold>YES</bold>, additional questions were displayed:</p>
+        <list list-type="bullet">
+          <list-item>
+            <p><italic>To which pillar(s) of the Rule of Law does this
+            article relate?</italic> (Multiple selections allowed)</p>
+          </list-item>
+          <list-item>
+            <p><italic>What is the impact of the events described on the
+            Rule of Law?</italic> (Very Positive, Positive, Neutral,
+            Negative, Very Negative)</p>
+          </list-item>
+          <list-item>
+            <p><italic>In which country are the events described taking
+            place?</italic> (List of countries provided)</p>
+          </list-item>
+          <list-item>
+            <p>After answering, the annotation was recorded, and the
+            next article was shown.</p>
+          </list-item>
+        </list>
+      </list-item>
+      <list-item>
+        <p>If <bold>NO</bold>, the annotation was recorded immediately,
+        and the next article was shown.</p>
+      </list-item>
+    </list>
+    <p>Using the expert’s annotations, we applied the LLM prompts
+    defined in
+    <xref alt="Section 4.1" rid="sec-promptdef-nb-article">Section 4.1</xref> to
+    classify the same 200 news articles in both the first and second
+    classification stages. The output of <bold>GPT-4-Turbo</bold> and
+    <bold>Gemini-1.0-Pro</bold> was evaluated using a set of metrics to
+    measure their classification accuracy against the ground truth.</p>
+    <p>Finally, we trained a team of 20 human annotators through a
+    workshop designed to familiarize them with the project’s conceptual
+    framework. After the training, each participant labeled a set of 200
+    news articles using the same web app. To ensure consistency and
+    enable comparison, a hidden subset of 40 articles (shared with the
+    expert-labeled set) was included for each participant. The responses
+    to this hidden subset were used to estimate metrics and assess the
+    accuracy of human classification relative to the expert
+    benchmark.</p>
+    <p>A set of six metrics were estimated to assess the accuracy of the
+    classification:</p>
+    <list list-type="order">
+      <list-item>
+        <p><bold>Accuracy</bold>: The ratio of correctly predicted
+        instances to the total instances.</p>
+      </list-item>
+      <list-item>
+        <p><bold>Precision</bold>: The ratio of correctly predicted
+        positive instances to the total predicted positive</p>
+      </list-item>
+      <list-item>
+        <p><bold>Sensitivity (TPR)</bold>: The ratio of correctly
+        predicted positive instances to all actual positive
+        instances.</p>
+      </list-item>
+      <list-item>
+        <p><bold>Fall-Out (FPR)</bold>: The proportion of actual
+        negative instances that are incorrectly classified as positive
+        by the model.</p>
+      </list-item>
+      <list-item>
+        <p><bold>F1 Score</bold>: The harmonic mean of precision and
+        recall, giving a balance between the two.</p>
+      </list-item>
+      <list-item>
+        <p><bold>Matthews Correlation Coefficient</bold>: A balanced
+        measure of classification quality that considers true and false
+        positives and negatives.</p>
+      </list-item>
+      <list-item>
+        <p><bold>Confusion Matrix</bold>: A table that shows the actual
+        vs predicted classifications and helps visualize the performance
+        of the classifier.</p>
+      </list-item>
+    </list>
+    <p>Due to the significant imabalnce of negatives in the sample, we
+    focused our attention in the <italic>sensitivity</italic>,
+    <italic>fall-out</italic>, and <italic>confusion matrix</italic>.
+    The results of the classification for the first stage are shown in
+    the <xref alt="Table 5" rid="tbl-classacc1-nb-article">Table 5</xref>.</p>
+    <p>As we can observe, the <bold>GPT model</bold> performed
+    accurately in the small subset of news articles during the first
+    stage of classification while the <bold>Gemini model</bold> had a
+    low sensitivity performance due to a significant number of false
+    negatives (31). This is a dangerous statistic given that, unlike the
+    false positives, this is information that will be lost during the
+    second stage of the classification. This is a cost that is assumed
+    by this project in order to reduce the costs of the pilot.</p>
+    <p>When comparing the performance of the AI models to those of the
+    human annotators, only 7 out of the 20 human annotators performed
+    better than Gemini. This set of “<italic>Top Human
+    Classifiers</italic> shown a performance almost as high as the
+    <italic>GPT model</italic>. However, when looking at the whole human
+    team, we can see that average <italic>Human Annotator</italic>
+    performed very closely to the <italic>Gemini Model</italic>. While
+    the Gemini model had a lower FPR, the average human annotator
+    exhibited a higher TPR.</p>
+    <sec specific-use="notebook-content">
+    <code language="python">stage_one[[&quot;classifier&quot;, &quot;tpr&quot;, &quot;fpr&quot;, &quot;confusion_matrix&quot;]].rename(
+        columns = {
+            &quot;classifier&quot;       : &quot;Classifier&quot;,
+            &quot;tpr&quot;              : &quot;TPR&quot;,
+            &quot;fpr&quot;              : &quot;FPR&quot;,
+            &quot;confusion_matrix&quot; : &quot;Confussion Matrix&quot;
+        },
+        # inplace = True
+    ).style.hide(axis=&quot;index&quot;).format({
+    &quot;TPR&quot;: &quot;{:,.2f}&quot;,
+    &quot;FPR&quot;: &quot;{:,.2f}&quot;
+})</code>
+    <fig id="tbl-classacc1-nb-article">
+      <caption><p>Table 5: Classification Performance Assessment (Stage
+      1)</p></caption>
+      <boxed-text>
+        <table-wrap>
+          <table id="T_54c07-nb-article">
+            <thead>
+              <tr>
+                <th id="T_54c07_level0_col0-nb-article">Classifier</th>
+                <th id="T_54c07_level0_col1-nb-article">TPR</th>
+                <th id="T_54c07_level0_col2-nb-article">FPR</th>
+                <th id="T_54c07_level0_col3-nb-article">Confussion Matrix</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td id="T_54c07_row0_col0-nb-article">GPT</td>
+                <td id="T_54c07_row0_col1-nb-article">1.00</td>
+                <td id="T_54c07_row0_col2-nb-article">0.00</td>
+                <td id="T_54c07_row0_col3-nb-article">[[136 0] [ 0 67]]</td>
+              </tr>
+              <tr>
+                <td id="T_54c07_row1_col0-nb-article">Gemini</td>
+                <td id="T_54c07_row1_col1-nb-article">0.54</td>
+                <td id="T_54c07_row1_col2-nb-article">0.07</td>
+                <td id="T_54c07_row1_col3-nb-article">[[126 10] [ 31 36]]</td>
+              </tr>
+              <tr>
+                <td id="T_54c07_row2_col0-nb-article">Top Human Classifiers</td>
+                <td id="T_54c07_row2_col1-nb-article">0.92</td>
+                <td id="T_54c07_row2_col2-nb-article">0.14</td>
+                <td id="T_54c07_row2_col3-nb-article">[[241 43] [ 7 75]]</td>
+              </tr>
+              <tr>
+                <td id="T_54c07_row3_col0-nb-article">Human Classifiers</td>
+                <td id="T_54c07_row3_col1-nb-article">0.75</td>
+                <td id="T_54c07_row3_col2-nb-article">0.09</td>
+                <td id="T_54c07_row3_col3-nb-article">[[511 56] [ 42 125]]</td>
+              </tr>
+            </tbody>
+          </table>
+        </table-wrap>
+      </boxed-text>
+    </fig>
+    </sec>
+    <p>When assessing the accuracy of the classification during the
+    second stage, we only have a reliable sample size to evaluate the
+    accuracy on pillars one, four, and five. The results shown in
+    <xref alt="Table 6" rid="tbl-classacc2-nb-article">Table 6</xref> reflect that
+    AI models had a better performance than humans when classifying news
+    articles related to <italic>Constraints on Government
+    Powers</italic>, while humans had a better performance than AI
+    models when classifying news articles related to <italic>Order and
+    Security</italic>.</p>
+    <sec specific-use="notebook-content">
+    <code language="python">dataframes = [pillar_one, pillar_four, pillar_five]
+stage_two = pd.concat(dataframes)
+stage_two[[&quot;classifier&quot;, &quot;pillar&quot;, &quot;tpr&quot;, &quot;fpr&quot;, &quot;confusion_matrix&quot;]].rename(
+        columns = {
+            &quot;classifier&quot;       : &quot;Classifier&quot;,
+            &quot;pillar&quot;           : &quot;Pillar&quot;,
+            &quot;tpr&quot;              : &quot;TPR&quot;,
+            &quot;fpr&quot;              : &quot;FPR&quot;,
+            &quot;confusion_matrix&quot; : &quot;Confussion Matrix&quot;
+        },
+        # inplace = True
+    ).style.hide(axis=&quot;index&quot;).format({
+    &quot;TPR&quot;: &quot;{:,.2f}&quot;,
+    &quot;FPR&quot;: &quot;{:,.2f}&quot;
+})</code>
+    <fig id="tbl-classacc2-nb-article">
+      <caption><p>Table 6: Classification Performance Assessment (Stage
+      2)</p></caption>
+      <boxed-text>
+        <table-wrap>
+          <table id="T_50cb0-nb-article">
+            <thead>
+              <tr>
+                <th id="T_50cb0_level0_col0-nb-article">Classifier</th>
+                <th id="T_50cb0_level0_col1-nb-article">Pillar</th>
+                <th id="T_50cb0_level0_col2-nb-article">TPR</th>
+                <th id="T_50cb0_level0_col3-nb-article">FPR</th>
+                <th id="T_50cb0_level0_col4-nb-article">Confussion Matrix</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td id="T_50cb0_row0_col0-nb-article">GPT</td>
+                <td id="T_50cb0_row0_col1-nb-article">Pillar 1</td>
+                <td id="T_50cb0_row0_col2-nb-article">0.69</td>
+                <td id="T_50cb0_row0_col3-nb-article">0.21</td>
+                <td id="T_50cb0_row0_col4-nb-article">[[30 8] [ 9 20]]</td>
+              </tr>
+              <tr>
+                <td id="T_50cb0_row1_col0-nb-article">Gemini</td>
+                <td id="T_50cb0_row1_col1-nb-article">Pillar 1</td>
+                <td id="T_50cb0_row1_col2-nb-article">0.52</td>
+                <td id="T_50cb0_row1_col3-nb-article">0.37</td>
+                <td id="T_50cb0_row1_col4-nb-article">[[24 14] [14 15]]</td>
+              </tr>
+              <tr>
+                <td id="T_50cb0_row2_col0-nb-article">Top Human Classifiers</td>
+                <td id="T_50cb0_row2_col1-nb-article">Pillar 1</td>
+                <td id="T_50cb0_row2_col2-nb-article">0.55</td>
+                <td id="T_50cb0_row2_col3-nb-article">0.16</td>
+                <td id="T_50cb0_row2_col4-nb-article">[[89 27] [38 52]]</td>
+              </tr>
+              <tr>
+                <td id="T_50cb0_row3_col0-nb-article">Human Classifiers</td>
+                <td id="T_50cb0_row3_col1-nb-article">Pillar 1</td>
+                <td id="T_50cb0_row3_col2-nb-article">0.35</td>
+                <td id="T_50cb0_row3_col3-nb-article">0.07</td>
+                <td id="T_50cb0_row3_col4-nb-article">[[85 7] [50 25]]</td>
+              </tr>
+              <tr>
+                <td id="T_50cb0_row4_col0-nb-article">GPT</td>
+                <td id="T_50cb0_row4_col1-nb-article">Pillar 4</td>
+                <td id="T_50cb0_row4_col2-nb-article">0.60</td>
+                <td id="T_50cb0_row4_col3-nb-article">0.17</td>
+                <td id="T_50cb0_row4_col4-nb-article">[[35 7] [10 15]]</td>
+              </tr>
+              <tr>
+                <td id="T_50cb0_row5_col0-nb-article">Gemini</td>
+                <td id="T_50cb0_row5_col1-nb-article">Pillar 4</td>
+                <td id="T_50cb0_row5_col2-nb-article">0.24</td>
+                <td id="T_50cb0_row5_col3-nb-article">0.26</td>
+                <td id="T_50cb0_row5_col4-nb-article">[[31 11] [19 6]]</td>
+              </tr>
+              <tr>
+                <td id="T_50cb0_row6_col0-nb-article">Top Human Classifiers</td>
+                <td id="T_50cb0_row6_col1-nb-article">Pillar 4</td>
+                <td id="T_50cb0_row6_col2-nb-article">0.66</td>
+                <td id="T_50cb0_row6_col3-nb-article">0.15</td>
+                <td id="T_50cb0_row6_col4-nb-article">[[57 11] [20 37]]</td>
+              </tr>
+              <tr>
+                <td id="T_50cb0_row7_col0-nb-article">Human Classifiers</td>
+                <td id="T_50cb0_row7_col1-nb-article">Pillar 4</td>
+                <td id="T_50cb0_row7_col2-nb-article">0.40</td>
+                <td id="T_50cb0_row7_col3-nb-article">0.16</td>
+                <td id="T_50cb0_row7_col4-nb-article">[[62 13] [53 39]]</td>
+              </tr>
+              <tr>
+                <td id="T_50cb0_row8_col0-nb-article">GPT</td>
+                <td id="T_50cb0_row8_col1-nb-article">Pillar 5</td>
+                <td id="T_50cb0_row8_col2-nb-article">0.33</td>
+                <td id="T_50cb0_row8_col3-nb-article">0.10</td>
+                <td id="T_50cb0_row8_col4-nb-article">[[44 5] [12 6]]</td>
+              </tr>
+              <tr>
+                <td id="T_50cb0_row9_col0-nb-article">Gemini</td>
+                <td id="T_50cb0_row9_col1-nb-article">Pillar 5</td>
+                <td id="T_50cb0_row9_col2-nb-article">0.22</td>
+                <td id="T_50cb0_row9_col3-nb-article">0.14</td>
+                <td id="T_50cb0_row9_col4-nb-article">[[42 7] [14 4]]</td>
+              </tr>
+              <tr>
+                <td id="T_50cb0_row10_col0-nb-article">Top Human Classifiers</td>
+                <td id="T_50cb0_row10_col1-nb-article">Pillar 5</td>
+                <td id="T_50cb0_row10_col2-nb-article">0.67</td>
+                <td id="T_50cb0_row10_col3-nb-article">0.18</td>
+                <td id="T_50cb0_row10_col4-nb-article">[[69 15] [ 8 16]]</td>
+              </tr>
+              <tr>
+                <td id="T_50cb0_row11_col0-nb-article">Human Classifiers</td>
+                <td id="T_50cb0_row11_col1-nb-article">Pillar 5</td>
+                <td id="T_50cb0_row11_col2-nb-article">0.42</td>
+                <td id="T_50cb0_row11_col3-nb-article">0.18</td>
+                <td id="T_50cb0_row11_col4-nb-article">[[106 25] [ 19 17]]</td>
+              </tr>
+            </tbody>
+          </table>
+        </table-wrap>
+      </boxed-text>
+    </fig>
+    </sec>
   </sec>
 </sec>
 <sec id="summarization-and-sentiment-nb-article">
@@ -22714,241 +23317,12 @@ for member in eu_member_states:
 <sub-article article-type="notebook" id="nb-9-nb-3">
 <front-stub>
 <title-group>
-<article-title>4. Article summarization code</article-title>
-</title-group>
-</front-stub>
-
-<body>
-<sec id="cell-2-nb-3" specific-use="notebook-content">
-<code language="python">import os
-import ast
-import math
-import json
-import time
-import pandas as pd
-from dotenv import load_dotenv
-import prompt_templates_summarization as pts
-from langchain.schema import BaseOutputParser
-from langchain.prompts.chat import ChatPromptTemplate
-from langchain_google_genai import (
-    ChatGoogleGenerativeAI,
-    HarmBlockThreshold,
-    HarmCategory
-)
-from json.decoder import JSONDecodeError
-from google.generativeai.types import BlockedPromptException
-from google.generativeai.types.generation_types import StopCandidateException</code>
-</sec>
-<sec id="cell-3-nb-3" specific-use="notebook-content">
-<code language="python">country = &quot;Italy&quot;
-path2SP = &quot;.../EU-S Data/&quot;</code>
-</sec>
-<sec id="cell-4-nb-3" specific-use="notebook-content">
-<sec id="loading-api-key-nb-3">
-  <title>Loading API key</title>
-  </sec>
-  <sec id="cell-5-nb-3" specific-use="notebook-content">
-  <code language="python">load_dotenv()
-GoogleAI_key = os.getenv(&quot;googleAI_API_key&quot;)
-os.environ['GOOGLE_API_KEY'] = GoogleAI_key</code>
-  </sec>
-  <sec id="cell-6-nb-3" specific-use="notebook-content">
-</sec>
-<sec id="loading-data-nb-3">
-  <title>Loading data</title>
-  </sec>
-  <sec id="cell-7-nb-3" specific-use="notebook-content">
-  <code language="python">def showEverything(df):
-    with pd.option_context('display.max_rows', None,
-                        'display.max_columns', None,
-                        'display.width', 1000,
-                        'display.precision', 3,
-                        'display.colheader_justify', 'left'):
-        display(df)</code>
-  </sec>
-  <sec id="cell-8-nb-3" specific-use="notebook-content">
-  <code language="python">country_data      = pd.read_parquet(f&quot;{path2SP}/EU-S Data/Automated Qualitative Checks/Data/data-classification-1/0_compiled/{country}_classified.parquet.gzip&quot;)
-location_variable = f&quot;location_{country}&quot;
-if country == &quot;Czechia&quot;:
-    location_variable = f&quot;location_Czech&quot;
-subset_data       = (
-    country_data.copy()
-    .loc[(country_data[location_variable] == True) &amp; (country_data[&quot;topic_related&quot;].str.contains(&quot;Related|Justice|Governance&quot;))]
-)
-subset_data.shape</code>
-  </sec>
-  <sec id="cell-9-nb-3" specific-use="notebook-content">
-  <code language="python">pillar_columns = subset_data.filter(like='pillar_')
-pillar_sum = pillar_columns.sum(axis=0)
-pillar_sum</code>
-  </sec>
-  <sec id="cell-10-nb-3" specific-use="notebook-content">
-</sec>
-<sec id="defining-chain-nb-3">
-  <title>Defining chain</title>
-  </sec>
-  <sec id="cell-11-nb-3" specific-use="notebook-content">
-  <code language="python">safety_settings = {
-    HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_NONE,
-    HarmCategory.HARM_CATEGORY_HATE_SPEECH: HarmBlockThreshold.BLOCK_NONE,
-    HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT: HarmBlockThreshold.BLOCK_NONE,
-    HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_NONE
-}</code>
-  </sec>
-  <sec id="cell-12-nb-3" specific-use="notebook-content">
-  <code language="python">class JSONOutputParser(BaseOutputParser):
-    def parse(self, text: str):
-        &quot;&quot;&quot;
-        Parse the output of an LLM call to a valid JSON format.
-        &quot;&quot;&quot;
-        return json.loads(text.replace('```json', '').replace('```', ''), strict=False)</code>
-  </sec>
-  <sec id="cell-13-nb-3" specific-use="notebook-content">
-  <code language="python">def summarize_article(headline, summary, body, pillar):
-    &quot;&quot;&quot;
-    This function takes a headline, a summary, and the content of a news article and it sends a call to Google's Gemini
-    to summarize a article and provide an impact score focusing on a specific pillar of the Rule of Law.
-    &quot;&quot;&quot;
-    
-    idx = str(pillar)
-
-    # Setting up the Prompt Template
-    chat_prompt = ChatPromptTemplate.from_messages([
-                    (&quot;system&quot;, pts.context),
-                    (&quot;human&quot;, pts.instructions)
-                ])
-
-    # Defining our chain
-    chain_gemini = chat_prompt | ChatGoogleGenerativeAI(model = &quot;gemini-pro&quot;,
-                                                        temperature = 0.1, 
-                                                        safety_settings = safety_settings,
-                                                        convert_system_message_to_human = True) | JSONOutputParser()
-    
-    try: 
-        llm_response = chain_gemini.invoke({
-            &quot;headline&quot;       : headline,
-            &quot;summary&quot;        : summary,
-            &quot;body&quot;           : body,
-            &quot;pillar_name&quot;    : pts.pillar_names[idx],
-            &quot;pillar_bullets&quot; : pts.pillar_bullets[idx]
-        })
-        status = True
-        time.sleep(3)   # We need to slow down the calls. given that the Gemini API has a limit of 60 calls per second
-
-    # The API can still block some of our prompts due to undefined reasons. Sadly, we can't do anything about it, so we
-    # predefine the outcome    
-    except (BlockedPromptException, StopCandidateException):
-        print(&quot;Prompt BLOCKED&quot;)
-        status = False
-    
-    except JSONDecodeError:
-        print(&quot;Decode error... trying again...&quot;)
-        try: 
-            llm_response = chain_gemini.invoke({
-                &quot;headline&quot;       : headline,
-                &quot;summary&quot;        : summary,
-                &quot;body&quot;           : body,
-                &quot;pillar_name&quot;    : pts.pillar_names[idx],
-                &quot;pillar_bullets&quot; : pts.pillar_bullets[idx]
-            })
-            status = True
-            time.sleep(3)
-
-        except JSONDecodeError:
-            print(&quot;Failed. Skipping article.&quot;)
-            status = False
-
-    # We use the STATUS variable to throw an outcome to our call depending if our prompt was blocked or not
-    if status == True:
-        outcome = [llm_response[&quot;summary&quot;], llm_response[&quot;impact_score&quot;]]
-
-    else:
-        outcome = &quot;Skipped article&quot;
-
-    return outcome</code>
-  </sec>
-  <sec id="cell-14-nb-3" specific-use="notebook-content">
-</sec>
-<sec id="sending-calls-in-sets-and-batches-nb-3">
-  <title>Sending calls in sets and batches</title>
-  </sec>
-  <sec id="cell-15-nb-3" specific-use="notebook-content">
-  <code language="python">try:
-    os.mkdir(f&quot;{path2SP}/EU-S Data/Automated Qualitative Checks/Data/data-summarization/{country}&quot;)
-    print(&quot;Directory created&quot;)
-except FileExistsError:
-    print(&quot;Directory already exists&quot;)
-try:
-    for p in range(1,9):
-        os.mkdir(f&quot;{path2SP}/EU-S Data/Automated Qualitative Checks/Data/data-summarization/{country}/pillar_{p}&quot;)
-    print(&quot;Sub-directories created&quot;)
-except FileExistsError:
-    print(&quot;Sub-directories already exists&quot;)</code>
-  </sec>
-  <sec id="cell-16-nb-3" specific-use="notebook-content">
-  <code language="python">for p in range(1,9):
-
-    print(&quot;=========================&quot;)
-    print(f&quot;Starting with PILLAR {p}&quot;)
-    print(&quot;=========================&quot;)
-
-    pillar_subset = (
-        subset_data.copy()
-        .loc[subset_data[f&quot;pillar_{p}&quot;] == True]
-    )
-    nsets = math.ceil(len(pillar_subset)/1000)
-
-    for set in range(1, nsets+!):
-        print(&quot;==============================================&quot;)
-        print(f&quot;Starting with SET {set} out of {nsets} set(s)&quot;)
-        print(&quot;==============================================&quot;)
-
-        results = []
-
-        for batch_number in range(1,11):
-            starting_row = ((set-1)*1000)+((batch_number-1)*100)
-            end_row      = starting_row+100
-            batch_subset = pillar_subset.copy().iloc[starting_row:end_row]
-
-            if len(batch_subset) &gt; 0 :
-                print(&quot;============================================================================&quot;)
-                print(f&quot;Sending batch number: {batch_number}, start: {starting_row}, end: {end_row}&quot;)
-                print(&quot;============================================================================&quot;)
-
-                batch_subset[[&quot;summary&quot;, &quot;impact_score&quot;]] = batch_subset.apply(lambda row: pd.Series(summarize_article(
-                    row[&quot;title_trans&quot;], 
-                    row[&quot;description_trans&quot;], 
-                    row[&quot;content_trans&quot;], 
-                    p
-                )), axis = 1)
-                results.append(batch_subset)
-
-        # Collapsing and saving data
-        collapsed_data = pd.concat(results).drop_duplicates(subset=&quot;id&quot;)
-        collapsed_data.loc[collapsed_data[&quot;impact_score&quot;] == &quot;N/A&quot;, &quot;impact_score&quot;] = 0
-        collapsed_data[&quot;impact_score&quot;] = collapsed_data[&quot;impact_score&quot;].fillna(0).astype(int)
-        collapsed_data.to_parquet(f&quot;{path2SP}/EU-S Data/Automated Qualitative Checks/Data/data-summarization/{country}/pillar_{p}/{country}_pillar_{p}_set_{set}.parquet.gzip&quot;, compression=&quot;gzip&quot;)
-        time.sleep(5)</code>
-  </sec>
-</sec>
-</body>
-
-
-
-<back>
-</back>
-
-
-</sub-article>
-<sub-article article-type="notebook" id="nb-12-nb-4">
-<front-stub>
-<title-group>
 <article-title>2. Translation code</article-title>
 </title-group>
 </front-stub>
 
 <body>
-<sec id="cell-2-nb-4" specific-use="notebook-content">
+<sec id="cell-2-nb-3" specific-use="notebook-content">
 <code language="python">import os
 import time
 import pandas as pd
@@ -22966,14 +23340,14 @@ nltk.download(&quot;punkt&quot;)</code>
   <preformat>True</preformat>
 </boxed-text>
 </sec>
-<sec id="cell-3-nb-4" specific-use="notebook-content">
+<sec id="cell-3-nb-3" specific-use="notebook-content">
 <code language="python">country = &quot;Romania&quot;
 path2SP = &quot;.../Data/data-extraction-1&quot;</code>
 </sec>
-<sec id="cell-4-nb-4" specific-use="notebook-content">
+<sec id="cell-4-nb-3" specific-use="notebook-content">
 <code language="python">master_data = pd.read_parquet(f&quot;{path2SP}/data4translation/{country}_tp.parquet.gzip&quot;)</code>
 </sec>
-<sec id="cell-5-nb-4" specific-use="notebook-content">
+<sec id="cell-5-nb-3" specific-use="notebook-content">
 <code language="python">def trans2english(text, sourcelang):
     &quot;&quot;&quot;
     This functions gathers a text in a specific language and it returns its equivalent
@@ -22995,7 +23369,7 @@ path2SP = &quot;.../Data/data-extraction-1&quot;</code>
     else:
       return &quot;No information available. No translation performed&quot;</code>
 </sec>
-<sec id="cell-6-nb-4" specific-use="notebook-content">
+<sec id="cell-6-nb-3" specific-use="notebook-content">
 <code language="python">total_batches = math.ceil(len(master_data)/2000)
 for batch_number in range(0, total_batches):
     print(&quot;======================================================================&quot;)
@@ -23038,7 +23412,7 @@ for batch_number in range(0, total_batches):
 
 
 </sub-article>
-<sub-article article-type="notebook" id="nb-15-nb-5">
+<sub-article article-type="notebook" id="nb-12-nb-4">
 <front-stub>
 <title-group>
 <article-title>1. Extraction code</article-title>
@@ -23046,7 +23420,7 @@ for batch_number in range(0, total_batches):
 </front-stub>
 
 <body>
-<sec id="cell-2-nb-5" specific-use="notebook-content">
+<sec id="cell-2-nb-4" specific-use="notebook-content">
 <code language="python">import pandas as pd
 import os
 import requests
@@ -23054,22 +23428,22 @@ import json
 import time
 from dotenv import load_dotenv</code>
 </sec>
-<sec id="cell-3-nb-5" specific-use="notebook-content">
-<sec id="loading-api-key-nb-5">
+<sec id="cell-3-nb-4" specific-use="notebook-content">
+<sec id="loading-api-key-nb-4">
   <title>Loading API Key</title>
   </sec>
-  <sec id="cell-4-nb-5" specific-use="notebook-content">
+  <sec id="cell-4-nb-4" specific-use="notebook-content">
   <code language="python"># Loading API KEY from environment
 load_dotenv()
 newscatcher_key_v2 = os.getenv(&quot;newscatcher_key_v2&quot;)
 newscatcher_key_v3 = os.getenv(&quot;newscatcher_key_v3&quot;)</code>
   </sec>
-  <sec id="cell-5-nb-5" specific-use="notebook-content">
+  <sec id="cell-5-nb-4" specific-use="notebook-content">
 </sec>
-<sec id="checking-subscription-plan-only-for-v3-nb-5">
+<sec id="checking-subscription-plan-only-for-v3-nb-4">
   <title>Checking Subscription Plan (only for V3)</title>
   </sec>
-  <sec id="cell-6-nb-5" specific-use="notebook-content">
+  <sec id="cell-6-nb-4" specific-use="notebook-content">
   <code language="python"># Defining URL, header, and parameters
 url      = &quot;https://v3-api.newscatcherapi.com/api/subscription&quot;
 headers  = {&quot;x-api-token&quot; : newscatcher_key_v3}
@@ -23084,16 +23458,16 @@ print(json_format)</code>
     <preformat>{'active': True, 'concurrent_calls': 1, 'plan': 'v3_nlp', 'plan_calls': 10000, 'remaining_calls': 7557, 'historical_days': 60}</preformat>
   </boxed-text>
   </sec>
-  <sec id="cell-7-nb-5" specific-use="notebook-content">
+  <sec id="cell-7-nb-4" specific-use="notebook-content">
 </sec>
-<sec id="loading-keywords-and-sources-nb-5">
+<sec id="loading-keywords-and-sources-nb-4">
   <title>Loading Keywords and Sources</title>
   </sec>
-  <sec id="cell-8-nb-5" specific-use="notebook-content">
+  <sec id="cell-8-nb-4" specific-use="notebook-content">
   <code language="python">sources = pd.read_excel(&quot;../inputs/EU_sources_1.xlsx&quot;)
 sources[&quot;shortURL&quot;] = sources[&quot;URL&quot;].replace(r&quot;^https?://|www\.|/&quot;, &quot;&quot;, regex=True)</code>
   </sec>
-  <sec id="cell-9-nb-5" specific-use="notebook-content">
+  <sec id="cell-9-nb-4" specific-use="notebook-content">
   <code language="python">keywords      = pd.read_excel(&quot;../inputs/keywords_1.xlsx&quot;)
 keywords_long = pd.melt(
     keywords, 
@@ -23102,15 +23476,15 @@ keywords_long = pd.melt(
     value_name = &quot;keyword&quot;
 )</code>
   </sec>
-  <sec id="cell-10-nb-5" specific-use="notebook-content">
+  <sec id="cell-10-nb-4" specific-use="notebook-content">
   <code language="python">institutions = pd.read_excel(&quot;../inputs/country_institutions_1.xlsx&quot;).dropna(subset=[&quot;translation&quot;])</code>
   </sec>
-  <sec id="cell-11-nb-5" specific-use="notebook-content">
+  <sec id="cell-11-nb-4" specific-use="notebook-content">
 </sec>
-<sec id="gathering-news-articles-nb-5">
+<sec id="gathering-news-articles-nb-4">
   <title>Gathering News Articles</title>
   </sec>
-  <sec id="cell-12-nb-5" specific-use="notebook-content">
+  <sec id="cell-12-nb-4" specific-use="notebook-content">
   <code language="python">def gatherKeywords(language, country):
     &quot;&quot;&quot;
     This function takes a language and a country as arguments and retrieve a set of query-styled strings
@@ -23259,11 +23633,11 @@ def mergeData(dta, version):
                 master_data  = pd.concat(data_list)
                 master_data.to_parquet(f&quot;../data/data-extraction-1/{version}/{source}.parquet.gzip&quot;, compression = &quot;gzip&quot;)    </code>
   </sec>
-  <sec id="cell-13-nb-5" specific-use="notebook-content">
-  <sec id="using-api-v2-to-gather-news-nb-5">
+  <sec id="cell-13-nb-4" specific-use="notebook-content">
+  <sec id="using-api-v2-to-gather-news-nb-4">
     <title>Using API V2 to gather news</title>
     </sec>
-    <sec id="cell-14-nb-5" specific-use="notebook-content">
+    <sec id="cell-14-nb-4" specific-use="notebook-content">
     <code language="python">results_list_v2 = (
     sources
     # .loc[64:64]
@@ -23271,15 +23645,15 @@ def mergeData(dta, version):
     .tolist()
 )</code>
     </sec>
-    <sec id="cell-15-nb-5" specific-use="notebook-content">
+    <sec id="cell-15-nb-4" specific-use="notebook-content">
     <code language="python">mergeData(results_list_v2, version = &quot;v2&quot;)</code>
     </sec>
-    <sec id="cell-16-nb-5" specific-use="notebook-content">
+    <sec id="cell-16-nb-4" specific-use="notebook-content">
   </sec>
-  <sec id="using-api-v3-to-gather-news-nb-5">
+  <sec id="using-api-v3-to-gather-news-nb-4">
     <title>Using API V3 to gather news</title>
     </sec>
-    <sec id="cell-17-nb-5" specific-use="notebook-content">
+    <sec id="cell-17-nb-4" specific-use="notebook-content">
     <code language="python">results_list_v3 = (
     sources
     # .loc[(sources[&quot;Priority&quot;] == &quot;Yes&quot;) &amp; (sources[&quot;HP&quot;] == &quot;No&quot;)]
@@ -23291,16 +23665,16 @@ def mergeData(dta, version):
     .tolist()
 )</code>
     </sec>
-    <sec id="cell-18-nb-5" specific-use="notebook-content">
+    <sec id="cell-18-nb-4" specific-use="notebook-content">
     <code language="python">mergeData(results_list_v3, version = &quot;v3&quot;)</code>
     </sec>
-    <sec id="cell-19-nb-5" specific-use="notebook-content">
+    <sec id="cell-19-nb-4" specific-use="notebook-content">
   </sec>
 </sec>
-<sec id="compiling-and-saving-data-nb-5">
+<sec id="compiling-and-saving-data-nb-4">
   <title>Compiling and saving data</title>
   </sec>
-  <sec id="cell-20-nb-5" specific-use="notebook-content">
+  <sec id="cell-20-nb-4" specific-use="notebook-content">
   <code language="python">files_v2 = os.listdir(&quot;../data/data-extraction-1/v2&quot;)
 data_sources_v2 = [
     pd.read_parquet(f&quot;../data/data-extraction-1/v2/{x}&quot;)
@@ -23309,7 +23683,7 @@ data_sources_v2 = [
 master_v2 = pd.concat(data_sources_v2).drop_duplicates(subset = &quot;_id&quot;)
 master_v2.to_parquet(&quot;../data/data-extraction-1/master_1v2.parquet.gzip&quot;, compression = &quot;gzip&quot;)</code>
   </sec>
-  <sec id="cell-21-nb-5" specific-use="notebook-content">
+  <sec id="cell-21-nb-4" specific-use="notebook-content">
   <code language="python">files_v3 = os.listdir(&quot;../data/data-extraction-1/v3&quot;)
 data_sources_v3 = [
     pd.read_parquet(f&quot;../data/data-extraction-1/v3/{x}&quot;)
@@ -23318,16 +23692,16 @@ data_sources_v3 = [
 master_v3 = pd.concat(data_sources_v3).drop_duplicates(subset = &quot;id&quot;)
 master_v3.to_parquet(&quot;../data/data-extraction-1/master_1v3.parquet.gzip&quot;, compression = &quot;gzip&quot;)</code>
   </sec>
-  <sec id="cell-22-nb-5" specific-use="notebook-content">
+  <sec id="cell-22-nb-4" specific-use="notebook-content">
 </sec>
-<sec id="harmonizing-v2-and-v3-data-nb-5">
+<sec id="harmonizing-v2-and-v3-data-nb-4">
   <title>Harmonizing V2 and V3 data</title>
   </sec>
-  <sec id="cell-23-nb-5" specific-use="notebook-content">
+  <sec id="cell-23-nb-4" specific-use="notebook-content">
   <code language="python">master_v2 = pd.read_parquet(&quot;../data/data-extraction-1/master_1v2.parquet.gzip&quot;)
 master_v3 = pd.read_parquet(&quot;../data/data-extraction-1/master_1v3.parquet.gzip&quot;)</code>
   </sec>
-  <sec id="cell-24-nb-5" specific-use="notebook-content">
+  <sec id="cell-24-nb-4" specific-use="notebook-content">
   <code language="python">target_columns = [&quot;id&quot;, &quot;link&quot;, &quot;domain_url&quot;, &quot;published_date&quot;, &quot;title&quot;, &quot;description&quot;, &quot;content&quot;, &quot;language&quot;, &quot;is_opinion&quot;]
 master_v2_harm = (
     master_v2
@@ -23348,23 +23722,23 @@ master_data    = (
 )
 master_data = master_data.loc[master_data[[&quot;title&quot;, &quot;content&quot;]].notna().all(axis=1)]</code>
   </sec>
-  <sec id="cell-25-nb-5" specific-use="notebook-content">
+  <sec id="cell-25-nb-4" specific-use="notebook-content">
 </sec>
-<sec id="saving-data-nb-5">
+<sec id="saving-data-nb-4">
   <title>Saving data</title>
   </sec>
-  <sec id="cell-26-nb-5" specific-use="notebook-content">
+  <sec id="cell-26-nb-4" specific-use="notebook-content">
   <code language="python">master_data.to_parquet(&quot;../data/data-extraction-1/master_extraction_1.parquet.gzip&quot;, compression = &quot;gzip&quot;)</code>
   </sec>
-  <sec id="cell-27-nb-5" specific-use="notebook-content">
+  <sec id="cell-27-nb-4" specific-use="notebook-content">
 </sec>
-<sec id="subsetting-data-for-translation-nb-5">
+<sec id="subsetting-data-for-translation-nb-4">
   <title>Subsetting data for translation</title>
   </sec>
-  <sec id="cell-28-nb-5" specific-use="notebook-content">
+  <sec id="cell-28-nb-4" specific-use="notebook-content">
   <code language="python">master_data = pd.read_parquet(&quot;../data/data-extraction-1/master_extraction_1.parquet.gzip&quot;)</code>
   </sec>
-  <sec id="cell-29-nb-5" specific-use="notebook-content">
+  <sec id="cell-29-nb-4" specific-use="notebook-content">
   <code language="python">top_journals = {
       &quot;Luxembourg&quot;  : ['lequotidien.lu','tageblatt.lu','wort.lu'],
       &quot;Slovakia&quot;    : ['dennikn.sk','sme.sk', 'pravda.sk'],
@@ -23403,7 +23777,7 @@ def assign_country(domain_url):
 
 master_data[&quot;country&quot;] = master_data[&quot;domain_url&quot;].apply(assign_country)</code>
   </sec>
-  <sec id="cell-30-nb-5" specific-use="notebook-content">
+  <sec id="cell-30-nb-4" specific-use="notebook-content">
   <code language="python">for country in sources[&quot;Country&quot;].drop_duplicates().to_list():
     subset4translation = (
         master_data.copy()
@@ -23452,7 +23826,7 @@ Sweden: 6417</preformat>
 
 
 </sub-article>
-<sub-article article-type="notebook" id="nb-18-nb-6">
+<sub-article article-type="notebook" id="nb-15-nb-5">
 <front-stub>
 <title-group>
 <article-title>Prompt Templates: Summarization</article-title>
@@ -23460,11 +23834,11 @@ Sweden: 6417</preformat>
 </front-stub>
 
 <body>
-<sec id="cell-2-nb-6" specific-use="notebook-content">
-<sec id="pillar-insights-and-context-nb-6">
+<sec id="cell-2-nb-5" specific-use="notebook-content">
+<sec id="pillar-insights-and-context-nb-5">
   <title>Pillar insights and context</title>
   </sec>
-  <sec id="cell-3-nb-6" specific-use="notebook-content">
+  <sec id="cell-3-nb-5" specific-use="notebook-content">
   <code language="python">pillar_bullets = {
     &quot;1&quot;: &quot;&quot;&quot;
     - The active and reactive transparency of legislative bodies (senate, parliament, assemblies), its ability to impose disciplinary measures to government officials, and if there is representation of disadvantaged groups, as well as citizen participation. It also measures if the opposition can express its opinions and if it exercises its functions of overseeing and investigating the government.
@@ -23539,13 +23913,13 @@ Sweden: 6417</preformat>
 }
   </code>
   </sec>
-  <sec id="cell-4-nb-6" specific-use="notebook-content">
+  <sec id="cell-4-nb-5" specific-use="notebook-content">
 </sec>
-<sec id="article-summarization-system-context-and-summarization-nb-6">
+<sec id="article-summarization-system-context-and-summarization-nb-5">
   <title>Article Summarization (System Context and
   Summarization)</title>
   </sec>
-  <sec id="cell-5-nb-6" specific-use="notebook-content">
+  <sec id="cell-5-nb-5" specific-use="notebook-content">
   <code language="python">context = &quot;&quot;&quot;
 You are a specialized assistant whose role is to meticulously analyze news articles, with a keen focus on thematic pillars that encompass constraints on government powers, governance, transparency, corruption, freedom, human rights, equality, justice, and civic participation. Your task consists in, first, reading a news article and preparing a concise summary that underscores its relevance to a specific thematic pillar and, second, provide an evaluation on how the events narrated by the article impact the thematic pillar specified. I will provide you with further details about the news articles and the chosen pillar.
 &quot;&quot;&quot;
@@ -23580,7 +23954,7 @@ Remember to ONLY answer following the JSON format provided and using double quot
 
 
 </sub-article>
-<sub-article article-type="notebook" id="nb-21-nb-7">
+<sub-article article-type="notebook" id="nb-18-nb-6">
 <front-stub>
 <title-group>
 <article-title>Prompt Templates: Text Classification</article-title>
@@ -23588,11 +23962,11 @@ Remember to ONLY answer following the JSON format provided and using double quot
 </front-stub>
 
 <body>
-<sec id="cell-2-nb-7" specific-use="notebook-content">
-<sec id="stage-1-system-context-and-instructions-nb-7">
+<sec id="cell-2-nb-6" specific-use="notebook-content">
+<sec id="stage-1-system-context-and-instructions-nb-6">
   <title>Stage 1 (System Context and Instructions)</title>
   </sec>
-  <sec id="cell-3-nb-7" specific-use="notebook-content">
+  <sec id="cell-3-nb-6" specific-use="notebook-content">
   <code language="python">context_stage_1 = &quot;&quot;&quot;
 You are an assistant with knowledge and subject-matter expertise on Rule of Law, justice, governance, global politics, social sciences, and related fields in the European Union. Your task is to carefully read a news article and determine whether it is related to the definitions of Rule of Law, Justice, and Governance that I will give you. To successfully perform this task, you should carefully read the definitions that I will provide, and use the knowledge of global politics, law, and social sciences that you have.
 &quot;&quot;&quot;
@@ -23648,12 +24022,12 @@ Remember to ONLY answer following the JSON format explained above.
 Begin!
 &quot;&quot;&quot;</code>
   </sec>
-  <sec id="cell-4-nb-7" specific-use="notebook-content">
+  <sec id="cell-4-nb-6" specific-use="notebook-content">
 </sec>
-<sec id="stage-2-system-context-and-instructions-nb-7">
+<sec id="stage-2-system-context-and-instructions-nb-6">
   <title>Stage 2 (System Context and Instructions)</title>
   </sec>
-  <sec id="cell-5-nb-7" specific-use="notebook-content">
+  <sec id="cell-5-nb-6" specific-use="notebook-content">
   <code language="python">context_stage_2 = &quot;&quot;&quot;
 You are an assistant with knowledge and expertise in global politics, social sciences, rule of law, and related fields. Your task is to assist me in classifying news articles according to which pillar of the Rule of Law do they belong to. To successfully accomplish this task, you will have to carefully read the definitions of each pillar that I will give you and the text of the article itself, as well as use the knowledge of global politics, social sciences, and law that you have. Once you have read the news article, you will proceed to determine the extent to which the events described in the news article are related to each pillar.
 &quot;&quot;&quot;
@@ -23771,6 +24145,1223 @@ When answering, strictly attach to the definitions of the Rule of Law, Justice, 
 
 Begin!
 &quot;&quot;&quot;</code>
+  </sec>
+</sec>
+</body>
+
+
+
+<back>
+</back>
+
+
+</sub-article>
+<sub-article article-type="notebook" id="nb-21-nb-7">
+<front-stub>
+<title-group>
+<article-title>4. Article summarization code</article-title>
+</title-group>
+</front-stub>
+
+<body>
+<sec id="cell-2-nb-7" specific-use="notebook-content">
+<code language="python">import os
+import ast
+import math
+import json
+import time
+import pandas as pd
+from dotenv import load_dotenv
+import prompt_templates_summarization as pts
+from langchain.schema import BaseOutputParser
+from langchain.prompts.chat import ChatPromptTemplate
+from langchain_google_genai import (
+    ChatGoogleGenerativeAI,
+    HarmBlockThreshold,
+    HarmCategory
+)
+from json.decoder import JSONDecodeError
+from google.generativeai.types import BlockedPromptException
+from google.generativeai.types.generation_types import StopCandidateException</code>
+</sec>
+<sec id="cell-3-nb-7" specific-use="notebook-content">
+<code language="python">country = &quot;Italy&quot;
+path2SP = &quot;.../EU-S Data/&quot;</code>
+</sec>
+<sec id="cell-4-nb-7" specific-use="notebook-content">
+<sec id="loading-api-key-nb-7">
+  <title>Loading API key</title>
+  </sec>
+  <sec id="cell-5-nb-7" specific-use="notebook-content">
+  <code language="python">load_dotenv()
+GoogleAI_key = os.getenv(&quot;googleAI_API_key&quot;)
+os.environ['GOOGLE_API_KEY'] = GoogleAI_key</code>
+  </sec>
+  <sec id="cell-6-nb-7" specific-use="notebook-content">
+</sec>
+<sec id="loading-data-nb-7">
+  <title>Loading data</title>
+  </sec>
+  <sec id="cell-7-nb-7" specific-use="notebook-content">
+  <code language="python">def showEverything(df):
+    with pd.option_context('display.max_rows', None,
+                        'display.max_columns', None,
+                        'display.width', 1000,
+                        'display.precision', 3,
+                        'display.colheader_justify', 'left'):
+        display(df)</code>
+  </sec>
+  <sec id="cell-8-nb-7" specific-use="notebook-content">
+  <code language="python">country_data      = pd.read_parquet(f&quot;{path2SP}/EU-S Data/Automated Qualitative Checks/Data/data-classification-1/0_compiled/{country}_classified.parquet.gzip&quot;)
+location_variable = f&quot;location_{country}&quot;
+if country == &quot;Czechia&quot;:
+    location_variable = f&quot;location_Czech&quot;
+subset_data       = (
+    country_data.copy()
+    .loc[(country_data[location_variable] == True) &amp; (country_data[&quot;topic_related&quot;].str.contains(&quot;Related|Justice|Governance&quot;))]
+)
+subset_data.shape</code>
+  </sec>
+  <sec id="cell-9-nb-7" specific-use="notebook-content">
+  <code language="python">pillar_columns = subset_data.filter(like='pillar_')
+pillar_sum = pillar_columns.sum(axis=0)
+pillar_sum</code>
+  </sec>
+  <sec id="cell-10-nb-7" specific-use="notebook-content">
+</sec>
+<sec id="defining-chain-nb-7">
+  <title>Defining chain</title>
+  </sec>
+  <sec id="cell-11-nb-7" specific-use="notebook-content">
+  <code language="python">safety_settings = {
+    HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_NONE,
+    HarmCategory.HARM_CATEGORY_HATE_SPEECH: HarmBlockThreshold.BLOCK_NONE,
+    HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT: HarmBlockThreshold.BLOCK_NONE,
+    HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_NONE
+}</code>
+  </sec>
+  <sec id="cell-12-nb-7" specific-use="notebook-content">
+  <code language="python">class JSONOutputParser(BaseOutputParser):
+    def parse(self, text: str):
+        &quot;&quot;&quot;
+        Parse the output of an LLM call to a valid JSON format.
+        &quot;&quot;&quot;
+        return json.loads(text.replace('```json', '').replace('```', ''), strict=False)</code>
+  </sec>
+  <sec id="cell-13-nb-7" specific-use="notebook-content">
+  <code language="python">def summarize_article(headline, summary, body, pillar):
+    &quot;&quot;&quot;
+    This function takes a headline, a summary, and the content of a news article and it sends a call to Google's Gemini
+    to summarize a article and provide an impact score focusing on a specific pillar of the Rule of Law.
+    &quot;&quot;&quot;
+    
+    idx = str(pillar)
+
+    # Setting up the Prompt Template
+    chat_prompt = ChatPromptTemplate.from_messages([
+                    (&quot;system&quot;, pts.context),
+                    (&quot;human&quot;, pts.instructions)
+                ])
+
+    # Defining our chain
+    chain_gemini = chat_prompt | ChatGoogleGenerativeAI(model = &quot;gemini-pro&quot;,
+                                                        temperature = 0.1, 
+                                                        safety_settings = safety_settings,
+                                                        convert_system_message_to_human = True) | JSONOutputParser()
+    
+    try: 
+        llm_response = chain_gemini.invoke({
+            &quot;headline&quot;       : headline,
+            &quot;summary&quot;        : summary,
+            &quot;body&quot;           : body,
+            &quot;pillar_name&quot;    : pts.pillar_names[idx],
+            &quot;pillar_bullets&quot; : pts.pillar_bullets[idx]
+        })
+        status = True
+        time.sleep(3)   # We need to slow down the calls. given that the Gemini API has a limit of 60 calls per second
+
+    # The API can still block some of our prompts due to undefined reasons. Sadly, we can't do anything about it, so we
+    # predefine the outcome    
+    except (BlockedPromptException, StopCandidateException):
+        print(&quot;Prompt BLOCKED&quot;)
+        status = False
+    
+    except JSONDecodeError:
+        print(&quot;Decode error... trying again...&quot;)
+        try: 
+            llm_response = chain_gemini.invoke({
+                &quot;headline&quot;       : headline,
+                &quot;summary&quot;        : summary,
+                &quot;body&quot;           : body,
+                &quot;pillar_name&quot;    : pts.pillar_names[idx],
+                &quot;pillar_bullets&quot; : pts.pillar_bullets[idx]
+            })
+            status = True
+            time.sleep(3)
+
+        except JSONDecodeError:
+            print(&quot;Failed. Skipping article.&quot;)
+            status = False
+
+    # We use the STATUS variable to throw an outcome to our call depending if our prompt was blocked or not
+    if status == True:
+        outcome = [llm_response[&quot;summary&quot;], llm_response[&quot;impact_score&quot;]]
+
+    else:
+        outcome = &quot;Skipped article&quot;
+
+    return outcome</code>
+  </sec>
+  <sec id="cell-14-nb-7" specific-use="notebook-content">
+</sec>
+<sec id="sending-calls-in-sets-and-batches-nb-7">
+  <title>Sending calls in sets and batches</title>
+  </sec>
+  <sec id="cell-15-nb-7" specific-use="notebook-content">
+  <code language="python">try:
+    os.mkdir(f&quot;{path2SP}/EU-S Data/Automated Qualitative Checks/Data/data-summarization/{country}&quot;)
+    print(&quot;Directory created&quot;)
+except FileExistsError:
+    print(&quot;Directory already exists&quot;)
+try:
+    for p in range(1,9):
+        os.mkdir(f&quot;{path2SP}/EU-S Data/Automated Qualitative Checks/Data/data-summarization/{country}/pillar_{p}&quot;)
+    print(&quot;Sub-directories created&quot;)
+except FileExistsError:
+    print(&quot;Sub-directories already exists&quot;)</code>
+  </sec>
+  <sec id="cell-16-nb-7" specific-use="notebook-content">
+  <code language="python">for p in range(1,9):
+
+    print(&quot;=========================&quot;)
+    print(f&quot;Starting with PILLAR {p}&quot;)
+    print(&quot;=========================&quot;)
+
+    pillar_subset = (
+        subset_data.copy()
+        .loc[subset_data[f&quot;pillar_{p}&quot;] == True]
+    )
+    nsets = math.ceil(len(pillar_subset)/1000)
+
+    for set in range(1, nsets+!):
+        print(&quot;==============================================&quot;)
+        print(f&quot;Starting with SET {set} out of {nsets} set(s)&quot;)
+        print(&quot;==============================================&quot;)
+
+        results = []
+
+        for batch_number in range(1,11):
+            starting_row = ((set-1)*1000)+((batch_number-1)*100)
+            end_row      = starting_row+100
+            batch_subset = pillar_subset.copy().iloc[starting_row:end_row]
+
+            if len(batch_subset) &gt; 0 :
+                print(&quot;============================================================================&quot;)
+                print(f&quot;Sending batch number: {batch_number}, start: {starting_row}, end: {end_row}&quot;)
+                print(&quot;============================================================================&quot;)
+
+                batch_subset[[&quot;summary&quot;, &quot;impact_score&quot;]] = batch_subset.apply(lambda row: pd.Series(summarize_article(
+                    row[&quot;title_trans&quot;], 
+                    row[&quot;description_trans&quot;], 
+                    row[&quot;content_trans&quot;], 
+                    p
+                )), axis = 1)
+                results.append(batch_subset)
+
+        # Collapsing and saving data
+        collapsed_data = pd.concat(results).drop_duplicates(subset=&quot;id&quot;)
+        collapsed_data.loc[collapsed_data[&quot;impact_score&quot;] == &quot;N/A&quot;, &quot;impact_score&quot;] = 0
+        collapsed_data[&quot;impact_score&quot;] = collapsed_data[&quot;impact_score&quot;].fillna(0).astype(int)
+        collapsed_data.to_parquet(f&quot;{path2SP}/EU-S Data/Automated Qualitative Checks/Data/data-summarization/{country}/pillar_{p}/{country}_pillar_{p}_set_{set}.parquet.gzip&quot;, compression=&quot;gzip&quot;)
+        time.sleep(5)</code>
+  </sec>
+</sec>
+</body>
+
+
+
+<back>
+</back>
+
+
+</sub-article>
+<sub-article article-type="notebook" id="nb-24-nb-8">
+<front-stub>
+<title-group>
+<article-title>3. Classification Performance Assessment</article-title>
+</title-group>
+</front-stub>
+
+<body>
+<sec id="cell-2-nb-8" specific-use="notebook-content">
+<code language="python">import pandas as pd
+import numpy as np
+import math
+import re
+import getpass</code>
+</sec>
+<sec id="cell-3-nb-8" specific-use="notebook-content">
+<sec id="loading-data-nb-8">
+  <title>Loading data</title>
+  </sec>
+  <sec id="cell-4-nb-8" specific-use="notebook-content">
+  <code language="python">AI_data = pd.read_parquet(f&quot;/Users/{getpass.getuser()}/OneDrive - World Justice Project/EU Subnational/EU-S Data/Automated Qualitative Checks/Data/GPT-vs-Gemini-data.parquet.gzip&quot;)
+EU_team = pd.read_parquet(f&quot;/Users/{getpass.getuser()}/OneDrive - World Justice Project/EU Subnational/EU-S Data/Automated Qualitative Checks/Data/human_labelling.parquet.gzip&quot;)
+EU_team = EU_team[EU_team['bucket'] != &quot;hortiz&quot;]
+horacio = pd.read_parquet(f&quot;/Users/{getpass.getuser()}/OneDrive - World Justice Project/EU Subnational/EU-S Data/Automated Qualitative Checks/Data/hortiz.parquet.gzip&quot;)</code>
+  </sec>
+  <sec id="cell-5-nb-8" specific-use="notebook-content">
+</sec>
+<sec id="performance-metrics-function-nb-8">
+  <title>Performance Metrics Function</title>
+  </sec>
+  <sec id="cell-6-nb-8" specific-use="notebook-content">
+  <code language="python">def calculate_performance(df, predicted_column, truth_column):
+    true_pos   = len(df[(df[predicted_column] == 1) &amp; (df[truth_column] == 1)])
+    true_neg   = len(df[(df[predicted_column] == 0) &amp; (df[truth_column] == 0)])
+    false_neg  = len(df[(df[predicted_column] == 0) &amp; (df[truth_column] == 1)])
+    false_pos  = len(df[(df[predicted_column] == 1) &amp; (df[truth_column] == 0)])
+
+    accuracy  = (true_pos + true_neg) / (true_neg + true_pos + false_neg + false_pos) 
+    precision = ((true_pos) / (true_pos + false_pos)) if (true_pos + false_pos) &gt; 0 else 0
+    recall    = ((true_pos) / (true_pos + false_neg)) if (true_pos + false_neg) &gt; 0 else 0
+    f1        = (2*((precision*recall) / (precision+recall))) if (recall != 0) else 0
+    tpr       = ((true_pos)/(true_pos + false_neg)) if (true_pos + false_neg) &gt; 0 else 0
+    fpr       = ((false_pos)/(false_pos + true_neg)) if (false_pos + true_neg) &gt; 0 else 0 
+    c_matrix  = np.array(
+        [[true_neg, false_pos],[false_neg, true_pos]]
+    )
+    mcc       = ((true_pos*true_neg) - (false_pos*false_neg)) / math.sqrt((true_pos+false_pos)*(true_pos+false_neg)*(true_neg+false_pos)*(true_neg+false_neg)) if (
+        math.sqrt((true_pos+false_pos)*(true_pos+false_neg)*(true_neg+false_pos)*(true_neg+false_neg))) &gt; 0 else 0
+
+    summary = {
+        'accuracy' : accuracy,
+        'precision' : precision,
+        'recall' : recall,
+        'f1' : f1,
+        'mcc' : mcc,
+        'tpr' : tpr,
+        'fpr' : fpr,
+        'confusion_matrix' : c_matrix,
+        'true_pos' : true_pos,
+        'true_neg' : true_neg,
+        'false_pos' : false_pos,
+        'false_neg' : false_neg
+    }
+
+    return summary</code>
+  </sec>
+  <sec id="cell-7-nb-8" specific-use="notebook-content">
+</sec>
+<sec id="wrangling-ai-data-nb-8">
+  <title>Wrangling AI Data</title>
+  </sec>
+  <sec id="cell-8-nb-8" specific-use="notebook-content">
+  <code language="python">AI_data['horacio_rol'] = (
+    AI_data[[
+        'horacio_pillar_1', 'horacio_pillar_2', 'horacio_pillar_3', 'horacio_pillar_4',
+        'horacio_pillar_5', 'horacio_pillar_6', 'horacio_pillar_7', 'horacio_pillar_8'
+    ]].eq(1).any(axis=1)
+).astype(int)
+AI_data['GPT_ROL'] = (AI_data['factor(s)'] != &quot;Not related to Rule of Law&quot;).astype(int)
+AI_data['Gemini_ROL'] = (AI_data['gemini_stage_1'] != &quot;Unrelated&quot;).astype(int)</code>
+  </sec>
+  <sec id="cell-9-nb-8" specific-use="notebook-content">
+</sec>
+<sec id="wrangling-human-data-nb-8">
+  <title>Wrangling Human Data</title>
+  </sec>
+  <sec id="cell-10-nb-8" specific-use="notebook-content">
+  <code language="python">horacio['horacio_ROL'] = np.where((horacio['factor(s)'] != &quot;Not related to Rule of Law&quot;),1,0)
+EU_team['model_ROL']   = np.where((EU_team['factor(s)'] != &quot;Not related to Rule of Law&quot;),1,0)
+
+for df in [horacio, EU_team]:
+    df['factor(s)'] = df['factor(s)'].astype(str)
+
+pillars = [i for i in range(1,9)]
+for pillar in pillars:
+    horacio[f'horacio_pillar_{pillar}'] = horacio['factor(s)'].apply(lambda x: int(bool(re.search(f'{pillar}:', str(x)))))
+    EU_team[f'model_pillar_{pillar}'] = EU_team['factor(s)'].apply(lambda x: int(bool(re.search(f'{pillar}:', str(x)))))
+
+horacio = horacio.drop(columns = ['link', 'factor(s)', 'sentiment', 'is_eu_related','related_country', 'comments'])
+EU_team = EU_team.drop(columns = ['link', 'factor(s)', 'sentiment', 'is_eu_related', 'related_country', 'comments'])</code>
+  </sec>
+  <sec id="cell-11-nb-8" specific-use="notebook-content">
+  <code language="python">dataframes = {}
+
+for model in EU_team['bucket'].unique():
+    subset = EU_team.loc[EU_team['bucket'] == model]
+    human_vs_horacio = pd.merge(subset, horacio, on = &quot;article_id&quot;, how = &quot;inner&quot;)
+    dataframes[model] = human_vs_horacio
+    n_articles = len(human_vs_horacio)</code>
+  </sec>
+  <sec id="cell-12-nb-8" specific-use="notebook-content">
+</sec>
+<sec id="stage-one-metrics-nb-8">
+  <title>Stage One Metrics</title>
+  </sec>
+  <sec id="cell-13-nb-8" specific-use="notebook-content">
+  <code language="python">gpt_metrics = calculate_performance(AI_data, 'GPT_ROL', 'horacio_rol')
+print('GPT metrics:', gpt_metrics)
+gemini_metrics = calculate_performance(AI_data, 'Gemini_ROL', 'horacio_rol')
+print('Gemini metrics: ', gemini_metrics)</code>
+  <boxed-text>
+    <preformat>GPT metrics: {'accuracy': 1.0, 'precision': 1.0, 'recall': 1.0, 'f1': 1.0, 'mcc': 1.0, 'tpr': 1.0, 'fpr': 0.0, 'confusion_matrix': array([[136,   0],
+       [  0,  67]]), 'true_pos': 67, 'true_neg': 136, 'false_pos': 0, 'false_neg': 0}
+Gemini metrics:  {'accuracy': 0.7980295566502463, 'precision': 0.782608695652174, 'recall': 0.5373134328358209, 'f1': 0.6371681415929203, 'mcc': 0.5209474243346167, 'tpr': 0.5373134328358209, 'fpr': 0.07352941176470588, 'confusion_matrix': array([[126,  10],
+       [ 31,  36]]), 'true_pos': 36, 'true_neg': 126, 'false_pos': 10, 'false_neg': 31}</preformat>
+  </boxed-text>
+  </sec>
+  <sec id="cell-14-nb-8" specific-use="notebook-content">
+  <code language="python">classification_performance = pd.DataFrame()
+
+for classifier in dataframes:
+    metrics = calculate_performance(dataframes[classifier], 'model_ROL', 'horacio_ROL')
+    new_row = {
+        'classifier': classifier, 
+        'accuracy': metrics['accuracy'], 
+        'precision': metrics['precision'], 
+        'recall': metrics['recall'], 
+        'f1': metrics['f1'], 
+        'mcc': metrics['mcc'],
+        'tpr' : metrics['tpr'],
+        'fpr' : metrics['fpr'],
+        'confusion_matrix': metrics['confusion_matrix'],  # Store the confusion matrix if needed
+        'true_pos' : metrics['true_pos'],
+        'true_neg' : metrics['true_neg'],
+        'false_pos' : metrics['false_pos'],
+        'false_neg' : metrics['false_neg']
+    }
+    new_row = pd.DataFrame([new_row])
+    classification_performance = pd.concat([classification_performance, new_row], ignore_index = True)</code>
+  </sec>
+  <sec id="cell-15-nb-8" specific-use="notebook-content">
+  <code language="python">stage_one_summary = []
+gpt_stage_one = {
+    'tpr' : gpt_metrics[&quot;tpr&quot;],
+    &quot;fpr&quot; : gpt_metrics[&quot;fpr&quot;],
+    'confusion_matrix' : gpt_metrics[&quot;confusion_matrix&quot;],
+    'classifier' : 'GPT'
+}
+gem_stage_one = {
+    'tpr' : gemini_metrics[&quot;tpr&quot;],
+    &quot;fpr&quot; : gemini_metrics[&quot;fpr&quot;],
+    'confusion_matrix' : gemini_metrics[&quot;confusion_matrix&quot;],
+    'classifier' : 'Gemini'
+}
+
+top = classification_performance.loc[
+    (classification_performance['tpr'] &gt; 0.8)
+]
+top_eu = {
+    'tpr' : top['tpr'].mean(),
+    'fpr' : top['fpr'].mean(),
+    'confusion_matrix' : top['confusion_matrix'].sum(),
+    'classifier' : 'Top Human Classifiers'
+}
+all_of_eu = {
+    'tpr' : classification_performance['tpr'].mean(),
+    'fpr' : classification_performance['fpr'].mean(),
+    'confusion_matrix' : classification_performance['confusion_matrix'].sum(),
+    'classifier' : 'Human Classifiers'
+}
+
+for i in [gpt_stage_one, gem_stage_one, top_eu, all_of_eu]:
+    stage_one_summary.append(i)
+
+stage_one = pd.DataFrame(stage_one_summary)</code>
+  </sec>
+  <sec specific-use="notebook-content">
+  <code language="python">stage_one[[&quot;classifier&quot;, &quot;tpr&quot;, &quot;fpr&quot;, &quot;confusion_matrix&quot;]].rename(
+        columns = {
+            &quot;classifier&quot;       : &quot;Classifier&quot;,
+            &quot;tpr&quot;              : &quot;TPR&quot;,
+            &quot;fpr&quot;              : &quot;FPR&quot;,
+            &quot;confusion_matrix&quot; : &quot;Confussion Matrix&quot;
+        },
+        # inplace = True
+    ).style.hide(axis=&quot;index&quot;).format({
+    &quot;TPR&quot;: &quot;{:,.2f}&quot;,
+    &quot;FPR&quot;: &quot;{:,.2f}&quot;
+})</code>
+  <fig id="tbl-classacc1-nb-8">
+    <caption><p>Table 1: Classification Performance Assessment (Stage
+    1)</p></caption>
+    <boxed-text>
+      <table-wrap>
+        <table id="T_54c07-nb-8">
+          <thead>
+            <tr>
+              <th id="T_54c07_level0_col0-nb-8">Classifier</th>
+              <th id="T_54c07_level0_col1-nb-8">TPR</th>
+              <th id="T_54c07_level0_col2-nb-8">FPR</th>
+              <th id="T_54c07_level0_col3-nb-8">Confussion Matrix</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td id="T_54c07_row0_col0-nb-8">GPT</td>
+              <td id="T_54c07_row0_col1-nb-8">1.00</td>
+              <td id="T_54c07_row0_col2-nb-8">0.00</td>
+              <td id="T_54c07_row0_col3-nb-8">[[136 0] [ 0 67]]</td>
+            </tr>
+            <tr>
+              <td id="T_54c07_row1_col0-nb-8">Gemini</td>
+              <td id="T_54c07_row1_col1-nb-8">0.54</td>
+              <td id="T_54c07_row1_col2-nb-8">0.07</td>
+              <td id="T_54c07_row1_col3-nb-8">[[126 10] [ 31 36]]</td>
+            </tr>
+            <tr>
+              <td id="T_54c07_row2_col0-nb-8">Top Human Classifiers</td>
+              <td id="T_54c07_row2_col1-nb-8">0.92</td>
+              <td id="T_54c07_row2_col2-nb-8">0.14</td>
+              <td id="T_54c07_row2_col3-nb-8">[[241 43] [ 7 75]]</td>
+            </tr>
+            <tr>
+              <td id="T_54c07_row3_col0-nb-8">Human Classifiers</td>
+              <td id="T_54c07_row3_col1-nb-8">0.75</td>
+              <td id="T_54c07_row3_col2-nb-8">0.09</td>
+              <td id="T_54c07_row3_col3-nb-8">[[511 56] [ 42 125]]</td>
+            </tr>
+          </tbody>
+        </table>
+      </table-wrap>
+    </boxed-text>
+  </fig>
+  </sec>
+  <sec id="cell-17-nb-8" specific-use="notebook-content">
+  <code language="python">better_than_gemini = classification_performance.loc[
+    (classification_performance['accuracy'] &gt;= 0.8) &amp;
+    (classification_performance['precision'] &gt;= 0.8) &amp;
+    (classification_performance['recall'] &gt;= 0.54) &amp;
+    (classification_performance['f1'] &gt;= 0.64)
+]
+p = len(better_than_gemini) / len(classification_performance)
+print(f&quot;{p*100:.2f} % of the EU team classified articles better than Gemini ({len(better_than_gemini)} people).&quot;)</code>
+  <boxed-text>
+    <preformat>35.00 % of the EU team classified articles better than Gemini (7 people).</preformat>
+  </boxed-text>
+  </sec>
+  <sec id="cell-18-nb-8" specific-use="notebook-content">
+</sec>
+<sec id="stage-two-metrics-nb-8">
+  <title>Stage Two Metrics</title>
+  </sec>
+  <sec id="cell-19-nb-8" specific-use="notebook-content">
+  <sec id="ai-metrics-nb-8">
+    <title>AI Metrics</title>
+    </sec>
+    <sec id="cell-20-nb-8" specific-use="notebook-content">
+    <code language="python">AI_data = AI_data[AI_data['horacio_rol'] == 1]
+
+gpt_columns = [
+    'GPT_pillar_1','GPT_pillar_2','GPT_pillar_3','GPT_pillar_4',
+    'GPT_pillar_5','GPT_pillar_6','GPT_pillar_7','GPT_pillar_8'
+]
+gemini_columns = [
+    'Gemini_pillar_1','Gemini_pillar_2','Gemini_pillar_3','Gemini_pillar_4',
+    'Gemini_pillar_5','Gemini_pillar_6','Gemini_pillar_7','Gemini_pillar_8'
+]
+horacio_columns = [
+    'horacio_pillar_1', 'horacio_pillar_2', 'horacio_pillar_3', 'horacio_pillar_4', 
+    'horacio_pillar_5', 'horacio_pillar_6', 'horacio_pillar_7', 'horacio_pillar_8'
+]
+
+performance_data = []
+for horacio, gpt, gemini in zip(horacio_columns, gpt_columns, gemini_columns):
+    
+    gpt_performance = calculate_performance(AI_data, gpt, horacio)
+    gpt_performance['Classifier'] = 'GPT'
+    gpt_performance['Model_Column'] = gpt
+    gpt_performance['Horacio'] = horacio
+    performance_data.append(gpt_performance)
+    
+    gemini_performance = calculate_performance(AI_data, gemini, horacio)
+    gemini_performance['Classifier'] = 'Gemini'
+    gemini_performance['Model_Column'] = gemini
+    gemini_performance['Horacio'] = horacio
+    performance_data.append(gemini_performance)
+
+AI_performance = pd.DataFrame(performance_data)</code>
+    </sec>
+    <sec id="cell-21-nb-8" specific-use="notebook-content">
+  </sec>
+  <sec id="human-metrics-nb-8">
+    <title>Human Metrics</title>
+    </sec>
+    <sec id="cell-22-nb-8" specific-use="notebook-content">
+    <code language="python">stage_two = {}
+for classifier, df in dataframes.items():
+    filtered_df = df.loc[df['horacio_ROL'] == 1]
+    stage_two[classifier] = filtered_df
+
+EU_columns = [
+    'model_pillar_1', 'model_pillar_2', 'model_pillar_3', 'model_pillar_4', 
+    'model_pillar_5', 'model_pillar_6', 'model_pillar_7', 'model_pillar_8'
+]
+horacio_columns = [
+    'horacio_pillar_1', 'horacio_pillar_2', 'horacio_pillar_3', 'horacio_pillar_4',
+    'horacio_pillar_5', 'horacio_pillar_6', 'horacio_pillar_7', 'horacio_pillar_8'
+]
+
+stage_two_classification_performance = []
+
+for classifier in stage_two:
+    for i, (eu_col, horacio_col) in enumerate(zip(EU_columns, horacio_columns)):
+        classifier_df = stage_two[classifier]
+
+        metrics = calculate_performance(classifier_df, eu_col, horacio_col)
+
+        new_row = {
+            'classifier': classifier,
+            'pillar': f'Pillar {i + 1}',
+            'accuracy': metrics['accuracy'],
+            'precision': metrics['precision'],
+            'recall': metrics['recall'],
+            'f1': metrics['f1'],
+            'mcc': metrics['mcc'],
+            'tpr' : metrics['tpr'],
+            'fpr' : metrics['fpr'],
+            'confusion_matrix': [metrics['confusion_matrix']],
+            'true_pos' : metrics['true_pos'],
+            'true_neg' : metrics['true_neg'],
+            'false_pos' : metrics['false_pos'],
+            'false_neg' : metrics['false_neg']
+            }
+
+        stage_two_classification_performance.append(new_row)
+
+stage_two_classification_performance = pd.DataFrame(stage_two_classification_performance)</code>
+    </sec>
+    <sec id="cell-23-nb-8" specific-use="notebook-content">
+    <code language="python">def map_pillar(column):
+    if 'pillar_' in column:
+        pillar_number = column.split('_')[-1]
+        return f'Pillar {pillar_number}'
+    
+AI_performance['pillar'] = AI_performance['Model_Column'].apply(map_pillar)</code>
+    </sec>
+    <sec id="cell-24-nb-8" specific-use="notebook-content">
+    <code language="python">AI_performance = AI_performance.rename(
+    columns = {
+        'Classifier' : 'classifier', 
+        'confusion matrix'  : 'confusion_matrix'
+    }
+)
+AI_performance = AI_performance.drop(columns = ['Model_Column', 'Horacio'])
+performance = pd.concat([AI_performance, stage_two_classification_performance], ignore_index=True)</code>
+    </sec>
+    <sec id="cell-25-nb-8" specific-use="notebook-content">
+    <code language="python">p1 = performance.loc[performance['pillar'] == &quot;Pillar 1&quot;]
+pillar_one = []
+
+p1_top = p1.loc[
+    (p1['classifier'] != 'lcleary') &amp; (p1['tpr'] &gt;= 0.5) &amp; (p1['fpr'] &lt; .4)
+]
+p1_top['confusion_matrix'] = np.array(p1_top['confusion_matrix'])
+eu_p1 = p1.loc[
+    (p1['classifier'] != 'GPT') &amp; (p1['classifier'] != 'Gemini')
+]
+eu_p1['confusion_matrix'] = np.array(eu_p1['confusion_matrix'])
+
+gem_p1 = {
+    'tpr' : p1.loc[(p1['classifier'] == 'Gemini')]['tpr'].iloc[0],
+    'fpr' : p1.loc[(p1['classifier'] == 'Gemini')]['fpr'].iloc[0],
+    'confusion_matrix' : np.array(p1.loc[(p1['classifier'] == 'Gemini')]['confusion_matrix'].iloc[0]),
+    'classifier' : 'Gemini',
+    'pillar' : 'Pillar 1'
+}
+
+gpt_p1 = {
+    'tpr': p1.loc[p1['classifier'] == 'GPT', 'tpr'].iloc[0],
+    'fpr': p1.loc[p1['classifier'] == 'GPT', 'fpr'].iloc[0],  
+    'confusion_matrix': np.array(p1.loc[p1['classifier'] == 'GPT', 'confusion_matrix'].iloc[0]),
+    'classifier': 'GPT',
+    'pillar': 'Pillar 1'
+}
+
+top_p1 = {
+    'tpr': p1_top['tpr'].mean(),
+    'fpr': p1_top['fpr'].mean(),
+    'confusion_matrix' : np.array([[p1_top['true_neg'].sum(), p1_top['false_pos'].sum()],
+                        [p1_top['false_neg'].sum(), p1_top['true_pos'].sum()]]),
+    'classifier': 'Top Human Classifiers',
+    'pillar': 'Pillar 1'
+}
+
+all_eu_p1 = {
+    'tpr' : eu_p1['tpr'].mean(),
+    'fpr' : eu_p1['fpr'].mean(),
+    'confusion_matrix' : np.array([[eu_p1['true_neg'].sum(),eu_p1['false_pos'].sum()],
+                        [eu_p1['false_neg'].sum(), eu_p1['true_pos'].sum()]]),
+    'classifier' : 'Human Classifiers',
+    'pillar' : 'Pillar 1'
+}
+
+for i in [gpt_p1, gem_p1, top_p1, all_eu_p1]:
+    pillar_one.append(i)
+
+pillar_one = pd.DataFrame(pillar_one)</code>
+    <boxed-text>
+      <preformat>/var/folders/7x/fdwfv0y13yz0y3sjb4mwznqm0000gp/T/ipykernel_47536/406494460.py:7: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  p1_top['confusion_matrix'] = np.array(p1_top['confusion_matrix'])
+/var/folders/7x/fdwfv0y13yz0y3sjb4mwznqm0000gp/T/ipykernel_47536/406494460.py:11: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  eu_p1['confusion_matrix'] = np.array(eu_p1['confusion_matrix'])</preformat>
+    </boxed-text>
+    </sec>
+    <sec id="cell-26-nb-8" specific-use="notebook-content">
+    <code language="python">p2 = performance.loc[performance['pillar'] == &quot;Pillar 2&quot;]
+
+pillar_two = []
+
+p2_top = p2.loc[
+    (p2['classifier'] != 'lcleary') &amp; (p2['tpr'] &gt;= 0.5) &amp; (p2['fpr'] &lt; .4)
+]
+eu_p2 = p2.loc[
+    (p2['classifier'] != 'GPT') &amp; (p2['classifier'] != 'Gemini')
+]
+eu_p2['confusion_matrix'] = np.array(eu_p2['confusion_matrix'])
+
+gem_p2 = {
+    'tpr' : p2.loc[(p2['classifier'] == 'Gemini')]['tpr'].iloc[0],
+    'fpr' : p2.loc[(p2['classifier'] == 'Gemini')]['fpr'].iloc[0],
+    'confusion_matrix' : np.array(p2.loc[(p2['classifier'] == 'Gemini')]['confusion_matrix'].iloc[0]),
+    'classifier' : 'Gemini',
+    'pillar' : 'Pillar 2'
+}
+
+gpt_p2 = {
+    'tpr': p2.loc[p2['classifier'] == 'GPT', 'tpr'].iloc[0],
+    'fpr': p2.loc[p2['classifier'] == 'GPT', 'fpr'].iloc[0],  
+    'confusion_matrix': np.array(p2.loc[p2['classifier'] == 'GPT', 'confusion_matrix'].iloc[0]),
+    'classifier': 'GPT',
+    'pillar': 'Pillar 2'
+}
+
+top_p2 = {
+    'tpr': p2_top['tpr'].mean(),
+    'fpr': p2_top['fpr'].mean(),
+    'confusion_matrix' : np.array([[p2_top['true_neg'].sum(), p2_top['false_pos'].sum()],
+                        [p2_top['false_neg'].sum(), p2_top['true_pos'].sum()]]),
+    'classifier': 'Top Human Classifiers',
+    'pillar': 'Pillar 2'
+}
+
+all_eu_p2 = {
+    'tpr' : eu_p2['tpr'].mean(),
+    'fpr' : eu_p2['fpr'].mean(),
+    'confusion_matrix' : np.array([[eu_p2['true_neg'].sum(),eu_p2['false_pos'].sum()],
+                        [eu_p2['false_neg'].sum(), eu_p2['true_pos'].sum()]]),
+    'classifier' : 'Human Classifiers',
+    'pillar' : 'Pillar 2'
+}
+
+for i in [gpt_p2, gem_p2, top_p2, all_eu_p2]:
+    pillar_two.append(i)
+
+pillar_two = pd.DataFrame(pillar_two)</code>
+    <boxed-text>
+      <preformat>/var/folders/7x/fdwfv0y13yz0y3sjb4mwznqm0000gp/T/ipykernel_47536/1115769891.py:11: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  eu_p2['confusion_matrix'] = np.array(eu_p2['confusion_matrix'])</preformat>
+    </boxed-text>
+    </sec>
+    <sec id="cell-27-nb-8" specific-use="notebook-content">
+    <code language="python">p3  = performance.loc[performance['pillar'] == &quot;Pillar 3&quot;]
+
+pillar_three = []
+
+p3_top = p3.loc[
+    (p3['classifier'] != 'lcleary') &amp; (p3['tpr'] &gt;= 0.5) &amp; (p3['fpr'] &lt; .4)
+]
+eu_p3 = p3.loc[
+    (p3['classifier'] != 'GPT') &amp; (p3['classifier'] != 'Gemini')
+]
+eu_p3['confusion_matrix'] = np.array(eu_p3['confusion_matrix'])
+
+gem_p3 = {
+    'tpr' : p3.loc[(p3['classifier'] == 'Gemini')]['tpr'].iloc[0],
+    'fpr' : p3.loc[(p3['classifier'] == 'Gemini')]['fpr'].iloc[0],
+    'confusion_matrix' : np.array(p3.loc[(p3['classifier'] == 'Gemini')]['confusion_matrix'].iloc[0]),
+    'classifier' : 'Gemini',
+    'pillar' : 'Pillar 3'
+}
+
+gpt_p3 = {
+    'tpr': p3.loc[p3['classifier'] == 'GPT', 'tpr'].iloc[0],
+    'fpr': p3.loc[p3['classifier'] == 'GPT', 'fpr'].iloc[0],  
+    'confusion_matrix': np.array(p3.loc[p3['classifier'] == 'GPT', 'confusion_matrix'].iloc[0]),
+    'classifier': 'GPT',
+    'pillar': 'Pillar 3'
+}
+
+top_p3 = {
+    'tpr': p3_top['tpr'].mean(),
+    'fpr': p3_top['fpr'].mean(),
+    'confusion_matrix' : np.array([[p3_top['true_neg'].sum(), p3_top['false_pos'].sum()],
+                        [p3_top['false_neg'].sum(), p3_top['true_pos'].sum()]]),
+    'classifier': 'Top Human Classifiers',
+    'pillar': 'Pillar 3'
+}
+
+
+all_eu_p3 = {
+    'tpr' : eu_p3['tpr'].mean(),
+    'fpr' : eu_p3['fpr'].mean(),
+    'confusion_matrix' : np.array([[eu_p3['true_neg'].sum(),eu_p3['false_pos'].sum()],
+                        [eu_p3['false_neg'].sum(), eu_p3['true_pos'].sum()]]),
+    'classifier' : 'Human Classifiers',
+    'pillar' : 'Pillar 3'
+}
+
+for i in [gpt_p3, gem_p3, top_p3, all_eu_p3]:
+    pillar_three.append(i)
+
+pillar_three = pd.DataFrame(pillar_two)</code>
+    <boxed-text>
+      <preformat>/var/folders/7x/fdwfv0y13yz0y3sjb4mwznqm0000gp/T/ipykernel_47536/4165617852.py:11: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  eu_p3['confusion_matrix'] = np.array(eu_p3['confusion_matrix'])</preformat>
+    </boxed-text>
+    </sec>
+    <sec id="cell-28-nb-8" specific-use="notebook-content">
+    <code language="python">p4 = performance.loc[performance['pillar'] == &quot;Pillar 4&quot;]
+
+pillar_four = []
+
+p4_top = p4.loc[
+    (p4['classifier'] != 'lcleary') &amp; (p4['tpr'] &gt;= 0.5) &amp; (p4['fpr'] &lt; .4)
+]
+eu_p4 = p4.loc[
+    (p4['classifier'] != 'GPT') &amp; (p4['classifier'] != 'Gemini')
+]
+eu_p4['confusion_matrix'] = np.array(eu_p4['confusion_matrix'])
+
+gem_p4 = {
+    'tpr' : p4.loc[(p4['classifier'] == 'Gemini')]['tpr'].iloc[0],
+    'fpr' : p4.loc[(p4['classifier'] == 'Gemini')]['fpr'].iloc[0],
+    'confusion_matrix' : np.array(p4.loc[(p4['classifier'] == 'Gemini')]['confusion_matrix'].iloc[0]),
+    'classifier' : 'Gemini',
+    'pillar' : 'Pillar 4'
+}
+
+gpt_p4 = {
+    'tpr': p4.loc[p4['classifier'] == 'GPT', 'tpr'].iloc[0],
+    'fpr': p4.loc[p4['classifier'] == 'GPT', 'fpr'].iloc[0],  
+    'confusion_matrix': np.array(p4.loc[p4['classifier'] == 'GPT', 'confusion_matrix'].iloc[0]),
+    'classifier': 'GPT',
+    'pillar': 'Pillar 4'
+}
+
+top_p4 = {
+    'tpr': p4_top['tpr'].mean(),
+    'fpr': p4_top['fpr'].mean(),
+    'confusion_matrix' : np.array([[p4_top['true_neg'].sum(), p4_top['false_pos'].sum()],
+                        [p4_top['false_neg'].sum(), p4_top['true_pos'].sum()]]),
+    'classifier': 'Top Human Classifiers',
+    'pillar': 'Pillar 4'
+}
+
+
+all_eu_p4 = {
+    'tpr' : eu_p4['tpr'].mean(),
+    'fpr' : eu_p4['fpr'].mean(),
+    'confusion_matrix' : np.array([[eu_p4['true_neg'].sum(),eu_p4['false_pos'].sum()],
+                        [eu_p4['false_neg'].sum(), eu_p4['true_pos'].sum()]]),
+    'classifier' : 'Human Classifiers',
+    'pillar' : 'Pillar 4'
+}
+
+for i in [gpt_p4, gem_p4, top_p4, all_eu_p4]:
+    pillar_four.append(i)
+
+pillar_four = pd.DataFrame(pillar_four)</code>
+    <boxed-text>
+      <preformat>/var/folders/7x/fdwfv0y13yz0y3sjb4mwznqm0000gp/T/ipykernel_47536/2076089035.py:11: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  eu_p4['confusion_matrix'] = np.array(eu_p4['confusion_matrix'])</preformat>
+    </boxed-text>
+    </sec>
+    <sec id="cell-29-nb-8" specific-use="notebook-content">
+    <code language="python">p5 = performance.loc[performance['pillar'] == &quot;Pillar 5&quot;]
+
+pillar_five = []
+
+p5_top = p5.loc[
+    (p5['classifier'] != 'lcleary') &amp; (p5['tpr'] &gt;= 0.5) &amp; (p5['fpr'] &lt; .4)
+]
+eu_p5 = p5.loc[
+    (p5['classifier'] != 'GPT') &amp; (p5['classifier'] != 'Gemini')
+]
+eu_p5['confusion_matrix'] = np.array(eu_p5['confusion_matrix'])
+
+gem_p5 = {
+    'tpr' : p5.loc[(p5['classifier'] == 'Gemini')]['tpr'].iloc[0],
+    'fpr' : p5.loc[(p5['classifier'] == 'Gemini')]['fpr'].iloc[0],
+    'confusion_matrix' : np.array(p5.loc[(p5['classifier'] == 'Gemini')]['confusion_matrix'].iloc[0]),
+    'classifier' : 'Gemini',
+    'pillar' : 'Pillar 5'
+}
+
+gpt_p5 = {
+    'tpr': p5.loc[p5['classifier'] == 'GPT', 'tpr'].iloc[0],
+    'fpr': p5.loc[p5['classifier'] == 'GPT', 'fpr'].iloc[0],  
+    'confusion_matrix': np.array(p5.loc[p5['classifier'] == 'GPT', 'confusion_matrix'].iloc[0]),
+    'classifier': 'GPT',
+    'pillar': 'Pillar 5'
+}
+
+top_p5 = {
+    'tpr': p5_top['tpr'].mean(),
+    'fpr': p5_top['fpr'].mean(),
+    'confusion_matrix' : np.array([[p5_top['true_neg'].sum(), p5_top['false_pos'].sum()],
+                        [p5_top['false_neg'].sum(), p5_top['true_pos'].sum()]]),
+    'classifier': 'Top Human Classifiers',
+    'pillar': 'Pillar 5'
+}
+
+all_eu_p5 = {
+    'tpr' : eu_p5['tpr'].mean(),
+    'fpr' : eu_p5['fpr'].mean(),
+    'confusion_matrix' : np.array([[eu_p5['true_neg'].sum(),eu_p5['false_pos'].sum()],
+                        [eu_p5['false_neg'].sum(), eu_p5['true_pos'].sum()]]),
+    'classifier' : 'Human Classifiers',
+    'pillar' : 'Pillar 5'
+}
+
+for i in [gpt_p5, gem_p5, top_p5, all_eu_p5]:
+    pillar_five.append(i)
+
+pillar_five = pd.DataFrame(pillar_five)</code>
+    <boxed-text>
+      <preformat>/var/folders/7x/fdwfv0y13yz0y3sjb4mwznqm0000gp/T/ipykernel_47536/775791368.py:11: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  eu_p5['confusion_matrix'] = np.array(eu_p5['confusion_matrix'])</preformat>
+    </boxed-text>
+    </sec>
+    <sec id="cell-30-nb-8" specific-use="notebook-content">
+    <code language="python">p6 = performance.loc[performance['pillar'] == &quot;Pillar 6&quot;]
+
+pillar_six = []
+
+p6_top = p6.loc[
+    (p6['classifier'] != 'lcleary') &amp; (p6['tpr'] &gt;= 0.5) &amp; (p6['fpr'] &lt; .4)
+]
+eu_p6 = p6.loc[
+    (p6['classifier'] != 'GPT') &amp; (p6['classifier'] != 'Gemini')
+]
+eu_p6['confusion_matrix'] = np.array(eu_p6['confusion_matrix'])
+
+gem_p6 = {
+    'tpr' : p6.loc[(p6['classifier'] == 'Gemini')]['tpr'].iloc[0],
+    'fpr' : p6.loc[(p6['classifier'] == 'Gemini')]['fpr'].iloc[0],
+    'confusion_matrix' : np.array(p6.loc[(p6['classifier'] == 'Gemini')]['confusion_matrix'].iloc[0]),
+    'classifier' : 'Gemini',
+    'pillar' : 'Pillar 6'
+}
+
+gpt_p6 = {
+    'tpr': p6.loc[p6['classifier'] == 'GPT', 'tpr'].iloc[0],
+    'fpr': p6.loc[p6['classifier'] == 'GPT', 'fpr'].iloc[0],  
+    'confusion_matrix': np.array(p6.loc[p6['classifier'] == 'GPT', 'confusion_matrix'].iloc[0]),
+    'classifier': 'GPT',
+    'pillar': 'Pillar 6'
+}
+
+top_p6 = {
+    'tpr': p6_top['tpr'].mean(),
+    'fpr': p6_top['fpr'].mean(),
+    'confusion_matrix' : np.array([[p6_top['true_neg'].sum(), p6_top['false_pos'].sum()],
+                        [p6_top['false_neg'].sum(), p6_top['true_pos'].sum()]]),
+    'classifier': 'Top Human Classifiers',
+    'pillar': 'Pillar 6'
+}
+
+all_eu_p6 = {
+    'tpr' : eu_p6['tpr'].mean(),
+    'fpr' : eu_p6['fpr'].mean(),
+    'confusion_matrix' : np.array([[eu_p6['true_neg'].sum(),eu_p6['false_pos'].sum()],
+                        [eu_p6['false_neg'].sum(), eu_p6['true_pos'].sum()]]),
+    'classifier' : 'Human Classifiers',
+    'pillar' : 'Pillar 6'
+}
+
+for i in [gpt_p6, gem_p6, top_p6, all_eu_p6]:
+    pillar_six.append(i)
+
+pillar_six = pd.DataFrame(pillar_six)</code>
+    <boxed-text>
+      <preformat>/var/folders/7x/fdwfv0y13yz0y3sjb4mwznqm0000gp/T/ipykernel_47536/4058969709.py:11: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  eu_p6['confusion_matrix'] = np.array(eu_p6['confusion_matrix'])</preformat>
+    </boxed-text>
+    </sec>
+    <sec id="cell-31-nb-8" specific-use="notebook-content">
+    <code language="python">p7 = performance.loc[performance['pillar'] == &quot;Pillar 7&quot;]
+
+pillar_seven = []
+
+p7_top = p7.loc[
+    (p7['classifier'] != 'lcleary') &amp; (p7['tpr'] &gt;= 0.5) &amp; (p7['fpr'] &lt; .4)
+]
+eu_p7 = p7.loc[
+    (p7['classifier'] != 'GPT') &amp; (p7['classifier'] != 'Gemini')
+]
+eu_p7['confusion_matrix'] = np.array(eu_p7['confusion_matrix'])
+
+gem_p7 = {
+    'tpr' : p7.loc[(p7['classifier'] == 'Gemini')]['tpr'].iloc[0],
+    'fpr' : p7.loc[(p7['classifier'] == 'Gemini')]['fpr'].iloc[0],
+    'confusion_matrix' : np.array(p7.loc[(p7['classifier'] == 'Gemini')]['confusion_matrix'].iloc[0]),
+    'classifier' : 'Gemini',
+    'pillar' : 'Pillar 7'
+}
+
+gpt_p7= {
+    'tpr': p7.loc[p7['classifier'] == 'GPT', 'tpr'].iloc[0],
+    'fpr': p7.loc[p7['classifier'] == 'GPT', 'fpr'].iloc[0],  
+    'confusion_matrix': np.array(p7.loc[p7['classifier'] == 'GPT', 'confusion_matrix'].iloc[0]),
+    'classifier': 'GPT',
+    'pillar': 'Pillar 7'
+}
+
+top_p7 = {
+    'tpr': p7_top['tpr'].mean(),
+    'fpr': p7_top['fpr'].mean(),
+    'confusion_matrix' : np.array([[p7_top['true_neg'].sum(), p7_top['false_pos'].sum()],
+                        [p7_top['false_neg'].sum(), p7_top['true_pos'].sum()]]),
+    'classifier': 'Top Human Classifiers',
+    'pillar': 'Pillar 7'
+}
+
+all_eu_p7 = {
+    'tpr' : eu_p7['tpr'].mean(),
+    'fpr' : eu_p7['fpr'].mean(),
+    'confusion_matrix' : np.array([[eu_p7['true_neg'].sum(),eu_p7['false_pos'].sum()],
+                        [eu_p7['false_neg'].sum(), eu_p7['true_pos'].sum()]]),
+    'classifier' : 'Human Classifiers',
+    'pillar' : 'Pillar 7'
+}
+
+for i in [gpt_p7, gem_p7, top_p7, all_eu_p7]:
+    pillar_seven.append(i)
+
+pillar_seven = pd.DataFrame(pillar_seven)</code>
+    <boxed-text>
+      <preformat>/var/folders/7x/fdwfv0y13yz0y3sjb4mwznqm0000gp/T/ipykernel_47536/3508723912.py:11: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  eu_p7['confusion_matrix'] = np.array(eu_p7['confusion_matrix'])</preformat>
+    </boxed-text>
+    </sec>
+    <sec id="cell-32-nb-8" specific-use="notebook-content">
+    <code language="python">p8 = performance.loc[performance['pillar'] == &quot;Pillar 8&quot;]
+
+pillar_eight = []
+
+p8_top = p8.loc[
+    (p8['classifier'] != 'lcleary') &amp; (p8['tpr'] &gt;= 0.5) &amp; (p8['fpr'] &lt; .4)
+]
+eu_p8 = p8.loc[
+    (p8['classifier'] != 'GPT') &amp; (p8['classifier'] != 'Gemini')
+]
+eu_p8['confusion_matrix'] = np.array(eu_p8['confusion_matrix'])
+
+gem_p8 = {
+    'tpr' : p8.loc[(p8['classifier'] == 'Gemini')]['tpr'].iloc[0],
+    'fpr' : p8.loc[(p8['classifier'] == 'Gemini')]['fpr'].iloc[0],
+    'confusion_matrix' : np.array(p8.loc[(p8['classifier'] == 'Gemini')]['confusion_matrix'].iloc[0]),
+    'classifier' : 'Gemini',
+    'pillar' : 'Pillar 8'
+}
+
+gpt_p8 = {
+    'tpr': p8.loc[p8['classifier'] == 'GPT', 'tpr'].iloc[0],
+    'fpr': p8.loc[p8['classifier'] == 'GPT', 'fpr'].iloc[0],  
+    'confusion_matrix': np.array(p8.loc[p8['classifier'] == 'GPT', 'confusion_matrix'].iloc[0]),
+    'classifier': 'GPT',
+    'pillar': 'Pillar 8'
+}
+
+top_p8 = {
+    'tpr': p8_top['tpr'].mean(),
+    'fpr': p8_top['fpr'].mean(),
+    'confusion_matrix' : np.array([[p8_top['true_neg'].sum(), p8_top['false_pos'].sum()],
+                        [p8_top['false_neg'].sum(), p8_top['true_pos'].sum()]]),
+    'classifier': 'Top Human Classifiers',
+    'pillar': 'Pillar 8'
+}
+
+
+all_eu_p8 = {
+    'tpr' : eu_p8['tpr'].mean(),
+    'fpr' : eu_p8['fpr'].mean(),
+    'confusion_matrix' : np.array([[eu_p8['true_neg'].sum(),eu_p8['false_pos'].sum()],
+                        [eu_p8['false_neg'].sum(), eu_p8['true_pos'].sum()]]),
+    'classifier' : 'Human Classifiers',
+    'pillar' : 'Pillar 8'
+}
+
+for i in [gpt_p8, gem_p8, top_p8, all_eu_p8]:
+    pillar_eight.append(i)
+
+pillar_eight = pd.DataFrame(pillar_eight)</code>
+    <boxed-text>
+      <preformat>/var/folders/7x/fdwfv0y13yz0y3sjb4mwznqm0000gp/T/ipykernel_47536/1783717482.py:11: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  eu_p8['confusion_matrix'] = np.array(eu_p8['confusion_matrix'])</preformat>
+    </boxed-text>
+    </sec>
+    <sec specific-use="notebook-content">
+    <code language="python">dataframes = [pillar_one, pillar_four, pillar_five]
+stage_two = pd.concat(dataframes)
+stage_two[[&quot;classifier&quot;, &quot;pillar&quot;, &quot;tpr&quot;, &quot;fpr&quot;, &quot;confusion_matrix&quot;]].rename(
+        columns = {
+            &quot;classifier&quot;       : &quot;Classifier&quot;,
+            &quot;pillar&quot;           : &quot;Pillar&quot;,
+            &quot;tpr&quot;              : &quot;TPR&quot;,
+            &quot;fpr&quot;              : &quot;FPR&quot;,
+            &quot;confusion_matrix&quot; : &quot;Confussion Matrix&quot;
+        },
+        # inplace = True
+    ).style.hide(axis=&quot;index&quot;).format({
+    &quot;TPR&quot;: &quot;{:,.2f}&quot;,
+    &quot;FPR&quot;: &quot;{:,.2f}&quot;
+})</code>
+    <fig id="tbl-classacc2-nb-8">
+      <caption><p>Table 2: Classification Performance Assessment (Stage
+      2)</p></caption>
+      <boxed-text>
+        <table-wrap>
+          <table id="T_50cb0-nb-8">
+            <thead>
+              <tr>
+                <th id="T_50cb0_level0_col0-nb-8">Classifier</th>
+                <th id="T_50cb0_level0_col1-nb-8">Pillar</th>
+                <th id="T_50cb0_level0_col2-nb-8">TPR</th>
+                <th id="T_50cb0_level0_col3-nb-8">FPR</th>
+                <th id="T_50cb0_level0_col4-nb-8">Confussion Matrix</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td id="T_50cb0_row0_col0-nb-8">GPT</td>
+                <td id="T_50cb0_row0_col1-nb-8">Pillar 1</td>
+                <td id="T_50cb0_row0_col2-nb-8">0.69</td>
+                <td id="T_50cb0_row0_col3-nb-8">0.21</td>
+                <td id="T_50cb0_row0_col4-nb-8">[[30 8] [ 9 20]]</td>
+              </tr>
+              <tr>
+                <td id="T_50cb0_row1_col0-nb-8">Gemini</td>
+                <td id="T_50cb0_row1_col1-nb-8">Pillar 1</td>
+                <td id="T_50cb0_row1_col2-nb-8">0.52</td>
+                <td id="T_50cb0_row1_col3-nb-8">0.37</td>
+                <td id="T_50cb0_row1_col4-nb-8">[[24 14] [14 15]]</td>
+              </tr>
+              <tr>
+                <td id="T_50cb0_row2_col0-nb-8">Top Human Classifiers</td>
+                <td id="T_50cb0_row2_col1-nb-8">Pillar 1</td>
+                <td id="T_50cb0_row2_col2-nb-8">0.55</td>
+                <td id="T_50cb0_row2_col3-nb-8">0.16</td>
+                <td id="T_50cb0_row2_col4-nb-8">[[89 27] [38 52]]</td>
+              </tr>
+              <tr>
+                <td id="T_50cb0_row3_col0-nb-8">Human Classifiers</td>
+                <td id="T_50cb0_row3_col1-nb-8">Pillar 1</td>
+                <td id="T_50cb0_row3_col2-nb-8">0.35</td>
+                <td id="T_50cb0_row3_col3-nb-8">0.07</td>
+                <td id="T_50cb0_row3_col4-nb-8">[[85 7] [50 25]]</td>
+              </tr>
+              <tr>
+                <td id="T_50cb0_row4_col0-nb-8">GPT</td>
+                <td id="T_50cb0_row4_col1-nb-8">Pillar 4</td>
+                <td id="T_50cb0_row4_col2-nb-8">0.60</td>
+                <td id="T_50cb0_row4_col3-nb-8">0.17</td>
+                <td id="T_50cb0_row4_col4-nb-8">[[35 7] [10 15]]</td>
+              </tr>
+              <tr>
+                <td id="T_50cb0_row5_col0-nb-8">Gemini</td>
+                <td id="T_50cb0_row5_col1-nb-8">Pillar 4</td>
+                <td id="T_50cb0_row5_col2-nb-8">0.24</td>
+                <td id="T_50cb0_row5_col3-nb-8">0.26</td>
+                <td id="T_50cb0_row5_col4-nb-8">[[31 11] [19 6]]</td>
+              </tr>
+              <tr>
+                <td id="T_50cb0_row6_col0-nb-8">Top Human Classifiers</td>
+                <td id="T_50cb0_row6_col1-nb-8">Pillar 4</td>
+                <td id="T_50cb0_row6_col2-nb-8">0.66</td>
+                <td id="T_50cb0_row6_col3-nb-8">0.15</td>
+                <td id="T_50cb0_row6_col4-nb-8">[[57 11] [20 37]]</td>
+              </tr>
+              <tr>
+                <td id="T_50cb0_row7_col0-nb-8">Human Classifiers</td>
+                <td id="T_50cb0_row7_col1-nb-8">Pillar 4</td>
+                <td id="T_50cb0_row7_col2-nb-8">0.40</td>
+                <td id="T_50cb0_row7_col3-nb-8">0.16</td>
+                <td id="T_50cb0_row7_col4-nb-8">[[62 13] [53 39]]</td>
+              </tr>
+              <tr>
+                <td id="T_50cb0_row8_col0-nb-8">GPT</td>
+                <td id="T_50cb0_row8_col1-nb-8">Pillar 5</td>
+                <td id="T_50cb0_row8_col2-nb-8">0.33</td>
+                <td id="T_50cb0_row8_col3-nb-8">0.10</td>
+                <td id="T_50cb0_row8_col4-nb-8">[[44 5] [12 6]]</td>
+              </tr>
+              <tr>
+                <td id="T_50cb0_row9_col0-nb-8">Gemini</td>
+                <td id="T_50cb0_row9_col1-nb-8">Pillar 5</td>
+                <td id="T_50cb0_row9_col2-nb-8">0.22</td>
+                <td id="T_50cb0_row9_col3-nb-8">0.14</td>
+                <td id="T_50cb0_row9_col4-nb-8">[[42 7] [14 4]]</td>
+              </tr>
+              <tr>
+                <td id="T_50cb0_row10_col0-nb-8">Top Human Classifiers</td>
+                <td id="T_50cb0_row10_col1-nb-8">Pillar 5</td>
+                <td id="T_50cb0_row10_col2-nb-8">0.67</td>
+                <td id="T_50cb0_row10_col3-nb-8">0.18</td>
+                <td id="T_50cb0_row10_col4-nb-8">[[69 15] [ 8 16]]</td>
+              </tr>
+              <tr>
+                <td id="T_50cb0_row11_col0-nb-8">Human Classifiers</td>
+                <td id="T_50cb0_row11_col1-nb-8">Pillar 5</td>
+                <td id="T_50cb0_row11_col2-nb-8">0.42</td>
+                <td id="T_50cb0_row11_col3-nb-8">0.18</td>
+                <td id="T_50cb0_row11_col4-nb-8">[[106 25] [ 19 17]]</td>
+              </tr>
+            </tbody>
+          </table>
+        </table-wrap>
+      </boxed-text>
+    </fig>
+    </sec>
   </sec>
 </sec>
 </body>

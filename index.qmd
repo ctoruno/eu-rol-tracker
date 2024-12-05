@@ -198,7 +198,7 @@ We divided the classification phase into two stages. In the first stage, the sys
 
 In the second stage, the system will further classify the relevant articles according to which specific pillars of the rule of law the events are related to. This stage focuses exclusively on articles that were previously classified as related to our macro-concepts and that describe events occurring within one of the 27 member states of the European Union.
 
-### Prompt definition
+### Prompt definition {#sec-promptdef}
 
 In both stages, we defined two prompt templates to pass to the LLM: a system context and the instructions. The system context is a type of prompt used to set the context or guide the behavior of the model during a conversation. In our specific case, the system context was used to establish the role of the model as an assistant, provide general instructions and some background information of the purpose of the tasks. The instruction template contained the conceptual framework, the full text of the article, some key point to take into account, as well as specific instructions on how to structure the answers (JSON format). The full text of the prompts used can be found in the [Prompt templates: Text Classification notebook](https://ctoruno.github.io/eu-rol-tracker/notebooks/prompts_classification-preview.html) in the supplementary materials to this manuscript.
 
@@ -253,6 +253,46 @@ where ($b_i$) is the binary value indicating whether the article is related to p
 Percentages across pillars in @tbl-classstage2 do not sum up to 100 due to three reasons. First, one single article could be associated to multiple pillars. Second, when given more detailed information on the rule of law and its different dimensions, some news articles might have received new scores that would reflect their disassociation from our theoretical framework. Third, some news articles were only mildly related to all of the pillars considered in our conceptual framework.
 
 ### How accurate is the text classification? {#sec-accuracy}
+
+To evaluate the accuracy of our tracker, we conducted an experiment comparing the performance of two large language models (LLMs), *GPT-4-Turbo* and *Gemini-1.0-Pro*, with human annotators. The experiment was designed under the assumption that human labeling would serve as a counterfactual benchmark for AI-based classification.
+
+First, the political scientist who developed the conceptual framework manually classified a sample of 200 news articles. These expert annotations served as the "ground truth" for evaluating both AI and human performance. To streamline the annotation process, we developed a web application with the following features:
+
+1. **Article Display**: Each annotator was presented with a randomly selected news article, including its headline, a brief summary (provided by the news API), and the full text. All content was displayed in English.
+2. **Primary Question**: Annotators answered the question: *Is this news article related to the Rule of Law?*
+3. **Conditional Questions**:
+  - If **YES**, additional questions were displayed:
+    - *To which pillar(s) of the Rule of Law does this article relate?* (Multiple selections allowed)
+    - *What is the impact of the events described on the Rule of Law?* (Very Positive, Positive, Neutral, Negative, Very Negative)
+    - *In which country are the events described taking place?* (List of countries provided)
+    - After answering, the annotation was recorded, and the next article was shown.
+  - If **NO**, the annotation was recorded immediately, and the next article was shown.
+
+Using the expert's annotations, we applied the LLM prompts defined in @sec-promptdef to classify the same 200 news articles in both the first and second classification stages. The output of **GPT-4-Turbo** and **Gemini-1.0-Pro** was evaluated using a set of metrics to measure their classification accuracy against the ground truth.
+
+Finally, we trained a team of 20 human annotators through a workshop designed to familiarize them with the project's conceptual framework. After the training, each participant labeled a set of 200 news articles using the same web app. To ensure consistency and enable comparison, a hidden subset of 40 articles (shared with the expert-labeled set) was included for each participant. The responses to this hidden subset were used to estimate metrics and assess the accuracy of human classification relative to the expert benchmark.
+
+A set of six metrics were estimated to assess the accuracy of the classification:
+
+1. **Accuracy**: The ratio of correctly predicted instances to the total instances.
+2. **Precision**: The ratio of correctly predicted positive instances to the total predicted positive
+3. **Sensitivity (TPR)**: The ratio of correctly predicted positive instances to all actual positive instances.
+4. **Fall-Out (FPR)**: The proportion of actual negative instances that are incorrectly classified as positive by the model.
+4. **F1 Score**: The harmonic mean of precision and recall, giving a balance between the two.
+5. **Matthews Correlation Coefficient**: A balanced measure of classification quality that considers true and false positives and negatives.
+6. **Confusion Matrix**: A table that shows the actual vs predicted classifications and helps visualize the performance of the classifier.
+
+Due to the significant imabalnce of negatives in the sample, we focused our attention in the *sensitivity*, *fall-out*, and *confusion matrix*. The results of the classification for the first stage are shown in the @tbl-classacc1.
+
+As we can observe, the **GPT model** performed accurately in the small subset of news articles during the first stage of classification while the **Gemini model** had a low sensitivity performance due to a significant number of false negatives (31). This is a dangerous statistic given that, unlike the false positives, this is information that will be lost during the second stage of the classification. This is a cost that is assumed by this project in order to reduce the costs of the pilot.
+
+When comparing the performance of the AI models to those of the human annotators, only 7 out of the 20 human annotators performed better than Gemini. This set of "*Top Human Classifiers* shown a performance almost as high as the *GPT model*. However, when looking at the whole human team, we can see that average *Human Annotator* performed very closely to the *Gemini Model*. While the Gemini model had a lower FPR, the average human annotator exhibited a higher TPR.
+
+{{< embed notebooks/3_EU_news_classification_accuracy.ipynb#tbl-classacc1 >}}
+
+When assessing the accuracy of the classification during the second stage, we only have a reliable sample size to evaluate the accuracy on pillars one, four, and five. The results shown in @tbl-classacc2 reflect that AI models had a better performance than humans when classifying news articles related to *Constraints on Government Powers*, while humans had a better performance than AI models when classifying news articles related to *Order and Security*. 
+
+{{< embed notebooks/3_EU_news_classification_accuracy.ipynb#tbl-classacc2 >}}
 
 ## Summarization and Sentiment
 
